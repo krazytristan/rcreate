@@ -1,289 +1,255 @@
-// src/components/Hero.jsx
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import logo from "../assets/Logo.png";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue } from "framer-motion";
+
 import hero1 from "../assets/Logo.png";
 import hero2 from "../assets/images1.jpg";
 import hero3 from "../assets/images2.jpg";
+import bgVideo from "../assets/hero-bg.mp4";
 
 const heroImages = [hero1, hero2, hero3];
 
-// Floating shapes animation
-const floatVariants = {
+const float = {
   animate: {
     y: [0, -15, 0],
-    x: [0, 15, 0],
-    transition: { repeat: Infinity, duration: 10, ease: "easeInOut" },
+    x: [0, 12, 0],
+    transition: { duration: 8, repeat: Infinity, ease: "easeInOut" },
   },
 };
 
-// Generate interactive stars
 const generateStars = (count) =>
   Array.from({ length: count }, (_, i) => ({
     id: i,
     x: Math.random() * 100,
     y: Math.random() * 100,
-    size: Math.random() * 4 + 2,
+    size: Math.random() * 3 + 2,
     opacity: Math.random() * 0.5 + 0.3,
-    delay: Math.random() * 5,
+    delay: Math.random() * 4,
   }));
 
 export default function Hero() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState(0);
-  const [stars, setStars] = useState(generateStars(25));
+  const [current, setCurrent] = useState(0);
+  const [modal, setModal] = useState(false);
+  const [stars, setStars] = useState(generateStars(30));
+  const videoRef = useRef(null);
+  const x = useMotionValue(0);
 
-  // Carousel effect
+  // AUTO SLIDE
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
-    return () => clearInterval(interval);
+    const timer = setInterval(
+      () => setCurrent((p) => (p + 1) % heroImages.length),
+      5000
+    );
+    return () => clearInterval(timer);
   }, []);
 
-  // Hover effect: stars move away from cursor
+  // VIDEO AUTOPLAY WITH VOLUME FADE-IN
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.volume = 0;
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Gradually increase volume to 0.3
+            let vol = 0;
+            const fade = setInterval(() => {
+              if (vol < 0.3) {
+                vol += 0.01;
+                videoRef.current.volume = vol;
+              } else {
+                clearInterval(fade);
+              }
+            }, 100);
+          })
+          .catch(() => {
+            videoRef.current.muted = true;
+            videoRef.current.play();
+          });
+      }
+    }
+  }, []);
+
+  // STAR PARALLAX
   const handleMouseMove = (e) => {
-    const hero = e.currentTarget.getBoundingClientRect();
-    const mouseX = e.clientX - hero.left;
-    const mouseY = e.clientY - hero.top;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    const my = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
 
     setStars((prev) =>
-      prev.map((star) => ({
-        ...star,
-        x: star.x + (star.x / 100 - mouseX / hero.width) * 3,
-        y: star.y + (star.y / 100 - mouseY / hero.height) * 3,
+      prev.map((s) => ({
+        ...s,
+        x: Math.min(100, Math.max(0, s.x + mx * 0.2)),
+        y: Math.min(100, Math.max(0, s.y + my * 0.2)),
       }))
     );
   };
 
-  const headlineText = [
-    "Your",
-    "Right-Hand Virtual Assistant",
-    "for Busy Founders & Home Service CEOs",
-  ];
-
-  const sentence = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
+  // SMOOTH SCROLL
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    el?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const word = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  // HANDLE DRAG SWIPE
+  const handleDragEnd = (_, info) => {
+    if (info.offset.x < -50) {
+      setCurrent((p) => (p + 1) % heroImages.length);
+    } else if (info.offset.x > 50) {
+      setCurrent((p) => (p - 1 + heroImages.length) % heroImages.length);
+    }
   };
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden px-4 sm:px-6 md:px-12"
-      style={{ backgroundColor: "#FCFAF4" }}
       onMouseMove={handleMouseMove}
-      onMouseLeave={() => setStars(generateStars(25))}
+      className="relative min-h-screen overflow-hidden flex items-center px-6"
     >
-      {/* Gradient Background */}
+      {/* VIDEO BACKGROUND */}
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src={bgVideo} type="video/mp4" />
+      </video>
+
+      {/* GRADIENT OVERLAY */}
       <motion.div
-        className="absolute inset-0 z-0"
+        className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(120deg, #FFEDD6 0%, #AE7533 40%, #2D5D46 80%)",
-          backgroundSize: "400% 400%",
+            "radial-gradient(circle at 20% 20%, rgba(174,117,51,0.3), transparent 60%), linear-gradient(120deg, rgba(15,23,42,0.85), rgba(45,93,70,0.7), rgba(15,23,42,0.85))",
+          backgroundSize: "300% 300%",
         }}
         animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 30, repeat: Infinity }}
       />
 
-      {/* Stars */}
-      {stars.map((star) => (
+      <div className="absolute inset-0 bg-black/25" />
+
+      {/* STARS */}
+      {stars.map((s) => (
         <motion.div
-          key={star.id}
-          className="absolute bg-white rounded-full"
+          key={s.id}
+          className="absolute bg-white rounded-full pointer-events-none"
           style={{
-            width: star.size,
-            height: star.size,
-            opacity: star.opacity,
-            top: `${star.y}%`,
-            left: `${star.x}%`,
+            width: s.size,
+            height: s.size,
+            top: `${s.y}%`,
+            left: `${s.x}%`,
+            opacity: s.opacity,
           }}
-          animate={{ scale: [1, 1.3, 1] }}
-          transition={{ duration: 1, repeat: Infinity, delay: star.delay }}
+          animate={{ scale: [1, 1.4, 1] }}
+          transition={{ duration: 1.5, repeat: Infinity, delay: s.delay }}
         />
       ))}
 
-      {/* Floating shapes */}
+      {/* FLOATING ORBS */}
       <motion.div
-        className="absolute w-10 h-10 sm:w-12 sm:h-12 bg-[#FFEDD6] rounded-full opacity-40 top-1/4 left-1/5"
-        variants={floatVariants}
+        className="absolute w-16 h-16 bg-[#AE7533]/40 rounded-full blur-xl top-1/4 left-1/5"
+        variants={float}
         animate="animate"
       />
       <motion.div
-        className="absolute w-6 h-6 sm:w-8 sm:h-8 bg-[#AE7533] rounded-full opacity-30 top-3/4 right-1/4"
-        variants={floatVariants}
-        animate="animate"
-      />
-      <motion.div
-        className="absolute w-5 h-5 sm:w-6 sm:h-6 bg-[#2D5D46] rounded-full opacity-20 top-1/2 left-3/4"
-        variants={floatVariants}
+        className="absolute w-12 h-12 bg-[#2D5D46]/40 rounded-full blur-xl bottom-1/4 right-1/4"
+        variants={float}
         animate="animate"
       />
 
-      {/* Logo */}
-      <div className="absolute top-6 left-4 sm:left-6 z-20 flex items-center gap-2">
-        <img src={logo} alt="Logo" className="h-8 sm:h-10 w-auto" />
-        <span className="font-bold tracking-wide text-[#2D5D46] text-base sm:text-lg md:text-xl">
-          RCREATE
-        </span>
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-center">
+      {/* CONTENT */}
+      <div className="relative z-20 max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
         {/* LEFT */}
-        <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex flex-col"
-        >
-          <span className="inline-block mb-4 px-3 py-1 rounded-full text-xs sm:text-sm font-semibold w-fit bg-[#FFEDD6] text-[#AE7533]">
-            Trusted Virtual Support for Growing Businesses
+        <div className="text-white">
+          <span className="inline-block mb-5 px-5 py-2 rounded-full bg-white/10 backdrop-blur">
+            Trusted Virtual Support for Founders
           </span>
 
-          {/* Headline */}
-          <motion.h1
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 break-words text-[#FCFAF4] shadow-lg"
-            variants={sentence}
-            initial="hidden"
-            animate="visible"
-          >
-            {headlineText.map((wordText, i) => (
-              <motion.span key={i} className="block md:inline" variants={word}>
-                {wordText}{" "}
-              </motion.span>
-            ))}
-          </motion.h1>
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight">
+            Your <span className="text-[#FFEDD6]">Right-Hand</span> <br />
+            <span className="text-[#AE7533]">Virtual Assistant</span>
+          </h1>
 
-          <motion.p
-            className="text-base sm:text-lg md:text-xl max-w-xl mb-8 md:mb-10 text-[#FCFAF4]/90 leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            We handle admin, operations, client communication, marketing, and
-            website creation — so you can focus on growth without burnout.
-          </motion.p>
+          <p className="mt-6 max-w-xl text-lg text-white/90 leading-relaxed">
+            Admin, marketing, systems, and websites — so you can scale without
+            burnout.
+          </p>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
-            <motion.button
-              onClick={() => setModalOpen(true)}
-              whileHover={{
-                scale: 1.06,
-                boxShadow: "0 0 25px rgba(46, 64, 45, 0.4)",
-              }}
-              whileTap={{ scale: 0.96 }}
-              className="px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold shadow-lg transition bg-[#2D5D46] text-[#FCFAF4] hover:bg-[#3C6B54] w-full sm:w-auto text-center"
+          <div className="mt-10 flex gap-4 flex-wrap">
+            <button
+              onClick={() => setModal(true)}
+              className="px-10 py-4 rounded-full bg-[#2D5D46] text-white font-semibold shadow-2xl hover:bg-[#3C6B54] transition"
             >
-              Message Us Now! →
-            </motion.button>
-
-            <motion.a
-              href="#services"
-              className="px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold transition border border-[#2D5D46] text-[#FCFAF4] hover:bg-[#2D5D46] hover:text-[#FCFAF4] w-full sm:w-auto text-center"
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 0 20px rgba(46, 64, 45, 0.3)",
-              }}
+              Message Us →
+            </button>
+            <button
+              onClick={() => scrollTo("services")}
+              className="px-10 py-4 rounded-full border border-white/70 hover:bg-white/15 transition"
             >
               Explore Services
-            </motion.a>
+            </button>
           </div>
+        </div>
 
-          <p className="mt-4 sm:mt-6 text-xs sm:text-sm md:text-sm text-[#FCFAF4]/80">
-            ✓ No contracts • ✓ No pressure • ✓ 100% free readiness call
-          </p>
-        </motion.div>
+        {/* RIGHT — DEPTH CAROUSEL */}
+        <div className="relative h-[480px] flex items-center justify-center">
+          {heroImages.map((img, i) => {
+            const isActive = i === current;
+            const offset =
+              i === (current + 1) % heroImages.length
+                ? 80
+                : i === (current - 1 + heroImages.length) % heroImages.length
+                ? -80
+                : 0;
 
-        {/* RIGHT - Hero Image Carousel */}
-        <div className="relative w-full flex justify-center md:justify-end mt-6 md:mt-0">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={currentImage}
-              src={heroImages[currentImage]}
-              alt="Hero"
-              className="relative z-10 rounded-3xl shadow-2xl w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
-              initial={{ opacity: 0, y: 30, scale: 0.95 }}
-              animate={{ opacity: 1, y: [0, -5, 0], scale: 1 }}
-              exit={{ opacity: 0, y: -30, scale: 0.95 }}
-              transition={{ duration: 0.8 }}
-            />
-          </AnimatePresence>
-          <motion.div
-            className="absolute -inset-6 rounded-3xl blur-2xl opacity-70"
-            style={{ backgroundColor: "#FFEDD6" }}
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          />
+            return (
+              <motion.img
+                key={i}
+                src={img}
+                className="absolute w-[320px] rounded-3xl shadow-2xl cursor-grab"
+                style={{ x }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                onDragEnd={handleDragEnd}
+                animate={{
+                  x: offset,
+                  scale: isActive ? 1 : 0.82,
+                  opacity: isActive ? 1 : 0.25,
+                  filter: isActive ? "blur(0)" : "blur(10px)",
+                  zIndex: isActive ? 30 : 10,
+                }}
+                transition={{ duration: 0.9 }}
+              />
+            );
+          })}
         </div>
       </div>
 
-      {/* Modal */}
+      {/* MODAL */}
       <AnimatePresence>
-        {modalOpen && (
+        {modal && (
           <>
             <motion.div
               className="fixed inset-0 bg-black/60 z-50"
-              onClick={() => setModalOpen(false)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              onClick={() => setModal(false)}
             />
             <motion.div
-              className="fixed top-1/2 left-1/2 z-50 w-[90%] sm:w-[80%] md:w-[60%] lg:w-[50%] bg-[#FFEDD6] rounded-3xl shadow-2xl p-6 sm:p-8 overflow-y-auto max-h-[90vh]"
-              initial={{ opacity: 0, scale: 0.8, x: "-50%", y: "-50%" }}
-              animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.3 }}
+              className="fixed top-1/2 left-1/2 z-50 bg-[#FFEDD6] p-8 rounded-3xl w-[90%] md:w-[500px]"
+              initial={{ scale: 0.85, x: "-50%", y: "-50%" }}
+              animate={{ scale: 1, x: "-50%", y: "-50%" }}
             >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl sm:text-2xl font-bold text-[#2D5D46]">
-                  Message Us Now!
-                </h3>
-                <button
-                  onClick={() => setModalOpen(false)}
-                  className="text-2xl text-[#AE7533] hover:text-[#2D5D46] transition"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <p className="text-[#2D5D46]/90 mb-6 text-sm sm:text-base">
-                Fill out the form or contact us to schedule your free strategy
-                session. We’ll discuss how we can help your business grow
-                without the overwhelm.
-              </p>
-
-              <form className="flex flex-col gap-3 sm:gap-4">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="p-3 sm:p-4 rounded-xl border border-[#AE7533] focus:outline-none focus:ring-2 focus:ring-[#AE7533] transition"
-                />
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="p-3 sm:p-4 rounded-xl border border-[#AE7533] focus:outline-none focus:ring-2 focus:ring-[#AE7533] transition"
-                />
-                <textarea
-                  rows="4"
-                  placeholder="Your Message"
-                  className="p-3 sm:p-4 rounded-xl border border-[#AE7533] focus:outline-none focus:ring-2 focus:ring-[#AE7533] transition"
-                />
-                <motion.button
-                  type="submit"
-                  className="px-6 py-3 rounded-full font-bold text-[#FCFAF4] bg-[#2D5D46] hover:bg-[#AE7533] transition"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
+              <h3 className="text-2xl font-semibold text-[#2D5D46] mb-4">
+                Let’s Work Together
+              </h3>
+              <form className="flex flex-col gap-4">
+                <input className="p-4 rounded-xl" placeholder="Name" />
+                <input className="p-4 rounded-xl" placeholder="Email" />
+                <textarea className="p-4 rounded-xl" placeholder="Message" />
+                <button className="bg-[#2D5D46] text-white py-3 rounded-full hover:bg-[#3C6B54] transition">
                   Submit
-                </motion.button>
+                </button>
               </form>
             </motion.div>
           </>
