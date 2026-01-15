@@ -167,9 +167,24 @@ export default function Hero() {
             Trusted Virtual Support for Founders
           </span>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight">
-            Your <span className="text-[#FFEDD6]">Right-Hand</span> <br />
-            <span className="text-[#AE7533]">Virtual Assistant</span>
+          {/* HEADLINE WITH GRADIENT ANIMATION */}
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light leading-tight tracking-tight">
+            Your{" "}
+            <motion.span
+              className="bg-gradient-to-r from-[#FFEDD6] via-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent"
+              animate={{ backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+            >
+              Right-Hand
+            </motion.span>{" "}
+            <br />
+            <motion.span
+              className="bg-gradient-to-r from-[#AE7533] via-[#FFEDD6] to-[#2D5D46] bg-clip-text text-transparent"
+              animate={{ backgroundPosition: ["100% 0%", "0% 0%", "100% 0%"] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+            >
+              Virtual Assistant
+            </motion.span>
           </h1>
 
           <p className="mt-6 max-w-xl text-lg text-white/90 leading-relaxed">
@@ -240,7 +255,7 @@ export default function Hero() {
               initial={{ scale: 0.85, x: "-50%", y: "-50%" }}
               animate={{ scale: 1, x: "-50%", y: "-50%" }}
             >
-              <h3 className="text-2xl font-semibold text-[#2D5D46] mb-4">
+              <h3 className="text-2xl font-medium text-[#2D5D46] mb-4">
                 Let’s Work Together
               </h3>
               <form className="flex flex-col gap-4">
