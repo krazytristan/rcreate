@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useMotionValue } from "framer-motion";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
 
 import hero1 from "../assets/Logo.png";
 import hero2 from "../assets/images1.jpg";
@@ -31,16 +31,30 @@ export default function Hero() {
   const [modal, setModal] = useState(false);
   const [stars, setStars] = useState(generateStars(30));
   const videoRef = useRef(null);
-  const x = useMotionValue(0);
+  const progressControls = useAnimation();
+
+  const SLIDE_DURATION = 5000;
+
+  // Headline palette
+  const headlinePalette = ["#FFEDD6", "#AE7533", "#2D5D46"];
 
   // AUTO SLIDE
   useEffect(() => {
-    const timer = setInterval(
-      () => setCurrent((p) => (p + 1) % heroImages.length),
-      5000
-    );
+    progressControls.start({
+      width: ["0%", "100%"],
+      transition: { duration: SLIDE_DURATION / 1000, ease: "linear" },
+    });
+
+    const timer = setInterval(() => {
+      setCurrent((p) => (p + 1) % heroImages.length);
+      progressControls.start({
+        width: ["0%", "100%"],
+        transition: { duration: SLIDE_DURATION / 1000, ease: "linear" },
+      });
+    }, SLIDE_DURATION);
+
     return () => clearInterval(timer);
-  }, []);
+  }, [progressControls]);
 
   // VIDEO AUTOPLAY WITH VOLUME FADE-IN
   useEffect(() => {
@@ -50,7 +64,6 @@ export default function Hero() {
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
-            // Gradually increase volume to 0.3
             let vol = 0;
             const fade = setInterval(() => {
               if (vol < 0.3) {
@@ -92,10 +105,20 @@ export default function Hero() {
 
   // HANDLE DRAG SWIPE
   const handleDragEnd = (_, info) => {
-    if (info.offset.x < -50) {
-      setCurrent((p) => (p + 1) % heroImages.length);
-    } else if (info.offset.x > 50) {
-      setCurrent((p) => (p - 1 + heroImages.length) % heroImages.length);
+    if (info.offset.x < -50 || info.velocity.x < -500) {
+      const next = (current + 1) % heroImages.length;
+      setCurrent(next);
+      progressControls.start({
+        width: ["0%", "100%"],
+        transition: { duration: SLIDE_DURATION / 1000, ease: "linear" },
+      });
+    } else if (info.offset.x > 50 || info.velocity.x > 500) {
+      const prev = (current - 1 + heroImages.length) % heroImages.length;
+      setCurrent(prev);
+      progressControls.start({
+        width: ["0%", "100%"],
+        transition: { duration: SLIDE_DURATION / 1000, ease: "linear" },
+      });
     }
   };
 
@@ -103,7 +126,7 @@ export default function Hero() {
     <section
       id="hero"
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen overflow-hidden flex items-center px-6"
+      className="relative min-h-screen overflow-hidden flex items-center px-4 sm:px-6 md:px-12"
     >
       {/* VIDEO BACKGROUND */}
       <video
@@ -116,18 +139,17 @@ export default function Hero() {
         <source src={bgVideo} type="video/mp4" />
       </video>
 
-      {/* GRADIENT OVERLAY */}
+      {/* BRIGHT GRADIENT OVERLAY */}
       <motion.div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(circle at 20% 20%, rgba(174,117,51,0.3), transparent 60%), linear-gradient(120deg, rgba(15,23,42,0.85), rgba(45,93,70,0.7), rgba(15,23,42,0.85))",
+            "radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3), transparent 60%), linear-gradient(120deg, rgba(255,255,255,0.4), rgba(45,93,70,0.7), rgba(174,117,51,0.3))",
           backgroundSize: "300% 300%",
         }}
         animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
         transition={{ duration: 30, repeat: Infinity }}
       />
-
       <div className="absolute inset-0 bg-black/25" />
 
       {/* STARS */}
@@ -149,96 +171,121 @@ export default function Hero() {
 
       {/* FLOATING ORBS */}
       <motion.div
-        className="absolute w-16 h-16 bg-[#AE7533]/40 rounded-full blur-xl top-1/4 left-1/5"
+        className="absolute w-12 sm:w-16 h-12 sm:h-16 bg-[#AE7533]/40 rounded-full blur-xl top-1/4 left-1/5"
         variants={float}
         animate="animate"
       />
       <motion.div
-        className="absolute w-12 h-12 bg-[#2D5D46]/40 rounded-full blur-xl bottom-1/4 right-1/4"
+        className="absolute w-10 sm:w-12 h-10 sm:h-12 bg-[#2D5D46]/40 rounded-full blur-xl bottom-1/4 right-1/4"
         variants={float}
         animate="animate"
       />
 
       {/* CONTENT */}
-      <div className="relative z-20 max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+      <div className="relative z-20 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center">
         {/* LEFT */}
-        <div className="text-white">
-          <span className="inline-block mb-5 px-5 py-2 rounded-full bg-white/10 backdrop-blur">
+        <div className="text-white text-center md:text-left">
+          <span className="inline-block mb-5 px-4 py-2 rounded-full bg-white/10 backdrop-blur text-sm sm:text-base">
             Trusted Virtual Support for Founders
           </span>
 
-          {/* HEADLINE WITH GRADIENT ANIMATION */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light leading-tight tracking-tight">
-            Your{" "}
-            <motion.span
-              className="bg-gradient-to-r from-[#FFEDD6] via-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent"
-              animate={{ backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            >
-              Right-Hand
-            </motion.span>{" "}
-            <br />
-            <motion.span
-              className="bg-gradient-to-r from-[#AE7533] via-[#FFEDD6] to-[#2D5D46] bg-clip-text text-transparent"
-              animate={{ backgroundPosition: ["100% 0%", "0% 0%", "100% 0%"] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            >
-              Virtual Assistant
-            </motion.span>
+          {/* HEADLINE WITH COLOR PALETTE AND HOVER ANIMATION */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light leading-tight tracking-tight mt-2">
+            {["Right-Hand", "Virtual", "Assistant"].map((word, idx) => (
+              <motion.span
+                key={idx}
+                className="inline-block mr-1 cursor-pointer"
+                style={{ color: headlinePalette[idx] }}
+                whileHover={{
+                  scale: 1.15,
+                  textShadow: `0px 0px 8px ${headlinePalette[idx]}`,
+                  transition: { type: "spring", stiffness: 300 },
+                }}
+              >
+                {word}{" "}
+              </motion.span>
+            ))}
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg text-white/90 leading-relaxed">
+          <p className="mt-4 sm:mt-6 max-w-md sm:max-w-xl text-base sm:text-lg text-white/90 leading-relaxed mx-auto md:mx-0">
             Admin, marketing, systems, and websites — so you can scale without
             burnout.
           </p>
 
-          <div className="mt-10 flex gap-4 flex-wrap">
+          <div className="mt-6 sm:mt-10 flex gap-3 sm:gap-4 flex-wrap justify-center md:justify-start">
             <button
               onClick={() => setModal(true)}
-              className="px-10 py-4 rounded-full bg-[#2D5D46] text-white font-semibold shadow-2xl hover:bg-[#3C6B54] transition"
+              className="px-8 sm:px-10 py-3 sm:py-4 rounded-full bg-[#2D5D46] text-white font-semibold shadow-2xl hover:bg-[#3C6B54] transition"
             >
               Message Us →
             </button>
             <button
               onClick={() => scrollTo("services")}
-              className="px-10 py-4 rounded-full border border-white/70 hover:bg-white/15 transition"
+              className="px-8 sm:px-10 py-3 sm:py-4 rounded-full border border-white/70 hover:bg-white/15 transition"
             >
               Explore Services
             </button>
           </div>
         </div>
 
-        {/* RIGHT — DEPTH CAROUSEL */}
-        <div className="relative h-[480px] flex items-center justify-center">
-          {heroImages.map((img, i) => {
-            const isActive = i === current;
-            const offset =
-              i === (current + 1) % heroImages.length
-                ? 80
-                : i === (current - 1 + heroImages.length) % heroImages.length
-                ? -80
-                : 0;
+        {/* RIGHT — CAROUSEL */}
+        <div className="relative h-[300px] sm:h-[400px] md:h-[480px] flex items-center justify-center mt-8 md:mt-0">
+          <AnimatePresence initial={false}>
+            {heroImages.map((img, i) => {
+              const isActive = i === current;
 
-            return (
-              <motion.img
+              return (
+                <motion.img
+                  key={i}
+                  src={img}
+                  className="absolute w-[220px] sm:w-[280px] md:w-[320px] rounded-2xl md:rounded-3xl shadow-2xl cursor-grab touch-none"
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.3}
+                  dragMomentum={true}
+                  onDragEnd={handleDragEnd}
+                  initial={{ x: 300, opacity: 0, scale: 0.8 }}
+                  animate={{
+                    x: 0,
+                    scale: isActive ? 1 : 0.82,
+                    opacity: isActive ? 1 : 0.25,
+                    filter: isActive ? "blur(0)" : "blur(10px)",
+                    zIndex: isActive ? 30 : 10,
+                  }}
+                  exit={{ x: -300, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                />
+              );
+            })}
+          </AnimatePresence>
+
+          {/* DOT PAGINATION MATCHING PALETTE */}
+          <div className="absolute bottom-8 sm:bottom-10 flex gap-2 sm:gap-3 z-20">
+            {heroImages.map((_, i) => (
+              <motion.div
                 key={i}
-                src={img}
-                className="absolute w-[320px] rounded-3xl shadow-2xl cursor-grab"
-                style={{ x }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={handleDragEnd}
-                animate={{
-                  x: offset,
-                  scale: isActive ? 1 : 0.82,
-                  opacity: isActive ? 1 : 0.25,
-                  filter: isActive ? "blur(0)" : "blur(10px)",
-                  zIndex: isActive ? 30 : 10,
+                onClick={() => {
+                  setCurrent(i);
+                  progressControls.start({
+                    width: ["0%", "100%"],
+                    transition: { duration: SLIDE_DURATION / 1000, ease: "linear" },
+                  });
                 }}
-                transition={{ duration: 0.9 }}
+                className={`w-2 sm:w-3 h-2 sm:h-3 rounded-full cursor-pointer`}
+                style={{
+                  backgroundColor: i === current ? headlinePalette[i % 3] : "rgba(255,255,255,0.4)",
+                }}
+                whileHover={{ scale: 1.5 }}
               />
-            );
-          })}
+            ))}
+          </div>
+
+          {/* ANIMATED PROGRESS BAR MATCHING CURRENT SLIDE COLOR */}
+          <motion.div
+            className="absolute bottom-0 left-0 h-1 sm:h-1.5 z-20"
+            animate={progressControls}
+            style={{ backgroundColor: headlinePalette[current % 3] }}
+          />
         </div>
       </div>
 
@@ -251,18 +298,18 @@ export default function Hero() {
               onClick={() => setModal(false)}
             />
             <motion.div
-              className="fixed top-1/2 left-1/2 z-50 bg-[#FFEDD6] p-8 rounded-3xl w-[90%] md:w-[500px]"
+              className="fixed top-1/2 left-1/2 z-50 bg-[#FFEDD6] p-6 sm:p-8 rounded-3xl w-[90%] md:w-[500px]"
               initial={{ scale: 0.85, x: "-50%", y: "-50%" }}
               animate={{ scale: 1, x: "-50%", y: "-50%" }}
             >
-              <h3 className="text-2xl font-medium text-[#2D5D46] mb-4">
+              <h3 className="text-xl sm:text-2xl font-medium text-[#2D5D46] mb-4">
                 Let’s Work Together
               </h3>
-              <form className="flex flex-col gap-4">
-                <input className="p-4 rounded-xl" placeholder="Name" />
-                <input className="p-4 rounded-xl" placeholder="Email" />
-                <textarea className="p-4 rounded-xl" placeholder="Message" />
-                <button className="bg-[#2D5D46] text-white py-3 rounded-full hover:bg-[#3C6B54] transition">
+              <form className="flex flex-col gap-3 sm:gap-4">
+                <input className="p-3 sm:p-4 rounded-xl" placeholder="Name" />
+                <input className="p-3 sm:p-4 rounded-xl" placeholder="Email" />
+                <textarea className="p-3 sm:p-4 rounded-xl" placeholder="Message" />
+                <button className="bg-[#2D5D46] text-white py-2.5 sm:py-3 rounded-full hover:bg-[#3C6B54] transition">
                   Submit
                 </button>
               </form>
