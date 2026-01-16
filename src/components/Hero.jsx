@@ -184,7 +184,12 @@ export default function Hero() {
       {/* CONTENT */}
       <div className="relative z-20 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center">
         {/* LEFT */}
-        <div className="text-white text-center md:text-left">
+        <motion.div
+          className="text-white text-center md:text-left"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
           <span className="inline-block mb-5 px-4 py-2 rounded-full bg-white/10 backdrop-blur text-sm sm:text-base">
             Trusted Virtual Support for Founders
           </span>
@@ -201,16 +206,24 @@ export default function Hero() {
                   textShadow: `0px 0px 8px ${headlinePalette[idx]}`,
                   transition: { type: "spring", stiffness: 300 },
                 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 + idx * 0.2, duration: 0.8 }}
               >
                 {word}{" "}
               </motion.span>
             ))}
           </h1>
 
-          <p className="mt-4 sm:mt-6 max-w-md sm:max-w-xl text-base sm:text-lg text-white/90 leading-relaxed mx-auto md:mx-0">
+          <motion.p
+            className="mt-4 sm:mt-6 max-w-md sm:max-w-xl text-base sm:text-lg text-white/90 leading-relaxed mx-auto md:mx-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 1 }}
+          >
             Admin, marketing, systems, and websites — so you can scale without
             burnout.
-          </p>
+          </motion.p>
 
           <div className="mt-6 sm:mt-10 flex gap-3 sm:gap-4 flex-wrap justify-center md:justify-start">
             <button
@@ -226,7 +239,7 @@ export default function Hero() {
               Explore Services
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* RIGHT — CAROUSEL */}
         <div className="relative h-[300px] sm:h-[400px] md:h-[480px] flex items-center justify-center mt-8 md:mt-0">

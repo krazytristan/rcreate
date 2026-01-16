@@ -10,22 +10,21 @@ import bg3 from "../assets/bg3.jpg";
 const aboutCards = [
   {
     title: "Right-Hand Support",
-    desc: "We provide dependable virtual assistants who work as an extension of your business—handling daily tasks so you can focus on leadership and growth.",
+    desc: "Dependable virtual assistants who work as an extension of your business—handling daily tasks so you can focus on leadership and growth.",
     icon: "🤝",
   },
   {
     title: "Done-For-You Operations",
-    desc: "From admin work and client communication to marketing and website or landing page creation, our trained VAs keep your operations running smoothly.",
+    desc: "From admin work and client communication to marketing and website creation, our trained VAs keep operations smooth.",
     icon: "⚙️",
   },
   {
     title: "Long-Term Partnership",
-    desc: "We build lasting support partnerships that ensure consistency, efficiency, and a strong online presence that works for you 24/7.",
+    desc: "We build lasting support partnerships that ensure consistency, efficiency, and a strong online presence 24/7.",
     icon: "📈",
   },
 ];
 
-// Background images array
 const backgroundImages = [bg1, bg2, bg3];
 
 export default function About() {
@@ -40,10 +39,7 @@ export default function About() {
   }, []);
 
   return (
-    <section
-      id="about"
-      className="relative py-20 px-6 overflow-hidden"
-    >
+    <section id="about" className="relative py-20 px-6 overflow-hidden">
       {/* BACKGROUND IMAGE */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -70,10 +66,10 @@ export default function About() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-6" style={{ color: "#2D5D46" }}>
-            About <span style={{ color: "#AE7533" }}>Rcreate Virtual Assistance Services</span>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-[#2D5D46]">
+            About <span className="text-[#AE7533]">Rcreate Virtual Assistance Services</span>
           </h2>
-          <p className="text-lg md:text-xl max-w-4xl mx-auto leading-relaxed" style={{ color: "#94A591" }}>
+          <p className="text-lg md:text-xl max-w-4xl mx-auto leading-relaxed text-[#94A591]">
             At Rcreate Virtual Assistance Services, we provide right-hand virtual
             assistance for founders and home service CEOs. Our trained virtual
             assistants manage your admin, operations, client communication,
@@ -87,7 +83,7 @@ export default function About() {
           {aboutCards.map((card, i) => (
             <motion.div
               key={i}
-              className="rounded-3xl p-8 text-center shadow-lg transition hover:shadow-2xl bg-[#FFEDD6] relative z-20"
+              className="rounded-3xl p-8 text-center shadow-lg bg-[#FFEDD6] relative z-20 transform transition-transform hover:scale-105 hover:shadow-2xl"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -95,19 +91,19 @@ export default function About() {
             >
               {/* ICON */}
               <div
-                className="w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-full text-3xl shadow"
-                style={{ backgroundColor: "#FCFAF4", color: "#AE7533" }}
+                className="w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-full text-3xl shadow-md bg-gradient-to-tr from-[#FCFAF4] to-[#FFE8C4] text-[#AE7533]"
+                aria-label={`${card.title} icon`}
               >
                 {card.icon}
               </div>
 
               {/* TITLE */}
-              <h3 className="text-xl md:text-2xl font-bold mb-4" style={{ color: "#2D5D46" }}>
+              <h3 className="text-xl md:text-2xl font-bold mb-4 text-[#2D5D46]">
                 {card.title}
               </h3>
 
               {/* DESCRIPTION */}
-              <p className="text-base leading-relaxed" style={{ color: "#2D5D46CC" }}>
+              <p className="text-base leading-relaxed text-[#2D5D46CC]">
                 {card.desc}
               </p>
             </motion.div>
