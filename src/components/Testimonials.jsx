@@ -1,108 +1,122 @@
-// src/components/Testimonials.jsx
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaQuoteLeft, FaStar } from "react-icons/fa";
 
 /* ===============================
    TESTIMONIALS DATA
 ================================ */
 const testimonials = [
   {
+    rating: 5,
     quote:
-      "Rcreate’s VA and marketing support has transformed how I run my business—everything runs smoothly!",
-    author: "CEO, Home Services",
+      "An excellent resource. Timely, consistent, and delivers work with an unparalleled work ethic.",
+    author: "Client, Studio Project",
   },
   {
+    rating: 5,
     quote:
-      "Their team handles admin, communication, marketing, and even built our website—allowing me to focus on growth.",
-    author: "Founder, Service Agency",
+      "Communication was excellent and instructions were followed perfectly. Always courteous and delivered work on time. Would recommend any time.",
+    author: "Client, Virtual Assistant Project",
   },
   {
+    rating: 5,
     quote:
-      "We’ve doubled our client engagement thanks to their social media management and strategy guidance.",
-    author: "Marketing Director, Home Improvement",
+      "Helpful and reliable with every task needed. Effort was consistently appreciated, and we look forward to working together again.",
+    author: "Client, Digital Marketing Project",
   },
   {
+    rating: 5,
     quote:
-      "Their virtual assistants seamlessly integrate into our operations, saving us time and reducing stress.",
-    author: "Operations Manager, Cleaning Services",
+      "Amazing to work with as ongoing support for our business. The contract ended due to internal reasons and had nothing to do with performance or work quality.",
+    author: "Client, Home Services Business",
   },
   {
+    rating: 5,
     quote:
-      "The team is responsive, professional, and goes above and beyond to help our business scale.",
-    author: "Entrepreneur, Landscaping Services",
+      "Handled social media design, customer communication, quoting, scheduling, and coordination with field staff. A true asset to operations.",
+    author: "Client, Office & Operations Support",
   },
 ];
 
-/* ===============================
-   TESTIMONIALS COMPONENT
-================================ */
 export default function Testimonials() {
-  const [current, setCurrent] = useState(0);
-
-  // Auto-slide every 6 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % testimonials.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section
       id="testimonials"
-      className="relative py-20 px-4 md:px-16 overflow-hidden"
+      className="py-20 px-6"
       style={{ backgroundColor: "#FCFAF4" }}
     >
-      <h2
-        className="text-4xl md:text-5xl font-bold mb-14 text-center tracking-wide"
-        style={{ color: "#AE7533" }}
+      {/* HEADER */}
+      <motion.div
+        className="max-w-6xl mx-auto text-center mb-16"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
       >
-        Testimonials
-      </h2>
+        <h2
+          className="text-4xl md:text-5xl font-extrabold mb-6"
+          style={{ color: "#2D5D46" }}
+        >
+          Client{" "}
+          <span style={{ color: "#AE7533" }}>
+            Testimonials
+          </span>
+        </h2>
 
-      <div className="relative max-w-4xl mx-auto">
-        <AnimatePresence mode="wait">
+        <p
+          className="text-lg md:text-xl max-w-4xl mx-auto leading-relaxed"
+          style={{ color: "#94A591" }}
+        >
+          Trusted by founders, service businesses, and agencies who value
+          reliability, professionalism, and results.
+        </p>
+      </motion.div>
+
+      {/* TESTIMONIAL CARDS */}
+      <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+        {testimonials.map((item, i) => (
           <motion.div
-            key={current}
-            className="rounded-3xl p-8 shadow-lg relative z-10"
-            style={{ backgroundColor: "#FFEDD6", color: "#2D5D46" }}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.8 }}
+            key={i}
+            className="rounded-3xl p-8 shadow-sm hover:shadow-lg transition relative"
+            style={{ backgroundColor: "#FFEDD6" }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: i * 0.1 }}
           >
+            {/* QUOTE ICON */}
             <FaQuoteLeft
-              className="text-3xl absolute top-6 left-6"
-              style={{ color: "#AE7533" }}
-            />
-            <FaQuoteRight
-              className="text-3xl absolute bottom-6 right-6"
+              className="text-3xl mb-4 opacity-30"
               style={{ color: "#AE7533" }}
             />
 
-            <p className="text-base md:text-lg leading-relaxed mb-4">{testimonials[current].quote}</p>
+            {/* STAR RATING */}
+            <div className="flex gap-1 mb-4">
+              {Array.from({ length: item.rating }).map((_, idx) => (
+                <FaStar
+                  key={idx}
+                  className="text-sm"
+                  style={{ color: "#AE7533" }}
+                />
+              ))}
+            </div>
+
+            {/* QUOTE */}
+            <p
+              className="text-base leading-relaxed mb-6"
+              style={{ color: "#2D5D46CC" }}
+            >
+              “{item.quote}”
+            </p>
+
+            {/* AUTHOR */}
             <span
-              className="font-bold text-sm md:text-base"
+              className="text-sm font-semibold"
               style={{ color: "#94A591" }}
             >
-              — {testimonials[current].author}
+              — {item.author}
             </span>
           </motion.div>
-        </AnimatePresence>
-
-        {/* Navigation Dots */}
-        <div className="flex justify-center mt-6 gap-3">
-          {testimonials.map((_, i) => (
-            <button
-              key={i}
-              className={`w-3 h-3 rounded-full transition ${
-                current === i ? "bg-[#AE7533]" : "bg-[#94A591]/50"
-              }`}
-              onClick={() => setCurrent(i)}
-            />
-          ))}
-        </div>
+        ))}
       </div>
     </section>
   );
