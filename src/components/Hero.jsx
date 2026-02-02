@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 
-/* ICONS (SAFE ONLY) */
+/* ICONS */
 import {
   FaGoogle,
   FaFacebook,
@@ -130,7 +130,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen overflow-hidden flex items-center px-4 sm:px-6 md:px-12"
+      className="relative min-h-screen overflow-hidden flex items-center px-4 sm:px-6 lg:px-12"
     >
       {/* VIDEO */}
       <video
@@ -163,64 +163,68 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* OVERLAYS */}
-      <div className="absolute inset-0 bg-black/40" />
-      <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-[#2D5D46]/60 to-[#AE7533]/40" />
+      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-[#2D5D46]/60 to-[#AE7533]/40" />
 
       {/* CONTENT */}
-      <div className="relative z-20 max-w-7xl mx-auto text-center md:text-left">
-        <span className="inline-block mb-5 px-4 py-2 rounded-full bg-white/10 backdrop-blur text-white">
+      <div className="relative z-20 max-w-7xl mx-auto w-full text-center md:text-left">
+        <span className="inline-block mb-4 px-4 py-2 rounded-full bg-white/10 backdrop-blur text-xs sm:text-sm text-white">
           Trusted Virtual Support for Founders
         </span>
 
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-white">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight">
           {slides[current].title.map((w, i) => (
             <span
               key={i}
+              className="inline-block mr-2"
               style={{ color: headlinePalette[i % 3] }}
-              className="mr-2 inline-block"
             >
               {w}
             </span>
           ))}
         </h1>
 
-        <p className="mt-6 text-white/90 max-w-xl mx-auto md:mx-0">
+        <p className="mt-4 sm:mt-6 text-white/90 max-w-xl mx-auto md:mx-0 text-sm sm:text-base md:text-lg">
           {slides[current].description}
         </p>
 
         {/* CTA */}
-        <div className="mt-10 flex gap-4 flex-wrap justify-center md:justify-start">
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
           <button
             onClick={() => setModal(true)}
-            className="px-10 py-4 rounded-full bg-[#2D5D46] text-white font-semibold hover:bg-[#3C6B54]"
+            className="px-8 sm:px-10 py-3 sm:py-4 rounded-full bg-[#2D5D46] text-white font-semibold hover:bg-[#3C6B54] transition"
           >
             Message Us →
           </button>
           <button
             onClick={() => scrollTo("services")}
-            className="px-10 py-4 rounded-full border border-white/70 text-white hover:bg-white/10"
+            className="px-8 sm:px-10 py-3 sm:py-4 rounded-full border border-white/70 text-white hover:bg-white/10 transition"
           >
             Explore Services
           </button>
         </div>
 
         {/* TOOLS CAROUSEL */}
-        <div className="mt-14 overflow-hidden">
-          <p className="text-sm uppercase tracking-widest text-white/70 mb-4">
+        <div className="mt-12 sm:mt-14 overflow-hidden">
+          <p className="text-xs sm:text-sm uppercase tracking-widest text-white/70 mb-4">
             Tools & Platforms We Use
           </p>
 
           <motion.div
-            className="flex gap-10 w-max"
+            className="flex gap-6 sm:gap-10 w-max"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
+            transition={{
+              repeat: Infinity,
+              duration: 70, // slower on all screens
+              ease: "linear",
+            }}
           >
             {[...tools, ...tools].map((tool, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 backdrop-blur text-white text-sm font-medium"
+                className="flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white/10 backdrop-blur text-white text-xs sm:text-sm font-medium whitespace-nowrap"
               >
-                <span className="text-lg text-[#AE7533]">
+                <span className="text-base sm:text-lg text-[#AE7533]">
                   {toolIcons[tool]}
                 </span>
                 <span>{tool}</span>
@@ -246,17 +250,17 @@ export default function Hero() {
               onClick={() => setModal(false)}
             />
             <motion.div
-              className="fixed top-1/2 left-1/2 z-50 bg-[#FFEDD6] p-8 rounded-3xl w-[90%] md:w-[500px]"
+              className="fixed top-1/2 left-1/2 z-50 bg-[#FFEDD6] p-6 sm:p-8 rounded-3xl w-[92%] sm:w-[500px]"
               initial={{ scale: 0.85, x: "-50%", y: "-50%" }}
               animate={{ scale: 1, x: "-50%", y: "-50%" }}
             >
-              <h3 className="text-2xl font-medium text-[#2D5D46] mb-4">
+              <h3 className="text-xl sm:text-2xl font-medium text-[#2D5D46] mb-4">
                 Let’s Work Together
               </h3>
-              <form className="flex flex-col gap-4">
-                <input className="p-4 rounded-xl" placeholder="Name" />
-                <input className="p-4 rounded-xl" placeholder="Email" />
-                <textarea className="p-4 rounded-xl" placeholder="Message" />
+              <form className="flex flex-col gap-3 sm:gap-4">
+                <input className="p-3 sm:p-4 rounded-xl" placeholder="Name" />
+                <input className="p-3 sm:p-4 rounded-xl" placeholder="Email" />
+                <textarea className="p-3 sm:p-4 rounded-xl" placeholder="Message" />
                 <button className="bg-[#2D5D46] text-white py-3 rounded-full hover:bg-[#3C6B54]">
                   Submit
                 </button>
