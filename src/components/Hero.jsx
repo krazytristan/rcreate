@@ -31,6 +31,17 @@ import hero3 from "../assets/images2.jpg";
 import bgVideo from "../assets/hero-bg.mp4";
 
 /* ===========================
+   COLOR PALETTE
+=========================== */
+const COLORS = {
+  light: "#FCFAF4",
+  green: "#2D5D46",
+  cream: "#FFEDD6",
+  brown: "#AE7533",
+  sage: "#94A591",
+};
+
+/* ===========================
    SLIDES CONFIG
 =========================== */
 const slides = [
@@ -66,23 +77,17 @@ const toolIcons = {
   Zapier: <SiZapier />,
   ClickUp: <SiClickup />,
   Notion: <SiNotion />,
-  CapCut: <FaChartLine />,
   Canva: <SiCanva />,
   "Meta (Facebook & Instagram)": <FaFacebook />,
-  ActiveCampaign: <FaChartLine />,
   Mailchimp: <SiMailchimp />,
   "Zoho CRM": <SiZoho />,
   Trello: <SiTrello />,
-  "Monday.com": <FaChartLine />,
   Asana: <SiAsana />,
-  Dubsado: <FaChartLine />,
   Microsoft: <FaMicrosoft />,
   Buffer: <SiBuffer />,
-  Later: <FaChartLine />,
   Hootsuite: <SiHootsuite />,
   "Google Workspace": <FaGoogle />,
   "Creator Studio": <FaInstagram />,
-  Kartra: <FaChartLine />,
   WordPress: <FaWordpress />,
   Wix: <SiWix />,
 };
@@ -96,7 +101,7 @@ export default function Hero() {
   const progressControls = useAnimation();
 
   const SLIDE_DURATION = 5000;
-  const headlinePalette = ["#FFEDD6", "#AE7533", "#2D5D46"];
+  const headlinePalette = [COLORS.cream, COLORS.brown, COLORS.sage];
 
   /* AUTO SLIDE */
   useEffect(() => {
@@ -123,15 +128,8 @@ export default function Hero() {
     videoRef.current.play();
   }, []);
 
-  const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen overflow-hidden flex items-center px-4 sm:px-6 lg:px-12"
-    >
+    <section className="relative min-h-screen overflow-hidden flex items-center px-4 sm:px-6 lg:px-12">
       {/* VIDEO */}
       <video
         ref={videoRef}
@@ -162,29 +160,32 @@ export default function Hero() {
         />
       </AnimatePresence>
 
-      {/* OVERLAYS */}
-      <div className="absolute inset-0 bg-black/50" />
-      <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-[#2D5D46]/60 to-[#AE7533]/40" />
+      {/* PALETTE OVERLAYS */}
+      <div className="absolute inset-0 bg-[#2D5D46]/55" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#FCFAF4]/30 via-[#2D5D46]/60 to-[#AE7533]/40" />
 
       {/* CONTENT */}
       <div className="relative z-20 max-w-7xl mx-auto w-full text-center md:text-left">
-        <span className="inline-block mb-4 px-4 py-2 rounded-full bg-white/10 backdrop-blur text-xs sm:text-sm text-white">
+        <span
+          className="inline-block mb-4 px-4 py-2 rounded-full backdrop-blur text-xs sm:text-sm"
+          style={{ backgroundColor: `${COLORS.sage}33`, color: COLORS.light }}
+        >
           Trusted Virtual Support for Founders
         </span>
 
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight">
-          {slides[current].title.map((w, i) => (
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-tight">
+          {slides[current].title.map((word, i) => (
             <span
               key={i}
               className="inline-block mr-2"
               style={{ color: headlinePalette[i % 3] }}
             >
-              {w}
+              {word}
             </span>
           ))}
         </h1>
 
-        <p className="mt-4 sm:mt-6 text-white/90 max-w-xl mx-auto md:mx-0 text-sm sm:text-base md:text-lg">
+        <p className="mt-4 sm:mt-6 max-w-xl mx-auto md:mx-0 text-sm sm:text-base md:text-lg text-[#FCFAF4]">
           {slides[current].description}
         </p>
 
@@ -192,42 +193,38 @@ export default function Hero() {
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
           <button
             onClick={() => setModal(true)}
-            className="px-8 sm:px-10 py-3 sm:py-4 rounded-full bg-[#2D5D46] text-white font-semibold hover:bg-[#3C6B54] transition"
+            className="px-8 py-3 rounded-full font-semibold transition"
+            style={{ backgroundColor: COLORS.green, color: COLORS.light }}
           >
             Message Us →
           </button>
           <button
-            onClick={() => scrollTo("services")}
-            className="px-8 sm:px-10 py-3 sm:py-4 rounded-full border border-white/70 text-white hover:bg-white/10 transition"
+            className="px-8 py-3 rounded-full border transition"
+            style={{ borderColor: COLORS.cream, color: COLORS.cream }}
           >
             Explore Services
           </button>
         </div>
 
-        {/* TOOLS CAROUSEL */}
-        <div className="mt-12 sm:mt-14 overflow-hidden">
-          <p className="text-xs sm:text-sm uppercase tracking-widest text-white/70 mb-4">
+        {/* TOOLS */}
+        <div className="mt-12 overflow-hidden">
+          <p className="text-xs uppercase tracking-widest text-[#FFEDD6]/70 mb-4">
             Tools & Platforms We Use
           </p>
 
           <motion.div
-            className="flex gap-6 sm:gap-10 w-max"
+            className="flex gap-6 w-max"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              repeat: Infinity,
-              duration: 70, // slower on all screens
-              ease: "linear",
-            }}
+            transition={{ repeat: Infinity, duration: 70, ease: "linear" }}
           >
             {[...tools, ...tools].map((tool, i) => (
               <div
                 key={i}
-                className="flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white/10 backdrop-blur text-white text-xs sm:text-sm font-medium whitespace-nowrap"
+                className="flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur text-xs sm:text-sm"
+                style={{ backgroundColor: `${COLORS.light}1A`, color: COLORS.light }}
               >
-                <span className="text-base sm:text-lg text-[#AE7533]">
-                  {toolIcons[tool]}
-                </span>
-                <span>{tool}</span>
+                <span style={{ color: COLORS.brown }}>{toolIcons[tool]}</span>
+                {tool}
               </div>
             ))}
           </motion.div>
@@ -250,18 +247,25 @@ export default function Hero() {
               onClick={() => setModal(false)}
             />
             <motion.div
-              className="fixed top-1/2 left-1/2 z-50 bg-[#FFEDD6] p-6 sm:p-8 rounded-3xl w-[92%] sm:w-[500px]"
+              className="fixed top-1/2 left-1/2 z-50 p-6 rounded-3xl w-[92%] sm:w-[500px]"
+              style={{ backgroundColor: COLORS.light }}
               initial={{ scale: 0.85, x: "-50%", y: "-50%" }}
               animate={{ scale: 1, x: "-50%", y: "-50%" }}
             >
-              <h3 className="text-xl sm:text-2xl font-medium text-[#2D5D46] mb-4">
+              <h3
+                className="text-xl font-medium mb-4"
+                style={{ color: COLORS.green }}
+              >
                 Let’s Work Together
               </h3>
-              <form className="flex flex-col gap-3 sm:gap-4">
-                <input className="p-3 sm:p-4 rounded-xl" placeholder="Name" />
-                <input className="p-3 sm:p-4 rounded-xl" placeholder="Email" />
-                <textarea className="p-3 sm:p-4 rounded-xl" placeholder="Message" />
-                <button className="bg-[#2D5D46] text-white py-3 rounded-full hover:bg-[#3C6B54]">
+              <form className="flex flex-col gap-3">
+                <input className="p-3 rounded-xl border" placeholder="Name" />
+                <input className="p-3 rounded-xl border" placeholder="Email" />
+                <textarea className="p-3 rounded-xl border" placeholder="Message" />
+                <button
+                  className="py-3 rounded-full text-white font-medium"
+                  style={{ backgroundColor: COLORS.green }}
+                >
                   Submit
                 </button>
               </form>
