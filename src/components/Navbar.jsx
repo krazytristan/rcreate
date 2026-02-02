@@ -84,13 +84,13 @@ export default function Navbar() {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex justify-between items-center h-16 sm:h-20 md:h-24">
-          {/* LOGO (FIXED PATH) */}
+          {/* LOGO – FIXED */}
           <div
             className="flex items-center gap-3 cursor-pointer"
             onClick={handleLogoClick}
           >
             <img
-              src={`${process.env.PUBLIC_URL}/assets/Logo.jpg`}
+              src={`${process.env.PUBLIC_URL}/assets/Logo.png`}
               alt="RCREATE Logo"
               className="w-8 sm:w-9 md:w-10 h-8 sm:h-9 md:h-10 object-contain"
             />
@@ -133,7 +133,6 @@ export default function Navbar() {
                 );
               })}
 
-              {/* About Owner */}
               <button
                 onClick={() => setOwnerOpen(true)}
                 className="w-10 h-10 flex items-center justify-center rounded-full transition-all hover:bg-[#FFDCA0]/30 hover:scale-110"
