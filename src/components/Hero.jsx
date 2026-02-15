@@ -1,5 +1,7 @@
+// src/components/Hero.jsx
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import CountUp from "react-countup";
 
 /* ICONS */
 import {
@@ -25,52 +27,20 @@ import {
   SiWix,
 } from "react-icons/si";
 
+/* ASSETS */
 import hero1 from "../assets/Logo.png";
 import hero2 from "../assets/images1.jpg";
 import hero3 from "../assets/images2.jpg";
 import bgVideo from "../assets/hero-bg.mp4";
 
-/* ===========================
-   COLOR PALETTE
-=========================== */
-const COLORS = {
-  light: "#FCFAF4",
-  green: "#2D5D46",
-  cream: "#FFEDD6",
-  brown: "#AE7533",
-  sage: "#94A591",
-};
-
-/* ===========================
-   SLIDES CONFIG
-=========================== */
+/* SLIDES */
 const slides = [
-  {
-    image: hero1,
-    title: ["Right-Hand", "Virtual", "Assistant"],
-    description:
-      "Admin, marketing, systems, and websites — so you can scale without burnout.",
-    kenBurns: { scale: [1, 1.12], x: ["0%", "-4%"], y: ["0%", "-3%"] },
-  },
-  {
-    image: hero2,
-    title: ["Build", "Systems", "Faster"],
-    description:
-      "We streamline operations and automate workflows so your business runs itself.",
-    kenBurns: { scale: [1, 1.15], x: ["0%", "4%"], y: ["0%", "-2%"] },
-  },
-  {
-    image: hero3,
-    title: ["Design", "Launch", "Scale"],
-    description:
-      "From branding to websites — everything you need to grow with confidence.",
-    kenBurns: { scale: [1, 1.1], x: ["0%", "-3%"], y: ["0%", "3%"] },
-  },
+  { image: hero1 },
+  { image: hero2 },
+  { image: hero3 },
 ];
 
-/* ===========================
-   TOOLS + ICON MAP
-=========================== */
+/* TOOLS */
 const toolIcons = {
   HighLevel: <FaChartLine />,
   Squarespace: <SiSquarespace />,
@@ -96,41 +66,40 @@ const tools = Object.keys(toolIcons);
 
 export default function Hero() {
   const [current, setCurrent] = useState(0);
-  const [modal, setModal] = useState(false);
   const videoRef = useRef(null);
-  const progressControls = useAnimation();
 
-  const SLIDE_DURATION = 5000;
-  const headlinePalette = [COLORS.cream, COLORS.brown, COLORS.sage];
+  const SLIDE_DURATION = 7000;
 
   /* AUTO SLIDE */
   useEffect(() => {
-    progressControls.start({
-      width: ["0%", "100%"],
-      transition: { duration: SLIDE_DURATION / 1000, ease: "linear" },
-    });
-
     const timer = setInterval(() => {
-      setCurrent((p) => (p + 1) % slides.length);
-      progressControls.start({
-        width: ["0%", "100%"],
-        transition: { duration: SLIDE_DURATION / 1000, ease: "linear" },
-      });
+      setCurrent((prev) => (prev + 1) % slides.length);
     }, SLIDE_DURATION);
 
     return () => clearInterval(timer);
-  }, [progressControls]);
+  }, []);
 
-  /* VIDEO */
+  /* SAFE VIDEO AUTOPLAY */
   useEffect(() => {
     if (!videoRef.current) return;
     videoRef.current.muted = true;
-    videoRef.current.play();
+    videoRef.current.play().catch(() => {});
   }, []);
 
+  /* SCROLL HANDLER */
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <section className="relative min-h-screen overflow-hidden flex items-center px-4 sm:px-6 lg:px-12">
-      {/* VIDEO */}
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center overflow-hidden px-6 scroll-mt-32"
+    >
+      {/* VIDEO BACKGROUND */}
       <video
         ref={videoRef}
         autoPlay
@@ -142,137 +111,130 @@ export default function Hero() {
         <source src={bgVideo} type="video/mp4" />
       </video>
 
-      {/* KEN BURNS */}
+      {/* IMAGE CROSSFADE */}
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${slides[current].image})` }}
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: 1,
-            scale: slides[current].kenBurns.scale,
-            x: slides[current].kenBurns.x,
-            y: slides[current].kenBurns.y,
-          }}
+          initial={{ opacity: 0, scale: 1 }}
+          animate={{ opacity: 1, scale: 1.08 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: SLIDE_DURATION / 1000, ease: "easeOut" }}
+          transition={{ duration: 2.2, ease: "easeOut" }}
         />
       </AnimatePresence>
 
-      {/* PALETTE OVERLAYS */}
-      <div className="absolute inset-0 bg-[#2D5D46]/55" />
-      <div className="absolute inset-0 bg-gradient-to-br from-[#FCFAF4]/30 via-[#2D5D46]/60 to-[#AE7533]/40" />
+      {/* DARK GRADIENT */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1c3a2d]/90 via-[#2D5D46]/85 to-black/80" />
+
+      {/* SOFT LUXURY GLOW */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[#AE7533]/20 blur-[180px] rounded-full" />
 
       {/* CONTENT */}
-      <div className="relative z-20 max-w-7xl mx-auto w-full text-center md:text-left">
-        <span
-          className="inline-block mb-4 px-4 py-2 rounded-full backdrop-blur text-xs sm:text-sm"
-          style={{ backgroundColor: `${COLORS.sage}33`, color: COLORS.light }}
+      <div className="relative z-20 max-w-6xl mx-auto w-full">
+
+        {/* BADGE */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="mb-6 inline-block px-5 py-2 rounded-full bg-white/10 backdrop-blur-md text-sm text-white tracking-wide border border-white/20"
         >
-          Trusted Virtual Support for Founders
-        </span>
+          9+ Years Supporting Growing Businesses
+        </motion.div>
 
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-tight">
-          {slides[current].title.map((word, i) => (
-            <span
-              key={i}
-              className="inline-block mr-2"
-              style={{ color: headlinePalette[i % 3] }}
-            >
-              {word}
-            </span>
-          ))}
-        </h1>
+        {/* HEADLINE */}
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.1 }}
+          className="font-heading text-4xl sm:text-5xl md:text-6xl leading-tight text-white tracking-tight max-w-4xl"
+        >
+          Reliable Virtual Assistants for{" "}
+          <span className="bg-gradient-to-r from-[#AE7533] via-[#FFEDD6] to-[#94A591] bg-clip-text text-transparent">
+            Growing Businesses
+          </span>
+        </motion.h1>
 
-        <p className="mt-4 sm:mt-6 max-w-xl mx-auto md:mx-0 text-sm sm:text-base md:text-lg text-[#FCFAF4]">
-          {slides[current].description}
-        </p>
+        {/* SUBHEADLINE */}
+        <motion.p
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="mt-6 font-body text-lg md:text-xl text-white/85 max-w-2xl"
+        >
+          We provide trained, dependable virtual assistants to help business
+          owners save time, streamline operations, and scale with confidence.
+        </motion.p>
 
-        {/* CTA */}
-        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+        {/* CTA BUTTONS */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="mt-8 flex flex-wrap gap-4"
+        >
+          {/* GET STARTED */}
           <button
-            onClick={() => setModal(true)}
-            className="px-8 py-3 rounded-full font-semibold transition"
-            style={{ backgroundColor: COLORS.green, color: COLORS.light }}
+            onClick={() => scrollToSection("contact")}
+            className="px-8 py-3 rounded-full bg-[#AE7533] text-white font-semibold shadow-xl hover:scale-105 transition duration-300"
           >
-            Message Us →
+            Get Started →
           </button>
+
+          {/* EXPLORE SERVICES */}
           <button
-            className="px-8 py-3 rounded-full border transition"
-            style={{ borderColor: COLORS.cream, color: COLORS.cream }}
+            onClick={() => scrollToSection("services")}
+            className="px-8 py-3 rounded-full border border-white/40 text-white backdrop-blur-md hover:bg-white hover:text-[#2D5D46] transition duration-300"
           >
             Explore Services
           </button>
-        </div>
+        </motion.div>
 
-        {/* TOOLS */}
-        <div className="mt-12 overflow-hidden">
-          <p className="text-xs uppercase tracking-widest text-[#FFEDD6]/70 mb-4">
-            Tools & Platforms We Use
-          </p>
+        {/* STATS */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="mt-16 grid grid-cols-2 sm:flex gap-12 text-white"
+        >
+          <div>
+            <h3 className="font-heading text-3xl">
+              <CountUp end={9} duration={2} />+
+            </h3>
+            <p className="text-sm text-white/70">Years Experience</p>
+          </div>
 
+          <div>
+            <h3 className="font-heading text-3xl">
+              <CountUp end={300} duration={2} separator="," />+
+            </h3>
+            <p className="text-sm text-white/70">Businesses Served</p>
+          </div>
+        </motion.div>
+
+        {/* TOOLS CAROUSEL */}
+        <div className="mt-16 overflow-hidden">
           <motion.div
             className="flex gap-6 w-max"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ repeat: Infinity, duration: 70, ease: "linear" }}
+            transition={{ repeat: Infinity, duration: 80, ease: "linear" }}
           >
             {[...tools, ...tools].map((tool, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur text-xs sm:text-sm"
-                style={{ backgroundColor: `${COLORS.light}1A`, color: COLORS.light }}
+                className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-sm text-white whitespace-nowrap"
               >
-                <span style={{ color: COLORS.brown }}>{toolIcons[tool]}</span>
+                <span className="text-[#AE7533] text-lg">
+                  {toolIcons[tool]}
+                </span>
                 {tool}
               </div>
             ))}
           </motion.div>
         </div>
+
       </div>
-
-      {/* PROGRESS BAR */}
-      <motion.div
-        className="absolute bottom-0 left-0 h-1 z-20"
-        animate={progressControls}
-        style={{ backgroundColor: headlinePalette[current % 3] }}
-      />
-
-      {/* MODAL */}
-      <AnimatePresence>
-        {modal && (
-          <>
-            <motion.div
-              className="fixed inset-0 bg-black/60 z-50"
-              onClick={() => setModal(false)}
-            />
-            <motion.div
-              className="fixed top-1/2 left-1/2 z-50 p-6 rounded-3xl w-[92%] sm:w-[500px]"
-              style={{ backgroundColor: COLORS.light }}
-              initial={{ scale: 0.85, x: "-50%", y: "-50%" }}
-              animate={{ scale: 1, x: "-50%", y: "-50%" }}
-            >
-              <h3
-                className="text-xl font-medium mb-4"
-                style={{ color: COLORS.green }}
-              >
-                Let’s Work Together
-              </h3>
-              <form className="flex flex-col gap-3">
-                <input className="p-3 rounded-xl border" placeholder="Name" />
-                <input className="p-3 rounded-xl border" placeholder="Email" />
-                <textarea className="p-3 rounded-xl border" placeholder="Message" />
-                <button
-                  className="py-3 rounded-full text-white font-medium"
-                  style={{ backgroundColor: COLORS.green }}
-                >
-                  Submit
-                </button>
-              </form>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

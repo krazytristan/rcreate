@@ -39,36 +39,47 @@ const services = [
 export default function Services() {
   const [index, setIndex] = useState(0);
 
-  // Auto-slide
+  const SLIDE_DURATION = 6000;
+
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % services.length);
-    }, 5000);
+    }, SLIDE_DURATION);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <section
       id="services"
-      className="py-24 px-6 overflow-hidden"
-      style={{ backgroundColor: "#FCFAF4" }}
+      className="relative py-28 px-6 overflow-hidden bg-[#FCFAF4]"
     >
-      {/* HEADER */}
-      <div className="max-w-6xl mx-auto text-center mb-16">
-        <h2
-          className="text-4xl md:text-5xl font-extrabold mb-6"
-          style={{ color: "#2D5D46" }}
-        >
-          Our <span style={{ color: "#AE7533" }}>Services</span>
-        </h2>
+      {/* SOFT GLOW */}
+      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#AE7533]/15 blur-[120px] rounded-full" />
 
-        <p
-          className="text-lg md:text-xl max-w-3xl mx-auto"
-          style={{ color: "#94A591" }}
+      {/* HEADER */}
+      <div className="relative max-w-6xl mx-auto text-center mb-20">
+        <motion.h2
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="font-heading text-4xl md:text-6xl tracking-tight mb-6 text-[#2D5D46]"
+        >
+          Our{" "}
+          <span className="bg-gradient-to-r from-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent">
+            Services
+          </span>
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9 }}
+          className="font-body text-lg md:text-xl max-w-3xl mx-auto text-[#5E6F66]"
         >
           Done-for-you virtual support designed to simplify operations, enhance
           communication, and help your business grow with ease.
-        </p>
+        </motion.p>
       </div>
 
       {/* CAROUSEL */}
@@ -76,52 +87,40 @@ export default function Services() {
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, x: 80 }}
+            initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -80 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="rounded-3xl p-10 shadow-md text-center"
-            style={{ backgroundColor: "#FFEDD6" }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.7, ease: "easeInOut" }}
+            className="rounded-3xl p-12 text-center bg-white/70 backdrop-blur-md border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-300"
           >
             {/* ICON */}
-            <div
-              className="w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-full text-3xl"
-              style={{
-                backgroundColor: "#FCFAF4",
-                color: "#AE7533",
-              }}
-            >
+            <div className="w-20 h-20 mx-auto mb-8 flex items-center justify-center rounded-full text-3xl bg-gradient-to-tr from-[#FCFAF4] to-[#FFE8C4] text-[#AE7533] shadow-md">
               {services[index].icon}
             </div>
 
             {/* TITLE */}
-            <h3
-              className="text-2xl font-bold mb-4"
-              style={{ color: "#2D5D46" }}
-            >
+            <h3 className="font-heading text-3xl mb-6 text-[#2D5D46]">
               {services[index].title}
             </h3>
 
             {/* DESCRIPTION */}
-            <p
-              className="text-base leading-relaxed max-w-xl mx-auto"
-              style={{ color: "#2D5D46CC" }}
-            >
+            <p className="font-body text-base md:text-lg leading-relaxed max-w-2xl mx-auto text-[#5E6F66]">
               {services[index].desc}
             </p>
           </motion.div>
         </AnimatePresence>
 
         {/* DOT NAVIGATION */}
-        <div className="flex justify-center gap-3 mt-10">
+        <div className="flex justify-center gap-4 mt-12">
           {services.map((_, i) => (
             <button
               key={i}
               onClick={() => setIndex(i)}
-              className="w-3 h-3 rounded-full transition"
-              style={{
-                backgroundColor: i === index ? "#AE7533" : "#94A591",
-              }}
+              className={`h-3 rounded-full transition-all duration-300 ${
+                i === index
+                  ? "w-8 bg-[#AE7533]"
+                  : "w-3 bg-[#94A591] opacity-60 hover:opacity-100"
+              }`}
             />
           ))}
         </div>

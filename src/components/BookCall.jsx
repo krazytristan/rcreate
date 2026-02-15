@@ -18,28 +18,22 @@ export default function CTAForm() {
 
   return (
     <>
-      {/* FLOATING CTA BUTTON */}
+      {/* FLOATING BUTTON */}
       <motion.div
-        className="fixed right-0 top-1/4 z-50"
-        initial={{ x: 100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        whileHover={{ scale: 1.1, rotate: [0, 10, -10, 0] }}
-        drag
-        dragConstraints={{ top: 0, bottom: 0, left: -50, right: 50 }}
-        dragElastic={0.2}
+        className="fixed right-6 bottom-6 z-50"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 120 }}
       >
         <button
           onClick={() => {
             setOpen(true);
             setSubmitted(false);
           }}
-          className="flex items-center justify-center bg-[#FFEDD6] text-[#2D5D46] font-bold 
-                     px-4 py-4 rounded-l-full shadow-lg hover:shadow-2xl transition text-2xl sm:text-3xl"
-          title="Book Your Free Call"
-          aria-label="Open Booking Form"
+          className="w-16 h-16 rounded-full bg-[#AE7533] text-white flex items-center justify-center shadow-xl hover:scale-110 hover:shadow-2xl transition-all duration-300"
+          aria-label="Book Free Call"
         >
-          <FaPhoneAlt />
+          <FaPhoneAlt className="text-xl" />
         </button>
       </motion.div>
 
@@ -48,7 +42,7 @@ export default function CTAForm() {
           <>
             {/* OVERLAY */}
             <motion.div
-              className="fixed inset-0 bg-black/50 z-40"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
               onClick={() => setOpen(false)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -57,20 +51,23 @@ export default function CTAForm() {
 
             {/* MODAL */}
             <motion.div
-              className="fixed z-50 top-1/2 left-1/2 w-[95%] sm:w-[480px] md:w-[520px] 
-                         bg-[#FCFAF4] text-[#2D5D46] rounded-3xl shadow-2xl flex flex-col overflow-hidden"
-              initial={{ scale: 0.85, opacity: 0, x: "-50%", y: "-50%" }}
-              animate={{ scale: 1, opacity: 1, x: "-50%", y: "-50%" }}
-              exit={{ scale: 0.85, opacity: 0 }}
+              className="fixed z-50 top-1/2 left-1/2 w-[92%] sm:w-[480px] md:w-[540px] 
+                         bg-white/80 backdrop-blur-xl border border-white/40 
+                         text-[#2D5D46] rounded-3xl shadow-2xl overflow-hidden"
+              initial={{ opacity: 0, scale: 0.85, x: "-50%", y: "-50%" }}
+              animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
+              exit={{ opacity: 0, scale: 0.85 }}
+              transition={{ duration: 0.3 }}
             >
               {/* HEADER */}
-              <div className="bg-[#FFEDD6] px-6 py-4 flex justify-between items-center rounded-t-3xl">
-                <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#2D5D46]">
-                  Free VA + Marketing + Website Call
+              <div className="px-6 py-5 border-b border-[#AE7533]/20 flex justify-between items-center">
+                <h2 className="font-heading text-xl md:text-2xl">
+                  Book Your Free Strategy Call
                 </h2>
+
                 <button
                   onClick={() => setOpen(false)}
-                  className="text-2xl sm:text-3xl text-[#AE7533]"
+                  className="text-[#AE7533] text-2xl hover:scale-110 transition"
                   aria-label="Close"
                 >
                   ✕
@@ -78,15 +75,18 @@ export default function CTAForm() {
               </div>
 
               {/* CONTENT */}
-              <div className="flex-1 p-6 text-center">
+              <div className="p-6 md:p-8 text-center">
                 {!submitted ? (
                   <>
-                    <p className="text-base sm:text-lg md:text-xl mb-6 text-[#2D5D46CC]">
-                      Ready to reclaim your time, streamline operations, grow your marketing, and launch your website or landing page? Fill out the form below to schedule your free call.
+                    <p className="font-body text-base md:text-lg mb-6 text-[#5E6F66]">
+                      Let’s discuss how a dedicated VA + marketing + website
+                      support can streamline your operations and accelerate growth.
                     </p>
 
-                    {/* FORM */}
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
+                    <form
+                      onSubmit={handleSubmit}
+                      className="flex flex-col gap-4"
+                    >
                       <input
                         type="text"
                         name="name"
@@ -94,8 +94,9 @@ export default function CTAForm() {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="p-3 sm:p-4 rounded-xl border border-[#AE7533] text-[#2D5D46] placeholder-[#94A591] focus:outline-none focus:ring-2 focus:ring-[#AE7533] text-base sm:text-lg"
+                        className="p-4 rounded-xl border border-[#AE7533]/40 focus:outline-none focus:ring-2 focus:ring-[#AE7533] transition"
                       />
+
                       <input
                         type="email"
                         name="email"
@@ -103,19 +104,19 @@ export default function CTAForm() {
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="p-3 sm:p-4 rounded-xl border border-[#AE7533] text-[#2D5D46] placeholder-[#94A591] focus:outline-none focus:ring-2 focus:ring-[#AE7533] text-base sm:text-lg"
+                        className="p-4 rounded-xl border border-[#AE7533]/40 focus:outline-none focus:ring-2 focus:ring-[#AE7533] transition"
                       />
+
                       <button
                         type="submit"
-                        className="bg-[#AE7533] text-[#FCFAF4] font-bold px-6 py-3 sm:py-4 rounded-xl
-                                   shadow-lg hover:shadow-2xl hover:scale-105 transition text-base sm:text-lg"
+                        className="mt-2 bg-[#AE7533] text-white font-semibold py-3 rounded-xl shadow-lg hover:scale-105 hover:shadow-xl transition duration-300"
                       >
-                        Submit & Book Call
+                        Submit & Continue →
                       </button>
                     </form>
 
-                    <p className="mt-4 text-sm sm:text-base text-[#94A591]">
-                      Optional: Receive a free checklist to prepare for your call.
+                    <p className="mt-4 text-sm text-[#94A591]">
+                      Takes less than 30 seconds.
                     </p>
                   </>
                 ) : (
@@ -124,26 +125,30 @@ export default function CTAForm() {
                     animate={{ opacity: 1, y: 0 }}
                     className="flex flex-col items-center gap-4"
                   >
-                    <h3 className="text-2xl sm:text-3xl font-extrabold text-[#2D5D46]">Thank You!</h3>
-                    <p className="text-base sm:text-lg text-[#2D5D46CC]">
-                      Your submission has been received. We'll contact you shortly to schedule your free call.
+                    <h3 className="font-heading text-2xl">
+                      Thank You!
+                    </h3>
+
+                    <p className="font-body text-[#5E6F66] text-base">
+                      We’ve received your details. Click below to secure your
+                      free call slot.
                     </p>
+
                     <a
                       href="[GHL Booking Link]"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-2 inline-block bg-[#AE7533] text-[#FCFAF4] font-bold px-6 py-3 sm:py-4 rounded-xl
-                                 shadow-lg hover:shadow-2xl hover:scale-105 transition text-base sm:text-lg"
+                      className="inline-block bg-[#AE7533] text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:scale-105 transition"
                     >
-                      Book Your Call Now
+                      Book Your Call →
                     </a>
                   </motion.div>
                 )}
               </div>
 
               {/* FOOTER */}
-              <div className="bg-[#FFEDD6] text-[#2D5D46CC] px-6 py-3 text-center text-sm sm:text-base rounded-b-3xl">
-                We'll guide you step by step to maximize your business growth.
+              <div className="text-center text-sm py-4 border-t border-[#AE7533]/20 text-[#94A591]">
+                Let’s build systems that scale your business.
               </div>
             </motion.div>
           </>

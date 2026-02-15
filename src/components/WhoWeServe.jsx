@@ -26,31 +26,27 @@ export default function WhoWeServe() {
   return (
     <section
       id="serve"
-      className="py-20 px-6"
-      style={{ backgroundColor: "#FCFAF4" }}
+      className="relative py-28 px-6 overflow-hidden bg-[#FCFAF4]"
     >
+      {/* SOFT BACKGROUND GLOW */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#AE7533]/15 blur-[130px] rounded-full" />
+
       {/* HEADER */}
       <motion.div
-        className="max-w-6xl mx-auto text-center mb-16"
-        initial={{ opacity: 0, y: 40 }}
+        className="relative max-w-6xl mx-auto text-center mb-20"
+        initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.8 }}
       >
-        <h2
-          className="text-4xl md:text-5xl font-extrabold mb-6"
-          style={{ color: "#2D5D46" }}
-        >
+        <h2 className="font-heading text-4xl md:text-6xl tracking-tight mb-6 text-[#2D5D46]">
           Who{" "}
-          <span style={{ color: "#AE7533" }}>
+          <span className="bg-gradient-to-r from-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent">
             We Serve
           </span>
         </h2>
 
-        <p
-          className="text-lg md:text-xl max-w-4xl mx-auto leading-relaxed"
-          style={{ color: "#94A591" }}
-        >
+        <p className="font-body text-lg md:text-xl max-w-4xl mx-auto leading-relaxed text-[#5E6F66]">
           We specialize in supporting founders and home service CEOs who want
           reliable, professional, and scalable support for operations,
           marketing, and online presence.
@@ -58,41 +54,29 @@ export default function WhoWeServe() {
       </motion.div>
 
       {/* AUDIENCE CARDS */}
-      <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+      <div className="relative grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
         {audiences.map((item, i) => (
           <motion.div
             key={i}
-            className="rounded-3xl p-8 shadow-sm transition hover:shadow-lg text-center"
-            style={{ backgroundColor: "#FFEDD6" }}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: i * 0.15 }}
+            transition={{ duration: 0.7, delay: i * 0.15 }}
+            whileHover={{ y: -8 }}
+            className="rounded-3xl p-10 text-center bg-white/70 backdrop-blur-md border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-300"
           >
             {/* ICON */}
-            <div
-              className="w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-full text-3xl shadow"
-              style={{
-                backgroundColor: "#FCFAF4",
-                color: "#AE7533",
-              }}
-            >
+            <div className="w-20 h-20 mx-auto mb-8 flex items-center justify-center rounded-full text-3xl bg-gradient-to-tr from-[#FCFAF4] to-[#FFE8C4] text-[#AE7533] shadow-md">
               {item.icon}
             </div>
 
             {/* TITLE */}
-            <h3
-              className="text-xl md:text-2xl font-bold mb-4"
-              style={{ color: "#2D5D46" }}
-            >
+            <h3 className="font-heading text-xl md:text-2xl mb-4 text-[#2D5D46]">
               {item.title}
             </h3>
 
             {/* DESCRIPTION */}
-            <p
-              className="text-base leading-relaxed"
-              style={{ color: "#2D5D46CC" }}
-            >
+            <p className="font-body text-base leading-relaxed text-[#5E6F66]">
               {item.description}
             </p>
           </motion.div>

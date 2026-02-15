@@ -41,78 +41,64 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="py-20 px-6"
-      style={{ backgroundColor: "#FCFAF4" }}
+      className="relative py-28 px-6 overflow-hidden bg-[#FCFAF4]"
     >
+      {/* SOFT GLOW BACKGROUND */}
+      <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#AE7533]/15 blur-[150px] rounded-full" />
+
       {/* HEADER */}
       <motion.div
-        className="max-w-6xl mx-auto text-center mb-16"
-        initial={{ opacity: 0, y: 40 }}
+        className="relative max-w-6xl mx-auto text-center mb-20"
+        initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.8 }}
       >
-        <h2
-          className="text-4xl md:text-5xl font-extrabold mb-6"
-          style={{ color: "#2D5D46" }}
-        >
+        <h2 className="font-heading text-4xl md:text-6xl tracking-tight mb-6 text-[#2D5D46]">
           Client{" "}
-          <span style={{ color: "#AE7533" }}>
+          <span className="bg-gradient-to-r from-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent">
             Testimonials
           </span>
         </h2>
 
-        <p
-          className="text-lg md:text-xl max-w-4xl mx-auto leading-relaxed"
-          style={{ color: "#94A591" }}
-        >
+        <p className="font-body text-lg md:text-xl max-w-4xl mx-auto leading-relaxed text-[#5E6F66]">
           Trusted by founders, service businesses, and agencies who value
-          reliability, professionalism, and results.
+          reliability, professionalism, and measurable results.
         </p>
       </motion.div>
 
-      {/* TESTIMONIAL CARDS */}
-      <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+      {/* TESTIMONIAL GRID */}
+      <div className="relative grid md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
         {testimonials.map((item, i) => (
           <motion.div
             key={i}
-            className="rounded-3xl p-8 shadow-sm hover:shadow-lg transition relative"
-            style={{ backgroundColor: "#FFEDD6" }}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: i * 0.1 }}
+            transition={{ duration: 0.7, delay: i * 0.1 }}
+            whileHover={{ y: -8 }}
+            className="rounded-3xl p-10 bg-white/70 backdrop-blur-md border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-300"
           >
             {/* QUOTE ICON */}
-            <FaQuoteLeft
-              className="text-3xl mb-4 opacity-30"
-              style={{ color: "#AE7533" }}
-            />
+            <FaQuoteLeft className="text-3xl mb-6 text-[#AE7533]/40" />
 
             {/* STAR RATING */}
-            <div className="flex gap-1 mb-4">
+            <div className="flex gap-1 mb-6">
               {Array.from({ length: item.rating }).map((_, idx) => (
                 <FaStar
                   key={idx}
-                  className="text-sm"
-                  style={{ color: "#AE7533" }}
+                  className="text-sm text-[#AE7533]"
                 />
               ))}
             </div>
 
             {/* QUOTE */}
-            <p
-              className="text-base leading-relaxed mb-6"
-              style={{ color: "#2D5D46CC" }}
-            >
+            <p className="font-body text-base leading-relaxed mb-8 text-[#5E6F66]">
               “{item.quote}”
             </p>
 
             {/* AUTHOR */}
-            <span
-              className="text-sm font-semibold"
-              style={{ color: "#94A591" }}
-            >
+            <span className="font-heading text-sm text-[#94A591]">
               — {item.author}
             </span>
           </motion.div>
