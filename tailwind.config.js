@@ -4,12 +4,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        maroon: "#800000",
-        yellow: "#FFD700",
-        darkblue: "#001F3F",
+        forest: "#2D5D46",
+        gold: "#AE7533",
+        cream: "#FCFAF4",
+        beige: "#FFEDD6",
+        sage: "#94A591",
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        heading: ['"TanMonCheri"', "serif"],
+        body: ['"Montserrat"', "sans-serif"],
+        sans: ['"Montserrat"', "sans-serif"], // optional override default
       },
     },
   },

@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 import { FaTasks, FaBullseye, FaChartLine, FaCogs } from "react-icons/fa";
 
 const benefits = [
@@ -29,63 +30,80 @@ const benefits = [
 ];
 
 export default function Benefits() {
+  const [active, setActive] = useState(0);
+
   return (
     <section
       id="benefits"
-      className="relative py-28 px-6 overflow-hidden bg-[#FCFAF4]"
+      className="relative py-28 px-6 bg-[#FCFAF4] overflow-hidden font-body"
     >
-      {/* SOFT GLOW BACKGROUND */}
+      {/* GOLD GLOW */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#AE7533]/15 blur-[130px] rounded-full" />
 
-      {/* HEADER */}
-      <motion.div
-        className="relative max-w-6xl mx-auto text-center mb-20"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-      >
-        <h2 className="font-heading text-4xl md:text-6xl tracking-tight mb-6 text-[#2D5D46]">
-          Why a{" "}
-          <span className="bg-gradient-to-r from-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent">
-            Right-Hand VA + Marketing + Website
-          </span>
-        </h2>
+      <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
 
-        <p className="font-body text-lg md:text-xl max-w-4xl mx-auto leading-relaxed text-[#5E6F66]">
-          Maximize efficiency and accelerate growth by leveraging professional
-          support for operations, marketing, and your online presence.
-        </p>
-      </motion.div>
+        {/* LEFT COLUMN — ICONS */}
+        <div className="flex md:flex-col justify-center items-center gap-8 md:gap-10">
 
-      {/* BENEFIT CARDS */}
-      <div className="relative grid md:grid-cols-2 lg:grid-cols-4 gap-12 max-w-6xl mx-auto">
-        {benefits.map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: i * 0.15 }}
-            whileHover={{ y: -8 }}
-            className="rounded-3xl p-10 text-center bg-white/70 backdrop-blur-md border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-300"
-          >
-            {/* ICON */}
-            <div className="w-20 h-20 mx-auto mb-8 flex items-center justify-center rounded-full text-3xl bg-gradient-to-tr from-[#FCFAF4] to-[#FFE8C4] text-[#AE7533] shadow-md">
+          {benefits.map((item, i) => (
+            <motion.button
+              key={i}
+              onClick={() => setActive(i)}
+              onMouseEnter={() => setActive(i)}
+              whileHover={{ scale: 1.1 }}
+              className={`w-20 h-20 flex items-center justify-center rounded-full text-2xl transition-all duration-300
+                ${
+                  active === i
+                    ? "bg-[#AE7533] text-white shadow-xl"
+                    : "bg-white/70 text-[#AE7533] border border-[#AE7533]/30"
+                }`}
+            >
               {item.icon}
-            </div>
+            </motion.button>
+          ))}
 
-            {/* TITLE */}
-            <h3 className="font-heading text-xl md:text-2xl mb-4 text-[#2D5D46]">
-              {item.title}
-            </h3>
+        </div>
 
-            {/* DESCRIPTION */}
-            <p className="font-body text-base leading-relaxed text-[#5E6F66]">
-              {item.description}
-            </p>
-          </motion.div>
-        ))}
+        {/* RIGHT COLUMN — TEXT + POPUP CARD */}
+        <div>
+
+          {/* HEADER */}
+          <h2 className="font-heading text-4xl md:text-6xl tracking-tight mb-6 text-[#2D5D46] leading-tight">
+            Why a{" "}
+            <span className="bg-gradient-to-r from-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent">
+              Right-Hand VA
+            </span>
+          </h2>
+
+          <p className="text-lg md:text-xl text-[#5E6F66] leading-relaxed mb-12 max-w-xl">
+            Maximize efficiency and accelerate growth by leveraging professional
+            support for operations, marketing, and your online presence.
+          </p>
+
+          {/* ACTIVE CARD */}
+          <div className="relative min-h-[200px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.4 }}
+                className="absolute w-full rounded-3xl p-8 bg-white/80 backdrop-blur-md border border-white/40 shadow-xl"
+              >
+                <h3 className="font-heading text-2xl mb-4 text-[#2D5D46]">
+                  {benefits[active].title}
+                </h3>
+
+                <p className="text-[#5E6F66] leading-relaxed">
+                  {benefits[active].description}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+        </div>
+
       </div>
     </section>
   );

@@ -1,5 +1,7 @@
 // src/components/HowItWorks.jsx
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const steps = [
   {
@@ -35,63 +37,105 @@ const steps = [
 ];
 
 export default function HowItWorks() {
+  const [index, setIndex] = useState(0);
+
+  const nextSlide = () => {
+    setIndex((prev) => (prev + 1) % steps.length);
+  };
+
+  const prevSlide = () => {
+    setIndex((prev) => (prev - 1 + steps.length) % steps.length);
+  };
+
   return (
     <section
       id="how-it-works"
-      className="relative py-28 px-6 bg-[#FCFAF4] overflow-hidden"
+      className="relative py-28 px-6 bg-[#FCFAF4] overflow-hidden font-body"
     >
-      {/* SOFT BACKGROUND GLOW */}
+      {/* GOLD GLOW */}
       <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#AE7533]/15 blur-[150px] rounded-full" />
 
-      {/* HEADER */}
-      <motion.div
-        className="relative max-w-4xl mx-auto text-center mb-20"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-      >
-        <h2 className="font-heading text-4xl md:text-6xl tracking-tight text-[#2D5D46] mb-6">
-          How{" "}
-          <span className="bg-gradient-to-r from-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent">
-            It Works
-          </span>
-        </h2>
+      <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
-        <p className="text-[#5E6F66] text-lg md:text-xl">
-          A simple, structured process designed to integrate reliable virtual
-          support into your business seamlessly.
-        </p>
-      </motion.div>
+        {/* LEFT COLUMN — TEXT */}
+        <div>
+          <h2 className="font-heading text-4xl md:text-6xl tracking-tight text-[#2D5D46] mb-6 leading-tight">
+            How{" "}
+            <span className="bg-gradient-to-r from-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent">
+              It Works
+            </span>
+          </h2>
 
-      {/* STEPS */}
-      <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-        {steps.map((step, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: index * 0.1 }}
-            whileHover={{ y: -6 }}
-            className="rounded-3xl p-10 bg-white/70 backdrop-blur-md border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-300 relative"
-          >
-            {/* NUMBER */}
-            <div className="absolute -top-6 left-6 text-5xl font-bold text-[#AE7533]/15 select-none">
-              {step.number}
-            </div>
+          <p className="text-[#5E6F66] text-lg md:text-xl leading-relaxed max-w-xl">
+            A simple, structured process designed to integrate reliable virtual
+            support into your business seamlessly. From discovery to long-term
+            partnership, we ensure clarity and consistency every step of the way.
+          </p>
+        </div>
 
-            <div className="relative z-10">
-              <h3 className="font-heading text-xl md:text-2xl text-[#2D5D46] mb-4">
-                {step.title}
+        {/* RIGHT COLUMN — CAROUSEL */}
+        <div className="relative">
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: 60 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -60 }}
+              transition={{ duration: 0.6 }}
+              className="rounded-3xl p-10 bg-white/70 backdrop-blur-md border border-white/40 shadow-xl relative"
+            >
+              {/* LARGE STEP NUMBER */}
+              <div className="absolute -top-6 right-6 text-6xl font-bold text-[#AE7533]/10 select-none">
+                {steps[index].number}
+              </div>
+
+              <h3 className="font-heading text-2xl md:text-3xl text-[#2D5D46] mb-4">
+                {steps[index].title}
               </h3>
 
-              <p className="font-body text-[#5E6F66] leading-relaxed">
-                {step.description}
+              <p className="text-[#5E6F66] leading-relaxed">
+                {steps[index].description}
               </p>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* NAVIGATION CONTROLS */}
+          <div className="flex items-center justify-between mt-10">
+
+            {/* PREV */}
+            <button
+              onClick={prevSlide}
+              className="w-12 h-12 flex items-center justify-center rounded-full border border-[#AE7533]/40 text-[#AE7533] hover:bg-[#AE7533] hover:text-white transition-all duration-300"
+            >
+              <FaArrowLeft />
+            </button>
+
+            {/* DOTS */}
+            <div className="flex gap-3">
+              {steps.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setIndex(i)}
+                  className={`h-3 rounded-full transition-all duration-300 ${
+                    i === index
+                      ? "w-8 bg-[#AE7533]"
+                      : "w-3 bg-[#94A591] opacity-50 hover:opacity-100"
+                  }`}
+                />
+              ))}
             </div>
-          </motion.div>
-        ))}
+
+            {/* NEXT */}
+            <button
+              onClick={nextSlide}
+              className="w-12 h-12 flex items-center justify-center rounded-full border border-[#AE7533]/40 text-[#AE7533] hover:bg-[#AE7533] hover:text-white transition-all duration-300"
+            >
+              <FaArrowRight />
+            </button>
+
+          </div>
+        </div>
       </div>
     </section>
   );
