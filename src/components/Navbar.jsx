@@ -14,27 +14,17 @@ import {
 } from "react-icons/fa";
 import Owner from "./Owner";
 
-/* UPDATED LINKS */
 const links = [
   { label: "Home", id: "hero", icon: <FaHome /> },
   { label: "About", id: "about", icon: <FaInfoCircle /> },
   { label: "Services", id: "services", icon: <FaCogs /> },
-  { label: "How It Works", id: "how-it-works", icon: <FaListOl /> },
-  { label: "Why Choose", id: "why-choose", icon: <FaCheckCircle /> },
+  { label: "Process", id: "how-it-works", icon: <FaListOl /> },
+  { label: "Why", id: "why-choose", icon: <FaCheckCircle /> },
   { label: "Benefits", id: "benefits", icon: <FaHandHoldingHeart /> },
-  { label: "Who We Serve", id: "serve", icon: <FaUsers /> },
-  { label: "Testimonials", id: "testimonials", icon: <FaCommentDots /> },
+  { label: "Audience", id: "serve", icon: <FaUsers /> },
+  { label: "Reviews", id: "testimonials", icon: <FaCommentDots /> },
   { label: "Contact", id: "contact", icon: <FaEnvelope /> },
 ];
-
-const mobileLinkVariants = {
-  hidden: { opacity: 0, y: -10 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.05, duration: 0.25 },
-  }),
-};
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -43,18 +33,17 @@ export default function Navbar() {
   const [isMobileView, setIsMobileView] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  /* SAFE RESPONSIVE INIT */
+  /* Responsive */
   useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth < 1024);
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  /* IMPROVED SCROLL DETECTION */
+  /* Scroll Detection */
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 150;
@@ -80,7 +69,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* SMOOTH SCROLL */
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
     if (section) {
@@ -92,21 +80,15 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`
-          fixed top-6 left-1/2 -translate-x-1/2
-          w-[95%] md:w-[90%] lg:w-[85%]
-          z-50 rounded-3xl
-          backdrop-blur-xl border
-          shadow-xl transition-all duration-300
-        `}
+        className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] md:w-[90%] lg:w-[85%] z-50 rounded-3xl backdrop-blur-2xl border shadow-lg transition-all duration-500"
         style={{
           backgroundColor: scrolled
-            ? "rgba(255,255,255,0.65)"
+            ? "rgba(255,255,255,0.75)"
             : "rgba(255,255,255,0.45)",
-          borderColor: "rgba(255,255,255,0.4)",
+          borderColor: "rgba(174,117,51,0.25)",
         }}
       >
-        <div className="flex justify-between items-center px-6 md:px-10 h-16 md:h-20">
+        <div className="flex justify-between items-center px-6 md:px-10 h-20">
 
           {/* LOGO */}
           <div
@@ -118,28 +100,27 @@ export default function Navbar() {
               alt="RCREATE Logo"
               className="w-9 h-9 object-contain transition-transform group-hover:scale-110"
             />
-            <span className="font-heading text-lg md:text-xl tracking-wide text-[#2D5D46]">
+            <span className="font-heading text-lg tracking-wide text-[#2D5D46]">
               RCREATE
             </span>
           </div>
 
-          {/* DESKTOP LINKS */}
+          {/* DESKTOP NAV */}
           {!isMobileView && (
-            <div className="flex items-center gap-5 font-medium flex-wrap justify-end">
-              {links.map(({ id, icon }) => {
+            <div className="flex items-center gap-10 relative">
+
+              {links.map(({ id, icon, label }) => {
                 const isActive = active === id;
 
                 return (
                   <button
                     key={id}
                     onClick={() => scrollToSection(id)}
-                    className="relative"
+                    className="flex flex-col items-center gap-1 relative pb-2"
                   >
                     <motion.div
-                      whileHover={{ scale: 1.15 }}
-                      className={`
-                        w-10 h-10 flex items-center justify-center rounded-full
-                        transition-all duration-300
+                      whileHover={{ scale: 1.1 }}
+                      className={`w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300
                         ${
                           isActive
                             ? "bg-[#AE7533]/20 text-[#AE7533]"
@@ -150,10 +131,24 @@ export default function Navbar() {
                       {icon}
                     </motion.div>
 
+                    <span
+                      className={`text-xs font-medium transition-all duration-300
+                        ${
+                          isActive
+                            ? "text-[#AE7533]"
+                            : "text-[#2D5D46]"
+                        }
+                      `}
+                    >
+                      {label}
+                    </span>
+
+                    {/* SLIDING LINE INDICATOR */}
                     {isActive && (
                       <motion.div
-                        layoutId="activeDot"
-                        className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#AE7533] rounded-full"
+                        layoutId="navLine"
+                        className="absolute -bottom-1 h-[2px] w-8 bg-[#AE7533] rounded-full"
+                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
                       />
                     )}
                   </button>
@@ -163,14 +158,16 @@ export default function Navbar() {
               {/* OWNER BUTTON */}
               <button
                 onClick={() => setOwnerOpen(true)}
-                className="w-10 h-10 flex items-center justify-center rounded-full text-[#2D5D46] hover:bg-[#AE7533]/10 hover:text-[#AE7533] transition"
+                className="flex flex-col items-center gap-1 text-[#2D5D46] hover:text-[#AE7533] transition"
               >
-                <FaHandHoldingHeart />
+                <FaHandHoldingHeart className="text-xl" />
+                <span className="text-xs">Owner</span>
               </button>
+
             </div>
           )}
 
-          {/* MOBILE MENU BUTTON */}
+          {/* MOBILE BUTTON */}
           {isMobileView && (
             <button
               onClick={() => setOpen(!open)}
@@ -188,22 +185,17 @@ export default function Navbar() {
               initial={{ opacity: 0, y: -15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3 }}
               className="px-6 pb-6 flex flex-col gap-3"
             >
-              {links.map(({ label, id }, i) => {
+              {links.map(({ label, id }) => {
                 const isActive = active === id;
 
                 return (
-                  <motion.button
+                  <button
                     key={id}
                     onClick={() => scrollToSection(id)}
-                    custom={i}
-                    variants={mobileLinkVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    className={`
-                      py-2 rounded-lg text-center transition
+                    className={`py-2 rounded-lg text-center transition
                       ${
                         isActive
                           ? "bg-[#AE7533]/20 text-[#AE7533]"
@@ -212,7 +204,7 @@ export default function Navbar() {
                     `}
                   >
                     {label}
-                  </motion.button>
+                  </button>
                 );
               })}
             </motion.div>
