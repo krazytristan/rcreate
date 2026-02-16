@@ -10,6 +10,8 @@ import Benefits from "./components/Benefits";
 import WhoWeServe from "./components/WhoWeServe";
 import Team from "./components/Team";
 import Testimonials from "./components/Testimonials";
+import Blogs from "./components/Blogs";
+import Career from "./components/Career";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
@@ -22,7 +24,7 @@ function App() {
 
       <Navbar />
 
-      <main>
+      <main className="relative z-10">
 
         {/* 01 — Hero */}
         <Hero />
@@ -30,7 +32,7 @@ function App() {
         {/* 02 — Authority */}
         <WhoWeHelp />
 
-        {/* 03 — Early CTA */}
+        {/* 03 — Strategy Call */}
         <BookCall />
 
         {/* 04 — About */}
@@ -57,7 +59,13 @@ function App() {
         {/* 11 — Testimonials */}
         <Testimonials />
 
-        {/* 12 — Contact */}
+        {/* 12 — Insights / Blogs */}
+        <Blogs />
+
+        {/* 13 — Careers */}
+        <Career />
+
+        {/* 14 — Contact */}
         <Contact />
 
       </main>
