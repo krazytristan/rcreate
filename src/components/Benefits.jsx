@@ -6,25 +6,25 @@ const benefits = [
   {
     title: "Delegate Low-Value Tasks",
     description:
-      "Let your assistant handle repetitive tasks and marketing execution so you can focus on strategic leadership and growth.",
+      "Allow your assistant to manage repetitive tasks and execution while you focus on strategic leadership and expansion.",
     icon: <FaTasks />,
   },
   {
     title: "Never Miss Opportunities",
     description:
-      "Stay on top of leads, follow-ups, and campaigns with consistent execution and reliable systems.",
+      "Stay ahead of leads, follow-ups, and campaigns with consistent execution and reliable operational systems.",
     icon: <FaBullseye />,
   },
   {
     title: "Focus on Growth",
     description:
-      "Spend your time on high-impact decisions that move your business forward instead of daily operations.",
+      "Invest your time in high-impact decisions that move your business forward rather than daily operations.",
     icon: <FaChartLine />,
   },
   {
     title: "Streamline Operations",
     description:
-      "Integrate marketing, operations, and your online presence into one efficient workflow.",
+      "Integrate marketing, operations, and digital systems into one efficient and scalable workflow.",
     icon: <FaCogs />,
   },
 ];
@@ -35,73 +35,99 @@ export default function Benefits() {
   return (
     <section
       id="benefits"
-      className="relative py-28 px-6 bg-[#FCFAF4] overflow-hidden font-body"
+      className="relative py-40 px-6 bg-neutral-background overflow-hidden"
     >
-      {/* GOLD GLOW */}
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#AE7533]/15 blur-[130px] rounded-full" />
+      {/* Accent Glow */}
+      <div className="absolute top-[-250px] left-1/2 -translate-x-1/2 w-[650px] h-[650px] bg-accent/10 blur-[180px] rounded-full" />
 
-      <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+      <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-28 items-center">
 
-        {/* LEFT COLUMN — ICONS */}
-        <div className="flex md:flex-col justify-center items-center gap-8 md:gap-10">
+        {/* LEFT — ICON SELECTOR */}
+        <div className="relative flex md:flex-col justify-center items-center gap-8 md:gap-14">
+
+          {/* Vertical Accent Line (Desktop Only) */}
+          <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-accent/20" />
 
           {benefits.map((item, i) => (
-            <motion.button
-              key={i}
-              onClick={() => setActive(i)}
-              onMouseEnter={() => setActive(i)}
-              whileHover={{ scale: 1.1 }}
-              className={`w-20 h-20 flex items-center justify-center rounded-full text-2xl transition-all duration-300
-                ${
-                  active === i
-                    ? "bg-[#AE7533] text-white shadow-xl"
-                    : "bg-white/70 text-[#AE7533] border border-[#AE7533]/30"
-                }`}
-            >
-              {item.icon}
-            </motion.button>
-          ))}
+            <div key={i} className="relative flex flex-col items-center">
 
+              <motion.button
+                onClick={() => setActive(i)}
+                whileHover={{ scale: 1.08 }}
+                transition={{ duration: 0.2 }}
+                className={`relative w-20 h-20 flex items-center justify-center rounded-full text-2xl transition-all duration-300
+                  ${
+                    active === i
+                      ? "bg-accent text-white shadow-premium"
+                      : "bg-white/60 backdrop-blur-xl text-accent border border-neutral-border"
+                  }`}
+              >
+                {item.icon}
+
+                {/* Glow Pulse for Active */}
+                {active === i && (
+                  <motion.div
+                    layoutId="activeGlow"
+                    className="absolute inset-0 rounded-full bg-accent/20 blur-xl -z-10"
+                  />
+                )}
+              </motion.button>
+
+              {/* Active Indicator */}
+              {active === i && (
+                <motion.div
+                  layoutId="activeIndicator"
+                  className="mt-3 w-8 h-1 bg-accent rounded-full"
+                />
+              )}
+
+            </div>
+          ))}
         </div>
 
-        {/* RIGHT COLUMN — TEXT + POPUP CARD */}
+        {/* RIGHT — CONTENT */}
         <div>
 
-          {/* HEADER */}
-          <h2 className="font-heading text-4xl md:text-6xl tracking-tight mb-6 text-[#2D5D46] leading-tight">
+          {/* SECTION LABEL */}
+          <span className="text-sm tracking-[0.4em] uppercase text-neutral-muted">
+            07 / Benefits
+          </span>
+
+          <h2 className="font-heading text-4xl md:text-6xl mt-6 text-primary leading-tight">
             Why a{" "}
-            <span className="bg-gradient-to-r from-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent">
+            <span className="text-accent">
               Right-Hand VA
             </span>
           </h2>
 
-          <p className="text-lg md:text-xl text-[#5E6F66] leading-relaxed mb-12 max-w-xl">
-            Maximize efficiency and accelerate growth by leveraging professional
-            support for operations, marketing, and your online presence.
+          <p className="text-lg md:text-xl text-neutral-muted leading-relaxed mt-6 mb-12 max-w-xl">
+            Maximize efficiency and accelerate growth through structured
+            operational support designed for clarity, execution, and scale.
           </p>
 
           {/* ACTIVE CARD */}
-          <div className="relative min-h-[200px]">
+          <div className="relative min-h-[240px] perspective-[1200px]">
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.4 }}
-                className="absolute w-full rounded-3xl p-8 bg-white/80 backdrop-blur-md border border-white/40 shadow-xl"
+                initial={{ opacity: 0, rotateX: 10, y: 40 }}
+                animate={{ opacity: 1, rotateX: 0, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="absolute w-full rounded-3xl p-12 bg-white/70 backdrop-blur-xl border border-neutral-border shadow-soft"
               >
-                <h3 className="font-heading text-2xl mb-4 text-[#2D5D46]">
+                <h3 className="font-heading text-2xl mb-4 text-primary">
                   {benefits[active].title}
                 </h3>
 
-                <p className="text-[#5E6F66] leading-relaxed">
+                <p className="text-neutral-muted leading-relaxed">
                   {benefits[active].description}
                 </p>
               </motion.div>
             </AnimatePresence>
-          </div>
 
+          </div>
         </div>
 
       </div>

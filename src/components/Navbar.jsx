@@ -80,34 +80,33 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] md:w-[90%] lg:w-[85%] z-50 rounded-3xl backdrop-blur-2xl border shadow-lg transition-all duration-500"
-        style={{
-          backgroundColor: scrolled
-            ? "rgba(255,255,255,0.75)"
-            : "rgba(255,255,255,0.45)",
-          borderColor: "rgba(174,117,51,0.25)",
-        }}
+        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500
+        ${scrolled ? "w-[85%] md:w-[75%] py-2 shadow-xl" : "w-[95%] md:w-[90%] py-3"}
+        rounded-3xl backdrop-blur-2xl border border-neutral-border bg-white/60`}
       >
-        <div className="flex justify-between items-center px-6 md:px-10 h-20">
+        <div className="flex justify-between items-center px-6 md:px-10 h-16">
 
-          {/* LOGO */}
+          {/* 🔥 LOGO — CIRCLE ONLY */}
           <div
             onClick={() => scrollToSection("hero")}
-            className="flex items-center gap-3 cursor-pointer group"
+            className="cursor-pointer group"
           >
-            <img
-              src={`${process.env.PUBLIC_URL}/assets/Logo.png`}
-              alt="RCREATE Logo"
-              className="w-9 h-9 object-contain transition-transform group-hover:scale-110"
-            />
-            <span className="font-heading text-lg tracking-wide text-[#2D5D46]">
-              RCREATE
-            </span>
+            <div className="relative w-12 h-12 rounded-full bg-white/70 backdrop-blur-xl border border-neutral-border flex items-center justify-center transition-all duration-300 group-hover:scale-105 shadow-soft">
+
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/Logo.png`}
+                alt="Logo"
+                className="w-7 h-7 object-contain"
+              />
+
+              {/* Subtle Accent Glow */}
+              <div className="absolute inset-0 rounded-full bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md -z-10" />
+            </div>
           </div>
 
           {/* DESKTOP NAV */}
           {!isMobileView && (
-            <div className="flex items-center gap-10 relative">
+            <div className="flex items-center gap-8 relative">
 
               {links.map(({ id, icon, label }) => {
                 const isActive = active === id;
@@ -116,15 +115,15 @@ export default function Navbar() {
                   <button
                     key={id}
                     onClick={() => scrollToSection(id)}
-                    className="flex flex-col items-center gap-1 relative pb-2"
+                    className="flex flex-col items-center gap-1 relative pb-2 group"
                   >
                     <motion.div
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.08 }}
                       className={`w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300
                         ${
                           isActive
-                            ? "bg-[#AE7533]/20 text-[#AE7533]"
-                            : "text-[#2D5D46] hover:bg-[#AE7533]/10"
+                            ? "bg-accent/20 text-accent"
+                            : "text-primary group-hover:bg-accent/10"
                         }
                       `}
                     >
@@ -135,19 +134,18 @@ export default function Navbar() {
                       className={`text-xs font-medium transition-all duration-300
                         ${
                           isActive
-                            ? "text-[#AE7533]"
-                            : "text-[#2D5D46]"
+                            ? "text-accent"
+                            : "text-primary"
                         }
                       `}
                     >
                       {label}
                     </span>
 
-                    {/* SLIDING LINE INDICATOR */}
                     {isActive && (
                       <motion.div
-                        layoutId="navLine"
-                        className="absolute -bottom-1 h-[2px] w-8 bg-[#AE7533] rounded-full"
+                        layoutId="navIndicator"
+                        className="absolute -bottom-1 h-[2px] w-8 bg-accent rounded-full"
                         transition={{ type: "spring", stiffness: 300, damping: 25 }}
                       />
                     )}
@@ -158,20 +156,19 @@ export default function Navbar() {
               {/* OWNER BUTTON */}
               <button
                 onClick={() => setOwnerOpen(true)}
-                className="flex flex-col items-center gap-1 text-[#2D5D46] hover:text-[#AE7533] transition"
+                className="ml-4 px-5 py-2 rounded-full bg-accent text-white text-sm font-medium shadow-premium hover:scale-105 transition"
               >
-                <FaHandHoldingHeart className="text-xl" />
-                <span className="text-xs">Owner</span>
+                Owner
               </button>
 
             </div>
           )}
 
-          {/* MOBILE BUTTON */}
+          {/* MOBILE TOGGLE */}
           {isMobileView && (
             <button
               onClick={() => setOpen(!open)}
-              className="text-2xl text-[#2D5D46]"
+              className="text-2xl text-primary"
             >
               {open ? "✕" : "☰"}
             </button>
@@ -195,11 +192,11 @@ export default function Navbar() {
                   <button
                     key={id}
                     onClick={() => scrollToSection(id)}
-                    className={`py-2 rounded-lg text-center transition
+                    className={`py-3 rounded-xl transition
                       ${
                         isActive
-                          ? "bg-[#AE7533]/20 text-[#AE7533]"
-                          : "text-[#2D5D46] hover:bg-[#AE7533]/10"
+                          ? "bg-accent/20 text-accent"
+                          : "text-primary hover:bg-accent/10"
                       }
                     `}
                   >

@@ -1,9 +1,16 @@
 // src/components/Owner.jsx
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
 import { FaLinkedinIn, FaFacebookF, FaInstagram } from "react-icons/fa";
 import ownerImage from "../assets/reg.png";
 
 export default function Owner({ isOpen, onClose }) {
+
+  /* Lock scroll when open */
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
+  }, [isOpen]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -19,28 +26,30 @@ export default function Owner({ isOpen, onClose }) {
 
           {/* MODAL */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, x: "-50%", y: "-50%" }}
+            initial={{ opacity: 0, scale: 0.92, x: "-50%", y: "-50%" }}
             animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
-            exit={{ opacity: 0, scale: 0.9 }}
+            exit={{ opacity: 0, scale: 0.92 }}
             transition={{ duration: 0.35 }}
-            className="
-              fixed z-50 top-1/2 left-1/2
-              w-[95%] md:w-[90%] lg:w-[75%]
-              max-h-[90vh]
-              bg-white/95 backdrop-blur-xl
-              border border-white/40
-              rounded-3xl shadow-2xl
-              overflow-hidden flex flex-col
-            "
+            className="fixed z-50 top-1/2 left-1/2
+                       w-[95%] md:w-[90%] lg:w-[75%]
+                       max-h-[90vh]
+                       rounded-3xl
+                       bg-white/70 backdrop-blur-2xl
+                       border border-neutral-border
+                       shadow-soft
+                       overflow-hidden flex flex-col"
           >
+            {/* Subtle Glow Layer */}
+            <div className="absolute -inset-1 bg-accent/5 blur-2xl rounded-3xl -z-10" />
+
             {/* HEADER */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-[#AE7533]/20">
-              <h2 className="font-heading text-xl md:text-2xl text-[#2D5D46]">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-neutral-border">
+              <h2 className="font-heading text-xl md:text-2xl text-primary">
                 The Story Behind Rcreate
               </h2>
               <button
                 onClick={onClose}
-                className="text-[#AE7533] text-2xl hover:scale-110 transition"
+                className="text-accent text-2xl hover:scale-110 transition"
               >
                 ✕
               </button>
@@ -48,62 +57,62 @@ export default function Owner({ isOpen, onClose }) {
 
             {/* CONTENT */}
             <div className="p-8 overflow-y-auto">
-              
-              {/* TWO COLUMN GRID */}
-              <div className="grid md:grid-cols-2 gap-12">
+
+              <div className="grid md:grid-cols-2 gap-14">
 
                 {/* LEFT COLUMN */}
-                <div className="space-y-10">
+                <div className="space-y-12">
 
                   {/* PROFILE */}
-                  <section className="flex flex-col items-center text-center space-y-4">
-                    <div className="w-36 h-36 rounded-full overflow-hidden shadow-xl border-4 border-[#AE7533]/30">
+                  <section className="flex flex-col items-center text-center space-y-5">
+                    <div className="relative w-36 h-36 rounded-full overflow-hidden shadow-premium border border-neutral-border">
                       <img
                         src={ownerImage}
                         alt="Founder"
                         className="w-full h-full object-cover"
                       />
+                      <div className="absolute inset-0 bg-accent/10 blur-xl -z-10" />
                     </div>
 
-                    <h3 className="font-heading text-2xl text-[#AE7533]">
+                    <h3 className="font-heading text-2xl text-accent">
                       Founder & Visionary
                     </h3>
 
-                    <p className="font-body text-[#5E6F66] leading-relaxed text-sm max-w-md">
-                      Rcreate was built with a mission to empower business
-                      owners with reliable systems, strategic marketing, and
-                      strong operational foundations.
+                    <p className="font-body text-neutral-muted leading-relaxed text-sm max-w-md">
+                      Rcreate was built to empower business owners with
+                      structured systems, strategic marketing foundations,
+                      and operational clarity that supports sustainable growth.
                     </p>
 
                     {/* SOCIAL LINKS */}
-                    <div className="flex gap-4 pt-2">
+                    <div className="flex gap-4 pt-3">
                       {[FaLinkedinIn, FaFacebookF, FaInstagram].map(
                         (Icon, i) => (
-                          <a
+                          <motion.a
                             key={i}
                             href="#"
-                            className="
-                              p-3 rounded-full
-                              bg-[#2D5D46] text-white
-                              hover:bg-[#AE7533]
-                              transition duration-300
-                            "
+                            whileHover={{ scale: 1.1 }}
+                            className="w-10 h-10 rounded-full
+                                       bg-white/60 backdrop-blur-xl
+                                       border border-neutral-border
+                                       flex items-center justify-center
+                                       text-primary hover:text-accent transition"
                           >
-                            <Icon />
-                          </a>
+                            <Icon size={14} />
+                          </motion.a>
                         )
                       )}
                     </div>
                   </section>
 
                   {/* VALUES */}
-                  <section className="bg-[#FCFAF4] rounded-2xl p-6 border border-[#AE7533]/10">
-                    <h4 className="font-heading text-lg mb-4 text-[#2D5D46]">
+                  <section className="bg-white/60 backdrop-blur-xl rounded-2xl p-6 border border-neutral-border">
+                    <h4 className="font-heading text-lg mb-4 text-primary">
                       What We Stand For
                     </h4>
-                    <ul className="space-y-2 font-body text-[#5E6F66] text-sm">
+                    <ul className="space-y-3 font-body text-neutral-muted text-sm">
                       <li>• Integrity & transparency</li>
-                      <li>• Systems that scale</li>
+                      <li>• Systems designed to scale</li>
                       <li>• Purpose-driven execution</li>
                       <li>• Sustainable business growth</li>
                     </ul>
@@ -112,23 +121,23 @@ export default function Owner({ isOpen, onClose }) {
                 </div>
 
                 {/* RIGHT COLUMN */}
-                <div className="space-y-10">
+                <div className="space-y-12">
 
-                  {/* STORY */}
-                  <section className="space-y-4">
-                    <h4 className="font-heading text-xl text-[#2D5D46]">
+                  {/* JOURNEY */}
+                  <section className="space-y-5">
+                    <h4 className="font-heading text-xl text-primary">
                       Our Journey
                     </h4>
 
-                    <div className="space-y-6 border-l-2 border-[#AE7533]/40 pl-6">
+                    <div className="space-y-8 border-l-2 border-accent/40 pl-6 relative">
                       {[
                         {
                           year: "2021",
-                          text: "The idea was born — structured, reliable virtual support for growing businesses.",
+                          text: "The idea was born — structured and reliable virtual support for growing businesses.",
                         },
                         {
                           year: "2022",
-                          text: "Launched with a focused team dedicated to quality execution and trust.",
+                          text: "Launched with a focused team committed to quality execution and long-term trust.",
                         },
                         {
                           year: "2023",
@@ -142,16 +151,15 @@ export default function Owner({ isOpen, onClose }) {
                         <motion.div
                           key={i}
                           initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
+                          animate={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.4, delay: i * 0.1 }}
                           className="relative"
                         >
-                          <span className="absolute -left-[34px] top-1 w-3 h-3 rounded-full bg-[#AE7533]" />
-                          <h5 className="font-semibold text-[#2D5D46]">
+                          <span className="absolute -left-[33px] top-1 w-3 h-3 rounded-full bg-accent" />
+                          <h5 className="font-semibold text-primary">
                             {item.year}
                           </h5>
-                          <p className="font-body text-[#5E6F66] text-sm">
+                          <p className="font-body text-neutral-muted text-sm">
                             {item.text}
                           </p>
                         </motion.div>
@@ -161,7 +169,7 @@ export default function Owner({ isOpen, onClose }) {
 
                   {/* QUOTE */}
                   <section>
-                    <p className="italic font-body text-[#AE7533] text-center md:text-left">
+                    <p className="italic font-body text-accent text-center md:text-left">
                       “Strong systems create sustainable success.”
                     </p>
                   </section>

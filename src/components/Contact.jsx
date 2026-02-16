@@ -1,4 +1,3 @@
-// src/components/Contact.jsx
 import { motion } from "framer-motion";
 import { useState } from "react";
 
@@ -20,51 +19,70 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    window.location.href = `mailto:yourcompany@email.com?subject=New Inquiry from ${formData.name}&body=
+    const subject = encodeURIComponent(
+      `New Inquiry from ${formData.name}`
+    );
+
+    const body = encodeURIComponent(`
 Name: ${formData.name}
 Email: ${formData.email}
 Business: ${formData.business}
 
 Message:
 ${formData.message}
-    `;
+    `);
+
+    window.location.href = `mailto:yourcompany@email.com?subject=${subject}&body=${body}`;
   };
 
   return (
     <section
       id="contact"
-      className="relative py-28 px-6 bg-[#FCFAF4] overflow-hidden font-body"
+      className="relative py-40 px-6 bg-neutral-background overflow-hidden"
     >
-      {/* GOLD GLOW */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[#AE7533]/15 blur-[150px] rounded-full" />
+      {/* Accent Glow */}
+      <div className="absolute top-[-250px] left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-accent/10 blur-[200px] rounded-full" />
 
-      <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+      <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-28 items-center">
 
-        {/* LEFT COLUMN — TEXT */}
+        {/* LEFT COLUMN */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="font-heading text-4xl md:text-6xl text-[#2D5D46] mb-6 leading-tight">
+          <span className="text-sm tracking-[0.4em] uppercase text-neutral-muted">
+            11 / Contact
+          </span>
+
+          <h2 className="font-heading text-4xl md:text-6xl mt-6 text-primary leading-tight">
             Let’s{" "}
-            <span className="bg-gradient-to-r from-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent">
+            <span className="text-accent">
               Work Together
             </span>
           </h2>
 
-          <p className="text-[#5E6F66] text-lg md:text-xl leading-relaxed max-w-lg mb-10">
-            Ready to simplify your operations and scale with confidence?
-            Share your details and we’ll get back to you with a tailored
+          <p className="text-neutral-muted text-lg md:text-xl leading-relaxed max-w-lg mt-6 mb-12">
+            Ready to simplify operations and scale with confidence?
+            Share your details and we’ll respond with a tailored
             support strategy.
           </p>
 
-          {/* OPTIONAL CONTACT INFO STYLE BLOCK */}
-          <div className="space-y-4 text-[#5E6F66]">
-            <p><strong>Email:</strong> yourcompany@email.com</p>
-            <p><strong>Availability:</strong> Monday – Friday</p>
-            <p><strong>Response Time:</strong> Within 24 hours</p>
+          {/* Contact Info */}
+          <div className="space-y-4 text-neutral-muted">
+            <p>
+              <span className="font-semibold text-primary">Email:</span>{" "}
+              yourcompany@email.com
+            </p>
+            <p>
+              <span className="font-semibold text-primary">Availability:</span>{" "}
+              Monday – Friday
+            </p>
+            <p>
+              <span className="font-semibold text-primary">Response Time:</span>{" "}
+              Within 24 hours
+            </p>
           </div>
         </motion.div>
 
@@ -75,8 +93,12 @@ ${formData.message}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="bg-white/70 backdrop-blur-md border border-white/40 shadow-xl rounded-3xl p-10 space-y-6"
+          className="relative rounded-3xl p-12 bg-white/70 backdrop-blur-xl border border-neutral-border shadow-soft space-y-6"
         >
+          {/* Subtle Glow Layer */}
+          <div className="absolute -inset-1 bg-accent/5 blur-2xl rounded-3xl -z-10" />
+
+          {/* Name */}
           <input
             type="text"
             name="name"
@@ -84,9 +106,10 @@ ${formData.message}
             required
             value={formData.name}
             onChange={handleChange}
-            className="w-full p-4 rounded-xl border border-[#94A591]/40 focus:outline-none focus:ring-2 focus:ring-[#AE7533] bg-white/80"
+            className="w-full p-4 rounded-xl border border-neutral-border bg-white/80 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition"
           />
 
+          {/* Email */}
           <input
             type="email"
             name="email"
@@ -94,18 +117,20 @@ ${formData.message}
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full p-4 rounded-xl border border-[#94A591]/40 focus:outline-none focus:ring-2 focus:ring-[#AE7533] bg-white/80"
+            className="w-full p-4 rounded-xl border border-neutral-border bg-white/80 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition"
           />
 
+          {/* Business */}
           <input
             type="text"
             name="business"
             placeholder="Business Name"
             value={formData.business}
             onChange={handleChange}
-            className="w-full p-4 rounded-xl border border-[#94A591]/40 focus:outline-none focus:ring-2 focus:ring-[#AE7533] bg-white/80"
+            className="w-full p-4 rounded-xl border border-neutral-border bg-white/80 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition"
           />
 
+          {/* Message */}
           <textarea
             name="message"
             placeholder="Tell us about your needs..."
@@ -113,12 +138,13 @@ ${formData.message}
             required
             value={formData.message}
             onChange={handleChange}
-            className="w-full p-4 rounded-xl border border-[#94A591]/40 focus:outline-none focus:ring-2 focus:ring-[#AE7533] bg-white/80"
+            className="w-full p-4 rounded-xl border border-neutral-border bg-white/80 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition resize-none"
           />
 
+          {/* Submit */}
           <button
             type="submit"
-            className="w-full py-4 rounded-xl bg-[#AE7533] text-white font-semibold shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
+            className="w-full py-4 rounded-xl bg-accent text-white font-semibold shadow-premium hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
           >
             Submit Inquiry →
           </button>

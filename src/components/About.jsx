@@ -1,5 +1,5 @@
 // src/components/About.jsx
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import bg1 from "../assets/bg1.jpg";
@@ -8,141 +8,139 @@ import bg3 from "../assets/bg3.jpg";
 
 const aboutCards = [
   {
-    title: "Right-Hand Support",
-    desc: "Dependable virtual assistants who work as an extension of your business—handling daily tasks so you can focus on leadership and growth.",
-    icon: "🤝",
+    title: "Right-Hand Executive Support",
+    desc: "Structured virtual assistants who operate as an extension of your leadership team — managing daily execution while you focus on growth strategy.",
     bg: bg1,
   },
   {
-    title: "Done-For-You Operations",
-    desc: "From admin work and client communication to marketing and website creation, our trained VAs keep operations smooth.",
-    icon: "⚙️",
+    title: "Done-For-You Operational Systems",
+    desc: "From client communication and admin to marketing systems and digital assets, we streamline and optimize backend processes.",
     bg: bg2,
   },
   {
-    title: "Long-Term Partnership",
-    desc: "We build lasting support partnerships that ensure consistency, efficiency, and a strong online presence 24/7.",
-    icon: "📈",
+    title: "Long-Term Strategic Partnership",
+    desc: "We build consistent, scalable partnerships that strengthen efficiency, brand presence, and operational stability.",
     bg: bg3,
   },
 ];
 
 export default function About() {
-  const [active, setActive] = useState(null);
-  const [bgImage, setBgImage] = useState(bg1);
-
-  const isMobile = () => window.innerWidth < 768;
-
-  const handleInteraction = (index) => {
-    if (isMobile()) {
-      setActive(active === index ? null : index);
-      setBgImage(aboutCards[index].bg);
-    }
-  };
-
-  const handleHover = (index) => {
-    if (!isMobile()) {
-      setActive(index);
-      setBgImage(aboutCards[index].bg);
-    }
-  };
-
-  const handleLeave = () => {
-    if (!isMobile()) {
-      setActive(null);
-    }
-  };
+  const [active, setActive] = useState(0);
 
   return (
-    <section id="about" className="relative py-24 px-6 overflow-hidden">
-
-      {/* BACKGROUND IMAGE (Animated on Active) */}
+    <section
+      id="about"
+      className="relative py-36 px-6 bg-neutral-background overflow-hidden"
+    >
+      {/* Dynamic Background */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={bgImage}
+          key={aboutCards[active].bg}
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgImage})` }}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
+          style={{ backgroundImage: `url(${aboutCards[active].bg})` }}
+          initial={{ opacity: 0, scale: 1.08 }}
+          animate={{ opacity: 0.16, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 1.2 }}
         />
       </AnimatePresence>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-[#FCFAF4]/95 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-neutral-background/95 backdrop-blur-sm" />
 
-      <div className="relative z-20 max-w-6xl mx-auto grid md:grid-cols-2 gap-24 items-start">
+      {/* Accent Glow */}
+      <div className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] bg-accent/10 blur-[120px] rounded-full" />
 
-        {/* LEFT TEXT */}
+      <div className="relative z-20 max-w-7xl mx-auto grid md:grid-cols-2 gap-28 items-start">
+
+        {/* LEFT SIDE */}
         <div>
-          <h2 className="font-heading text-4xl md:text-5xl mb-6 text-[#2D5D46]">
-            About{" "}
-            <span className="bg-gradient-to-r from-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent">
-              Rcreate Virtual Assistance Services
-            </span>
-          </h2>
 
-          <p className="text-lg text-[#5E6F66] leading-relaxed">
-            We provide right-hand virtual assistance for founders and home
-            service CEOs. Our trained VAs manage admin, operations,
-            communication, marketing, and website creation so you can focus on growth.
-          </p>
+          {/* 🔥 SECTION NUMBER */}
+          <span className="text-sm tracking-[0.4em] uppercase text-neutral-muted">
+            03 / About
+          </span>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+            className="font-heading text-4xl md:text-5xl mt-6 mb-10 text-primary leading-tight"
+          >
+            Built to Support{" "}
+            <span className="text-accent">
+              Visionary Leaders
+            </span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-lg text-neutral-muted leading-relaxed max-w-xl"
+          >
+            Rcreate Virtual Assistance Services delivers structured operational
+            support for founders and service-based businesses. We integrate
+            directly into your systems, strengthen workflows, and elevate
+            daily execution — so leadership remains focused on long-term growth.
+          </motion.p>
         </div>
 
-        {/* RIGHT SIDE */}
+        {/* RIGHT SIDE — TIMELINE */}
         <div className="relative">
 
-          {/* Vertical Gold Line */}
-          <div className="absolute left-8 top-0 bottom-0 w-[2px] bg-[#AE7533]/40" />
+          {/* Vertical Accent Line */}
+          <div className="absolute left-6 top-0 bottom-0 w-px bg-accent/30" />
 
-          <div className="space-y-16">
+          <div className="space-y-20">
 
             {aboutCards.map((card, i) => (
-              <div
+              <motion.div
                 key={i}
-                className={`flex items-start gap-10 relative ${
-                  i % 2 !== 0 ? "ml-6" : ""
-                }`} // staggered spacing
+                className="flex items-start gap-10 cursor-pointer group"
+                onMouseEnter={() => setActive(i)}
+                onClick={() => setActive(i)}   // mobile support
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.15, duration: 0.6 }}
+                viewport={{ once: true }}
               >
-
-                {/* ICON */}
-                <motion.div
-                  onClick={() => handleInteraction(i)}
-                  onMouseEnter={() => handleHover(i)}
-                  onMouseLeave={handleLeave}
-                  whileHover={{ scale: 1.1 }}
-                  className={`w-16 h-16 flex items-center justify-center rounded-full text-2xl cursor-pointer transition-all duration-300
-                    ${
-                      active === i
-                        ? "bg-[#AE7533] text-white shadow-xl"
-                        : "bg-white text-[#AE7533] border border-[#AE7533]/30"
-                    }`}
+                {/* Marker */}
+                <div
+                  className={`relative w-12 h-12 rounded-full flex items-center justify-center border transition-all duration-300
+                  ${
+                    active === i
+                      ? "bg-accent border-accent shadow-premium"
+                      : "bg-white border-accent/40"
+                  }`}
                 >
-                  {card.icon}
+                  <div
+                    className={`w-3 h-3 rounded-full transition-all duration-300
+                      ${
+                        active === i ? "bg-white scale-110" : "bg-accent/50"
+                      }`}
+                  />
+                </div>
+
+                {/* Card */}
+                <motion.div
+                  animate={{
+                    scale: active === i ? 1.03 : 1,
+                    opacity: active === i ? 1 : 0.7,
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="flex-1 bg-white/80 backdrop-blur-xl border border-neutral-border rounded-2xl p-8 shadow-soft group-hover:shadow-premium transition-all"
+                >
+                  <h3 className="font-heading text-xl mb-3 text-primary">
+                    {card.title}
+                  </h3>
+                  <p className="text-neutral-muted text-sm leading-relaxed">
+                    {card.desc}
+                  </p>
                 </motion.div>
-
-                {/* CONTENT */}
-                <AnimatePresence>
-                  {active === i && (
-                    <motion.div
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
-                      transition={{ duration: 0.3 }}
-                      className="flex-1 bg-white/80 backdrop-blur-md border border-white/40 rounded-2xl p-6 shadow-lg"
-                    >
-                      <h3 className="font-heading text-xl mb-2 text-[#2D5D46]">
-                        {card.title}
-                      </h3>
-                      <p className="text-[#5E6F66] text-sm leading-relaxed">
-                        {card.desc}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-              </div>
+              </motion.div>
             ))}
 
           </div>

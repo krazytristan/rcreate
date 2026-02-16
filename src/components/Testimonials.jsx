@@ -52,23 +52,27 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="relative py-28 px-6 bg-[#FCFAF4] overflow-hidden font-body"
+      className="relative py-40 px-6 bg-neutral-background overflow-hidden"
     >
-      {/* GOLD GLOW */}
-      <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#AE7533]/15 blur-[150px] rounded-full" />
+      {/* Accent Glow */}
+      <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-accent/10 blur-[180px] rounded-full" />
 
-      <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+      <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-28 items-center">
 
-        {/* LEFT COLUMN — TEXT */}
+        {/* LEFT COLUMN */}
         <div>
-          <h2 className="font-heading text-4xl md:text-6xl tracking-tight mb-6 text-[#2D5D46] leading-tight">
+          <span className="text-sm tracking-[0.4em] uppercase text-neutral-muted">
+            10 / Testimonials
+          </span>
+
+          <h2 className="font-heading text-4xl md:text-6xl mt-6 text-primary leading-tight">
             Client{" "}
-            <span className="bg-gradient-to-r from-[#AE7533] to-[#2D5D46] bg-clip-text text-transparent">
+            <span className="text-accent">
               Testimonials
             </span>
           </h2>
 
-          <p className="text-lg md:text-xl text-[#5E6F66] leading-relaxed max-w-xl">
+          <p className="text-lg md:text-xl text-neutral-muted leading-relaxed mt-6 max-w-xl">
             Trusted by founders, service businesses, and agencies who value
             reliability, professionalism, and measurable results.
           </p>
@@ -80,46 +84,46 @@ export default function Testimonials() {
           <AnimatePresence mode="wait">
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -60 }}
-              transition={{ duration: 0.6 }}
-              className="rounded-3xl p-10 bg-white/70 backdrop-blur-md border border-white/40 shadow-xl relative"
+              initial={{ opacity: 0, y: 40, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="relative rounded-3xl p-12 bg-white/70 backdrop-blur-xl border border-neutral-border shadow-soft"
             >
-              {/* QUOTE ICON */}
-              <FaQuoteLeft className="text-3xl mb-6 text-[#AE7533]/40" />
+              {/* Quote Icon */}
+              <FaQuoteLeft className="text-4xl mb-6 text-accent/30" />
 
-              {/* STAR RATING */}
+              {/* Star Rating */}
               <div className="flex gap-1 mb-6">
                 {Array.from({ length: testimonials[index].rating }).map(
                   (_, idx) => (
                     <FaStar
                       key={idx}
-                      className="text-sm text-[#AE7533]"
+                      className="text-sm text-accent"
                     />
                   )
                 )}
               </div>
 
-              {/* QUOTE */}
-              <p className="text-[#5E6F66] leading-relaxed mb-8">
+              {/* Quote */}
+              <p className="text-neutral-muted leading-relaxed mb-8 text-lg">
                 “{testimonials[index].quote}”
               </p>
 
-              {/* AUTHOR */}
-              <span className="font-heading text-sm text-[#94A591]">
+              {/* Author */}
+              <span className="font-heading text-sm text-neutral-muted/80">
                 — {testimonials[index].author}
               </span>
             </motion.div>
           </AnimatePresence>
 
           {/* CONTROLS */}
-          <div className="flex items-center justify-between mt-10">
+          <div className="flex items-center justify-between mt-12">
 
             {/* PREV */}
             <button
               onClick={prevSlide}
-              className="w-12 h-12 flex items-center justify-center rounded-full border border-[#AE7533]/40 text-[#AE7533] hover:bg-[#AE7533] hover:text-white transition-all duration-300"
+              className="w-12 h-12 flex items-center justify-center rounded-full border border-accent/40 text-accent hover:bg-accent hover:text-white transition-all duration-300"
             >
               <FaArrowLeft />
             </button>
@@ -132,8 +136,8 @@ export default function Testimonials() {
                   onClick={() => setIndex(i)}
                   className={`h-3 rounded-full transition-all duration-300 ${
                     i === index
-                      ? "w-8 bg-[#AE7533]"
-                      : "w-3 bg-[#94A591] opacity-50 hover:opacity-100"
+                      ? "w-8 bg-accent"
+                      : "w-3 bg-neutral-muted/40 hover:bg-accent/50"
                   }`}
                 />
               ))}
@@ -142,7 +146,7 @@ export default function Testimonials() {
             {/* NEXT */}
             <button
               onClick={nextSlide}
-              className="w-12 h-12 flex items-center justify-center rounded-full border border-[#AE7533]/40 text-[#AE7533] hover:bg-[#AE7533] hover:text-white transition-all duration-300"
+              className="w-12 h-12 flex items-center justify-center rounded-full border border-accent/40 text-accent hover:bg-accent hover:text-white transition-all duration-300"
             >
               <FaArrowRight />
             </button>

@@ -1,78 +1,14 @@
 /* src/App.css */
 
 .App {
-  text-align: center;
   font-family: 'Inter', sans-serif;
-  background-color: #FCFAF4; /* soft background */
+  background-color: #FCFAF4;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 25vmin;
-  max-height: 200px;
-  width: auto;
-  pointer-events: none;
-  margin-bottom: 2rem;
-  transition: transform 0.3s ease;
-}
-
-/* Spin once on load */
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin-once 2s linear forwards;
-  }
-}
-
-.App-logo:hover {
-  transform: scale(1.05);
-}
-
-.App-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: clamp(1rem, 2.5vw, 2rem); /* responsive text */
-  color: #2D5D46; /* dark green */
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
-  gap: 1rem;
-}
-
+/* Remove CRA demo styles completely */
+.App-logo,
+.App-header,
 .App-link {
-  color: #AE7533; /* branding */
-  font-weight: 600;
-  text-decoration: none;
-  transition: color 0.3s ease, transform 0.2s ease;
-}
-
-.App-link:hover {
-  color: #2D5D46;
-  transform: scale(1.05);
-}
-
-/* Responsive spacing */
-@media (max-width: 640px) {
-  .App {
-    padding: 1rem;
-  }
-
-  .App-logo {
-    height: 35vmin;
-  }
-}
-
-/* Spin once keyframes */
-@keyframes App-logo-spin-once {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  all: unset;
 }

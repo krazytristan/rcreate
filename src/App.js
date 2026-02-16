@@ -8,54 +8,56 @@ import HowItWorks from "./components/HowItWorks";
 import WhyChoose from "./components/WhyChoose";
 import Benefits from "./components/Benefits";
 import WhoWeServe from "./components/WhoWeServe";
+import Team from "./components/Team";
 import Testimonials from "./components/Testimonials";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div
-      className="font-sans min-h-screen"
-      style={{
-        backgroundColor: "#FCFAF4",
-        color: "#2D5D46",
-      }}
-    >
+    <div className="relative min-h-screen bg-neutral-background text-primary font-body overflow-x-hidden">
+
+      {/* Global Ambient Glow */}
+      <div className="pointer-events-none fixed top-[-300px] left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-accent/5 blur-[220px] rounded-full -z-10" />
+
       <Navbar />
 
-      <main className="space-y-24">
+      <main>
 
-        {/* 1️⃣ Hero */}
+        {/* 01 — Hero */}
         <Hero />
 
-        {/* 2️⃣ Authority Logos */}
+        {/* 02 — Authority */}
         <WhoWeHelp />
 
-        {/* 3️⃣ Early CTA */}
+        {/* 03 — Early CTA */}
         <BookCall />
 
-        {/* 4️⃣ About */}
+        {/* 04 — About */}
         <About />
 
-        {/* 5️⃣ Services */}
+        {/* 05 — Services */}
         <Services />
 
-        {/* 6️⃣ Process */}
+        {/* 06 — Process */}
         <HowItWorks />
 
-        {/* 7️⃣ Differentiation */}
+        {/* 07 — Why Choose */}
         <WhyChoose />
 
-        {/* 8️⃣ Benefits */}
+        {/* 08 — Benefits */}
         <Benefits />
 
-        {/* 9️⃣ Target Audience */}
+        {/* 09 — Who We Serve */}
         <WhoWeServe />
 
-        {/* 🔟 Social Proof */}
+        {/* 10 — Team */}
+        <Team />
+
+        {/* 11 — Testimonials */}
         <Testimonials />
 
-        {/* 1️⃣1️⃣ Contact / Lead Form */}
+        {/* 12 — Contact */}
         <Contact />
 
       </main>
