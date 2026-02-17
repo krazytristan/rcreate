@@ -1,4 +1,3 @@
-// src/components/About.jsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -32,21 +31,26 @@ export default function About() {
       id="about"
       className="relative py-36 px-6 bg-neutral-background overflow-hidden"
     >
-      {/* Dynamic Background */}
+      {/* 🔥 BACKGROUND IMAGE LAYER */}
       <AnimatePresence mode="wait">
         <motion.div
           key={aboutCards[active].bg}
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${aboutCards[active].bg})` }}
-          initial={{ opacity: 0, scale: 1.08 }}
-          animate={{ opacity: 0.16, scale: 1 }}
+          className="absolute inset-0"
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.2 }}
-        />
+          transition={{ duration: 1 }}
+        >
+          <img
+            src={aboutCards[active].bg}
+            alt="About Background"
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
       </AnimatePresence>
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-neutral-background/95 backdrop-blur-sm" />
+      {/* 🔥 DARK OVERLAY (Adjusted so image shows clearly) */}
+      <div className="absolute inset-0 bg-neutral-background/85 backdrop-blur-[2px]" />
 
       {/* Accent Glow */}
       <div className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] bg-accent/10 blur-[120px] rounded-full" />
@@ -55,8 +59,6 @@ export default function About() {
 
         {/* LEFT SIDE */}
         <div>
-
-          {/* 🔥 SECTION NUMBER */}
           <span className="text-sm tracking-[0.4em] uppercase text-neutral-muted">
             03 / About
           </span>
@@ -91,23 +93,20 @@ export default function About() {
         {/* RIGHT SIDE — TIMELINE */}
         <div className="relative">
 
-          {/* Vertical Accent Line */}
           <div className="absolute left-6 top-0 bottom-0 w-px bg-accent/30" />
 
           <div className="space-y-20">
-
             {aboutCards.map((card, i) => (
               <motion.div
                 key={i}
                 className="flex items-start gap-10 cursor-pointer group"
                 onMouseEnter={() => setActive(i)}
-                onClick={() => setActive(i)}   // mobile support
+                onClick={() => setActive(i)}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.15, duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                {/* Marker */}
                 <div
                   className={`relative w-12 h-12 rounded-full flex items-center justify-center border transition-all duration-300
                   ${
@@ -124,14 +123,13 @@ export default function About() {
                   />
                 </div>
 
-                {/* Card */}
                 <motion.div
                   animate={{
                     scale: active === i ? 1.03 : 1,
-                    opacity: active === i ? 1 : 0.7,
+                    opacity: active === i ? 1 : 0.75,
                   }}
                   transition={{ duration: 0.3 }}
-                  className="flex-1 bg-white/80 backdrop-blur-xl border border-neutral-border rounded-2xl p-8 shadow-soft group-hover:shadow-premium transition-all"
+                  className="flex-1 bg-white/85 backdrop-blur-xl border border-neutral-border rounded-2xl p-8 shadow-soft"
                 >
                   <h3 className="font-heading text-xl mb-3 text-primary">
                     {card.title}
@@ -142,10 +140,8 @@ export default function About() {
                 </motion.div>
               </motion.div>
             ))}
-
           </div>
         </div>
-
       </div>
     </section>
   );
