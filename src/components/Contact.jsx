@@ -53,7 +53,6 @@ ${formData.message}
           transition={{ duration: 0.8 }}
         >
           <span className="text-sm tracking-[0.4em] uppercase text-neutral-muted">
-            13 / Contact
           </span>
 
           <h2 className="font-heading text-4xl md:text-6xl mt-6 text-primary leading-tight">

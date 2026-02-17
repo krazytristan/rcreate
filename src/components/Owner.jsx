@@ -1,15 +1,31 @@
-// src/components/Owner.jsx
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import { FaLinkedinIn, FaFacebookF, FaInstagram } from "react-icons/fa";
-import ownerImage from "../assets/reg.png";
+import founderImage from "../assets/reg.png";
+import team1 from "../assets/va1.jpg";
+import team2 from "../assets/va2.jpg";
+import team3 from "../assets/va3.jpg";
+import team4 from "../assets/va4.jpg";
 
 export default function Owner({ isOpen, onClose }) {
 
-  /* Lock scroll when open */
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
   }, [isOpen]);
+
+  const teamMembers = [
+    { name: "Team Member 1", img: team1 },
+    { name: "Team Member 2", img: team2 },
+    { name: "Team Member 3", img: team3 },
+    { name: "Team Member 4", img: team4 },
+  ];
+
+  const howItWorks = [
+    "Discovery & Strategy Alignment",
+    "System Integration & Setup",
+    "Dedicated VA Assignment",
+    "Ongoing Optimization & Growth"
+  ];
 
   return (
     <AnimatePresence>
@@ -39,7 +55,7 @@ export default function Owner({ isOpen, onClose }) {
                        shadow-soft
                        overflow-hidden flex flex-col"
           >
-            {/* Subtle Glow Layer */}
+
             <div className="absolute -inset-1 bg-accent/5 blur-2xl rounded-3xl -z-10" />
 
             {/* HEADER */}
@@ -57,26 +73,28 @@ export default function Owner({ isOpen, onClose }) {
 
             {/* CONTENT */}
             <div className="p-8 overflow-y-auto">
-
               <div className="grid md:grid-cols-2 gap-14">
 
                 {/* LEFT COLUMN */}
                 <div className="space-y-12">
 
-                  {/* PROFILE */}
+                  {/* FOUNDER */}
                   <section className="flex flex-col items-center text-center space-y-5">
                     <div className="relative w-36 h-36 rounded-full overflow-hidden shadow-premium border border-neutral-border">
                       <img
-                        src={ownerImage}
-                        alt="Founder"
+                        src={founderImage}
+                        alt="Founder & CEO"
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-accent/10 blur-xl -z-10" />
                     </div>
 
                     <h3 className="font-heading text-2xl text-accent">
-                      Founder & Visionary
+                      Founder & CEO
                     </h3>
+
+                    <p className="font-semibold text-primary">
+                      Ms. REGINE S. CANDIDO
+                    </p>
 
                     <p className="font-body text-neutral-muted leading-relaxed text-sm max-w-md">
                       Rcreate was built to empower business owners with
@@ -84,7 +102,6 @@ export default function Owner({ isOpen, onClose }) {
                       and operational clarity that supports sustainable growth.
                     </p>
 
-                    {/* SOCIAL LINKS */}
                     <div className="flex gap-4 pt-3">
                       {[FaLinkedinIn, FaFacebookF, FaInstagram].map(
                         (Icon, i) => (
@@ -105,48 +122,18 @@ export default function Owner({ isOpen, onClose }) {
                     </div>
                   </section>
 
-                  {/* VALUES */}
-                  <section className="bg-white/60 backdrop-blur-xl rounded-2xl p-6 border border-neutral-border">
-                    <h4 className="font-heading text-lg mb-4 text-primary">
-                      What We Stand For
-                    </h4>
-                    <ul className="space-y-3 font-body text-neutral-muted text-sm">
-                      <li>• Integrity & transparency</li>
-                      <li>• Systems designed to scale</li>
-                      <li>• Purpose-driven execution</li>
-                      <li>• Sustainable business growth</li>
-                    </ul>
-                  </section>
-
-                </div>
-
-                {/* RIGHT COLUMN */}
-                <div className="space-y-12">
-
-                  {/* JOURNEY */}
-                  <section className="space-y-5">
-                    <h4 className="font-heading text-xl text-primary">
+                  {/* OUR JOURNEY (Moved Here) */}
+                  <section className="space-y-6">
+                    <h4 className="font-heading text-xl text-primary text-center md:text-left">
                       Our Journey
                     </h4>
 
-                    <div className="space-y-8 border-l-2 border-accent/40 pl-6 relative">
+                    <div className="space-y-6 border-l-2 border-accent/40 pl-6 relative">
                       {[
-                        {
-                          year: "2021",
-                          text: "The idea was born — structured and reliable virtual support for growing businesses.",
-                        },
-                        {
-                          year: "2022",
-                          text: "Launched with a focused team committed to quality execution and long-term trust.",
-                        },
-                        {
-                          year: "2023",
-                          text: "Expanded into marketing systems and website development.",
-                        },
-                        {
-                          year: "Today",
-                          text: "Building scalable systems that empower founders worldwide.",
-                        },
+                        { year: "2021", text: "The idea was born — structured virtual support for growing businesses." },
+                        { year: "2022", text: "Launched with a focused team committed to excellence." },
+                        { year: "2023", text: "Expanded into marketing systems and website development." },
+                        { year: "Today", text: "Building scalable systems for founders worldwide." }
                       ].map((item, i) => (
                         <motion.div
                           key={i}
@@ -172,6 +159,60 @@ export default function Owner({ isOpen, onClose }) {
                     <p className="italic font-body text-accent text-center md:text-left">
                       “Strong systems create sustainable success.”
                     </p>
+                  </section>
+
+                </div>
+
+                {/* RIGHT COLUMN */}
+                <div className="space-y-12">
+
+                  {/* HOW IT WORKS (Added Back) */}
+                  <section>
+                    <h4 className="font-heading text-xl text-primary mb-6">
+                      How It Works
+                    </h4>
+
+                    <div className="space-y-4">
+                      {howItWorks.map((step, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, x: 10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.1 }}
+                          className="bg-white/60 backdrop-blur-xl border border-neutral-border rounded-xl p-4 text-sm text-neutral-muted"
+                        >
+                          {step}
+                        </motion.div>
+                      ))}
+                    </div>
+                  </section>
+
+                  {/* TEAM (Moved Right) */}
+                  <section>
+                    <h4 className="font-heading text-lg text-primary mb-6">
+                      The RCreate Team
+                    </h4>
+
+                    <div className="grid grid-cols-4 gap-4">
+                      {teamMembers.map((member, i) => (
+                        <motion.div
+                          key={i}
+                          whileHover={{ scale: 1.08 }}
+                          className="flex flex-col items-center text-center"
+                        >
+                          <div className="w-16 h-16 rounded-full overflow-hidden border border-neutral-border shadow-soft">
+                            <img
+                              src={member.img}
+                              alt={member.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <span className="text-xs text-neutral-muted mt-2">
+                            {member.name}
+                          </span>
+                        </motion.div>
+                      ))}
+                    </div>
                   </section>
 
                 </div>

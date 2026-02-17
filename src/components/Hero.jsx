@@ -1,6 +1,6 @@
 // src/components/Hero.jsx
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import CountUp from "react-countup";
 
 /* ICONS */
@@ -59,6 +59,13 @@ const images = [hero1, hero2, hero3];
 
 export default function Hero() {
   const videoRef = useRef(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    date: "",
+    time: "",
+  });
 
   useEffect(() => {
     if (!videoRef.current) return;
@@ -66,9 +73,18 @@ export default function Hero() {
     videoRef.current.play().catch(() => {});
   }, []);
 
-  const scrollToSection = (id) => {
-    const section = document.getElementById(id);
-    if (section) section.scrollIntoView({ behavior: "smooth" });
+  useEffect(() => {
+    document.body.style.overflow = openModal ? "hidden" : "auto";
+  }, [openModal]);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Reservation:", formData);
+    setOpenModal(false);
   };
 
   return (
@@ -94,84 +110,54 @@ export default function Hero() {
       {/* Accent Glow */}
       <div className="absolute top-[-150px] right-[-150px] w-[500px] h-[500px] bg-accent/20 blur-[140px] rounded-full" />
 
-      {/* Grain */}
-      <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none
-        bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)]
-        [background-size:3px_3px]"
-      />
-
+      {/* Content */}
       <div className="relative z-20 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-20 items-center">
 
-        {/* LEFT CONTENT */}
+        {/* LEFT SIDE */}
         <div>
 
-          {/* SECTION NUMBER */}
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="text-xs tracking-[0.4em] uppercase text-white/50"
-          >
-            01 / Hero
-          </motion.span>
-
-          {/* BADGE */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="mt-6 mb-8 inline-block px-6 py-2 rounded-full bg-white/5 backdrop-blur-md text-xs tracking-[0.25em] uppercase border border-white/10"
-          >
-            9+ Years of Operational Excellence
-          </motion.div>
-
-          {/* HEADLINE */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9 }}
             className="font-heading text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight"
           >
-            Executive-Level
-            <br />
-            Virtual Support
+            Leading Executive Virtual Assistant Solutions
             <br />
             <span className="text-accent">
-              That Scales With You
+              for Growing Businesses
             </span>
           </motion.h1>
 
-          {/* DESCRIPTION */}
           <motion.p
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             className="mt-8 text-lg text-white/80 max-w-xl leading-relaxed"
           >
-            We streamline operations, automate workflows, and manage
-            daily execution so you can focus on leadership,
-            innovation, and strategic expansion.
+            <strong>Scale smarter. Operate efficiently. Lead confidently.</strong>
+            <br /><br />
+            Rcreate Virtual Assistance Services provides high-level executive,
+            operations, and marketing support for founders, CEOs,
+            and service-based businesses worldwide.
+            <br /><br />
+            From internal systems to external visibility, we manage the execution —
+            so you can focus on scaling strategically.
+            <br /><br />
+            All-in-one support. Structured systems. Long-term partnership.
           </motion.p>
 
           {/* CTA */}
           <div className="mt-10 flex flex-wrap gap-6">
             <button
-              onClick={() => scrollToSection("contact")}
+              onClick={() => setOpenModal(true)}
               className="px-10 py-3 rounded-full bg-accent text-white font-medium shadow-premium hover:scale-105 transition duration-300"
             >
-              Book Consultation
-            </button>
-
-            <button
-              onClick={() => scrollToSection("services")}
-              className="px-10 py-3 rounded-full border border-white/30 hover:bg-white hover:text-primary transition duration-300"
-            >
-              Our Services
+              Book a Reservation
             </button>
           </div>
 
-          {/* STATS */}
+          {/* Stats */}
           <div className="mt-16 flex gap-8">
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-6 shadow-soft">
               <h3 className="text-3xl font-semibold text-accent">
@@ -193,7 +179,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* RIGHT VISUAL STACK */}
+        {/* RIGHT SIDE IMAGES */}
         <div className="relative hidden lg:flex justify-center items-center">
           <div className="relative w-[420px] h-[420px]">
             {images.map((img, i) => (
@@ -216,7 +202,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* TOOL STRIP */}
+      {/* TOOL STRIP RESTORED */}
       <div className="absolute bottom-10 left-0 w-full overflow-hidden opacity-70">
         <motion.div
           className="flex gap-10 w-max"
@@ -233,6 +219,76 @@ export default function Hero() {
           ))}
         </motion.div>
       </div>
+
+      {/* BOOKING MODAL */}
+      <AnimatePresence>
+        {openModal && (
+          <>
+            <motion.div
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+              onClick={() => setOpenModal(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, x: "-50%", y: "-50%" }}
+              animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="fixed z-50 top-1/2 left-1/2 w-[95%] sm:w-[500px]
+                         bg-white rounded-3xl p-8 shadow-2xl"
+            >
+              <h3 className="text-2xl font-heading text-primary mb-6 text-center">
+                Book Your Appointment
+              </h3>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  required
+                  onChange={handleChange}
+                  className="w-full p-4 border rounded-xl"
+                />
+
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  required
+                  onChange={handleChange}
+                  className="w-full p-4 border rounded-xl"
+                />
+
+                <input
+                  type="date"
+                  name="date"
+                  required
+                  onChange={handleChange}
+                  className="w-full p-4 border rounded-xl"
+                />
+
+                <input
+                  type="time"
+                  name="time"
+                  required
+                  onChange={handleChange}
+                  className="w-full p-4 border rounded-xl"
+                />
+
+                <button
+                  type="submit"
+                  className="w-full bg-accent text-white py-3 rounded-xl font-semibold hover:scale-105 transition"
+                >
+                  Confirm Reservation
+                </button>
+              </form>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

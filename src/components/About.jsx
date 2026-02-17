@@ -1,6 +1,11 @@
 // src/components/About.jsx
 import { useState, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 
 import bg1 from "../assets/bg1.jpg";
 import bg2 from "../assets/bg2.jpg";
@@ -26,9 +31,10 @@ const aboutCards = [
 
 export default function About() {
   const [active, setActive] = useState(0);
+  const [imageIndex, setImageIndex] = useState(0);
   const sectionRef = useRef(null);
 
-  /* 🔥 Parallax Scroll Effect */
+  /* 🔥 Parallax Scroll */
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
@@ -37,13 +43,24 @@ export default function About() {
   const yParallax = useTransform(scrollYProgress, [0, 1], [-60, 60]);
   const imageShift = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
+  /* Slider Controls */
+  const nextImage = () => {
+    setImageIndex((prev) => (prev + 1) % aboutCards.length);
+  };
+
+  const prevImage = () => {
+    setImageIndex((prev) =>
+      prev === 0 ? aboutCards.length - 1 : prev - 1
+    );
+  };
+
   return (
     <section
       ref={sectionRef}
       id="about"
       className="relative py-40 px-6 bg-neutral-background overflow-hidden"
     >
-      {/* ================= CINEMATIC BACKGROUND ================= */}
+      {/* ================= BACKGROUND ================= */}
       <div className="absolute inset-0 overflow-hidden">
 
         <AnimatePresence mode="wait">
@@ -60,7 +77,7 @@ export default function About() {
           />
         </AnimatePresence>
 
-        {/* 🌫 Gradient Mask Instead of Solid Overlay */}
+        {/* Gradient Mask */}
         <motion.div
           style={{ y: yParallax }}
           className="absolute inset-0 bg-gradient-to-b
@@ -69,7 +86,6 @@ export default function About() {
             to-neutral-background"
         />
 
-        {/* Accent Glow */}
         <div className="absolute top-[-200px] left-[-200px] w-[500px] h-[500px] bg-accent/15 blur-[160px] rounded-full" />
       </div>
 
@@ -78,16 +94,12 @@ export default function About() {
 
         {/* LEFT SIDE */}
         <div>
-          <span className="text-sm tracking-[0.4em] uppercase text-neutral-muted">
-            03 / About
-          </span>
-
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="font-heading text-4xl md:text-5xl mt-6 mb-10 text-primary leading-tight"
+            className="font-heading text-4xl md:text-5xl mb-8 text-primary leading-tight"
           >
             Built to Support{" "}
             <span className="text-accent">
@@ -100,19 +112,78 @@ export default function About() {
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-lg text-neutral-muted leading-relaxed max-w-xl"
+            className="text-lg text-neutral-muted leading-relaxed max-w-xl mb-12"
           >
             Rcreate Virtual Assistance Services delivers structured operational
             support for founders and service-based businesses. We integrate
             directly into your systems, strengthen workflows, and elevate
             daily execution — so leadership remains focused on long-term growth.
           </motion.p>
+
+          {/* ================= IMAGE SLIDER ================= */}
+          <div className="relative w-full max-w-xl">
+
+            <div className="relative overflow-hidden rounded-2xl shadow-premium border border-neutral-border">
+
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={imageIndex}
+                  src={aboutCards[imageIndex].bg}
+                  alt="About Visual"
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -40 }}
+                  transition={{ duration: 0.6 }}
+                  className="w-full h-[300px] object-cover"
+                />
+              </AnimatePresence>
+
+              {/* PREV BUTTON */}
+              <button
+                onClick={prevImage}
+                className="absolute left-3 top-1/2 -translate-y-1/2
+                           w-10 h-10 rounded-full bg-white/70 backdrop-blur-xl
+                           border border-neutral-border
+                           text-primary hover:bg-accent hover:text-white
+                           transition"
+              >
+                ‹
+              </button>
+
+              {/* NEXT BUTTON */}
+              <button
+                onClick={nextImage}
+                className="absolute right-3 top-1/2 -translate-y-1/2
+                           w-10 h-10 rounded-full bg-white/70 backdrop-blur-xl
+                           border border-neutral-border
+                           text-primary hover:bg-accent hover:text-white
+                           transition"
+              >
+                ›
+              </button>
+            </div>
+
+            {/* PAGINATION DOTS */}
+            <div className="flex justify-center gap-3 mt-6">
+              {aboutCards.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setImageIndex(i)}
+                  className={`h-3 rounded-full transition-all duration-300 ${
+                    i === imageIndex
+                      ? "w-8 bg-accent"
+                      : "w-3 bg-neutral-muted/40 hover:bg-accent/50"
+                  }`}
+                />
+              ))}
+            </div>
+
+          </div>
         </div>
 
         {/* RIGHT SIDE — TIMELINE */}
         <div className="relative">
 
-          {/* Accent Vertical Line */}
           <div className="absolute left-6 top-0 bottom-0 w-px bg-accent/40" />
 
           <div className="space-y-20">
@@ -127,7 +198,6 @@ export default function About() {
                 transition={{ delay: i * 0.15, duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                {/* Marker */}
                 <div
                   className={`relative w-12 h-12 rounded-full flex items-center justify-center border transition-all duration-300
                   ${
@@ -144,7 +214,6 @@ export default function About() {
                   />
                 </div>
 
-                {/* Glass Card */}
                 <motion.div
                   animate={{
                     scale: active === i ? 1.03 : 1,
@@ -164,6 +233,7 @@ export default function About() {
             ))}
           </div>
         </div>
+
       </div>
     </section>
   );

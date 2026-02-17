@@ -6,23 +6,24 @@ import {
   FaInfoCircle,
   FaCogs,
   FaListOl,
-  FaCheckCircle,
   FaHandHoldingHeart,
   FaUsers,
   FaCommentDots,
   FaEnvelope,
+  FaBriefcase,
 } from "react-icons/fa";
+
 import Owner from "./Owner";
+import Career from "./Career";
 
 const links = [
   { label: "Home", id: "hero", icon: <FaHome /> },
   { label: "About", id: "about", icon: <FaInfoCircle /> },
   { label: "Services", id: "services", icon: <FaCogs /> },
-  { label: "Process", id: "how-it-works", icon: <FaListOl /> },
-  { label: "Why", id: "why-choose", icon: <FaCheckCircle /> },
+  { label: "How It Works", id: "how-it-works", icon: <FaListOl /> },
   { label: "Benefits", id: "benefits", icon: <FaHandHoldingHeart /> },
   { label: "Audience", id: "serve", icon: <FaUsers /> },
-  { label: "Reviews", id: "testimonials", icon: <FaCommentDots /> },
+  { label: "Testimonials", id: "testimonials", icon: <FaCommentDots /> },
   { label: "Contact", id: "contact", icon: <FaEnvelope /> },
 ];
 
@@ -30,6 +31,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("hero");
   const [ownerOpen, setOwnerOpen] = useState(false);
+  const [careerOpen, setCareerOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -43,8 +45,10 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  /* Scroll Detection */
+  /* Scroll Detection (disabled when modal open) */
   useEffect(() => {
+    if (careerOpen || ownerOpen) return;
+
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 150;
       setScrolled(window.scrollY > 40);
@@ -67,14 +71,25 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [careerOpen, ownerOpen]);
 
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
       setOpen(false);
+      setActive(id);
     }
+  };
+
+  const openCareer = () => {
+    setOpen(false);
+    setCareerOpen(true);
+  };
+
+  const openTeam = () => {
+    setOpen(false);
+    setOwnerOpen(true);
   };
 
   return (
@@ -86,21 +101,17 @@ export default function Navbar() {
       >
         <div className="flex justify-between items-center px-6 md:px-10 h-16">
 
-          {/* 🔥 LOGO — CIRCLE ONLY */}
+          {/* LOGO */}
           <div
             onClick={() => scrollToSection("hero")}
             className="cursor-pointer group"
           >
-            <div className="relative w-12 h-12 rounded-full bg-white/70 backdrop-blur-xl border border-neutral-border flex items-center justify-center transition-all duration-300 group-hover:scale-105 shadow-soft">
-
+            <div className="w-12 h-12 rounded-full bg-white/70 backdrop-blur-xl border border-neutral-border flex items-center justify-center shadow-soft transition group-hover:scale-105">
               <img
                 src={`${process.env.PUBLIC_URL}/assets/Logo.png`}
                 alt="Logo"
                 className="w-7 h-7 object-contain"
               />
-
-              {/* Subtle Accent Glow */}
-              <div className="absolute inset-0 rounded-full bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md -z-10" />
             </div>
           </div>
 
@@ -108,6 +119,7 @@ export default function Navbar() {
           {!isMobileView && (
             <div className="flex items-center gap-8 relative">
 
+              {/* SCROLL LINKS */}
               {links.map(({ id, icon, label }) => {
                 const isActive = active === id;
 
@@ -132,11 +144,7 @@ export default function Navbar() {
 
                     <span
                       className={`text-xs font-medium transition-all duration-300
-                        ${
-                          isActive
-                            ? "text-accent"
-                            : "text-primary"
-                        }
+                        ${isActive ? "text-accent" : "text-primary"}
                       `}
                     >
                       {label}
@@ -153,18 +161,44 @@ export default function Navbar() {
                 );
               })}
 
-              {/* OWNER BUTTON */}
+              {/* CAREER */}
               <button
-                onClick={() => setOwnerOpen(true)}
-                className="ml-4 px-5 py-2 rounded-full bg-accent text-white text-sm font-medium shadow-premium hover:scale-105 transition"
+                onClick={openCareer}
+                className="flex flex-col items-center gap-1 relative pb-2 group"
               >
-                Owner
+                <motion.div
+                  whileHover={{ scale: 1.08 }}
+                  className="w-10 h-10 flex items-center justify-center rounded-full text-primary group-hover:bg-accent/10 transition-all duration-300"
+                >
+                  <FaBriefcase />
+                </motion.div>
+
+                <span className="text-xs font-medium text-primary">
+                  Career
+                </span>
+              </button>
+
+              {/* TEAM */}
+              <button
+                onClick={openTeam}
+                className="flex flex-col items-center gap-1 relative pb-2 group"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.08 }}
+                  className="w-10 h-10 flex items-center justify-center rounded-full text-primary group-hover:bg-accent/10 transition-all duration-300"
+                >
+                  <FaUsers />
+                </motion.div>
+
+                <span className="text-xs font-medium text-primary">
+                  Team
+                </span>
               </button>
 
             </div>
           )}
 
-          {/* MOBILE TOGGLE */}
+          {/* MOBILE MENU BUTTON */}
           {isMobileView && (
             <button
               onClick={() => setOpen(!open)}
@@ -185,31 +219,37 @@ export default function Navbar() {
               transition={{ duration: 0.3 }}
               className="px-6 pb-6 flex flex-col gap-3"
             >
-              {links.map(({ label, id }) => {
-                const isActive = active === id;
+              {links.map(({ label, id }) => (
+                <button
+                  key={id}
+                  onClick={() => scrollToSection(id)}
+                  className="py-3 rounded-xl text-primary hover:bg-accent/10 transition"
+                >
+                  {label}
+                </button>
+              ))}
 
-                return (
-                  <button
-                    key={id}
-                    onClick={() => scrollToSection(id)}
-                    className={`py-3 rounded-xl transition
-                      ${
-                        isActive
-                          ? "bg-accent/20 text-accent"
-                          : "text-primary hover:bg-accent/10"
-                      }
-                    `}
-                  >
-                    {label}
-                  </button>
-                );
-              })}
+              <button
+                onClick={openCareer}
+                className="py-3 rounded-xl text-primary hover:bg-accent/10 transition"
+              >
+                Career
+              </button>
+
+              <button
+                onClick={openTeam}
+                className="py-3 rounded-xl text-primary hover:bg-accent/10 transition"
+              >
+                Team
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
 
+      {/* MODALS */}
       <Owner isOpen={ownerOpen} onClose={() => setOwnerOpen(false)} />
+      <Career isOpen={careerOpen} onClose={() => setCareerOpen(false)} />
     </>
   );
 }

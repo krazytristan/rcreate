@@ -23,18 +23,7 @@ export default function WhoWeHelp() {
       {/* Soft Accent Glow */}
       <div className="absolute top-[-140px] left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-accent/10 blur-[140px] rounded-full" />
 
-      <div className="relative z-20 max-w-6xl mx-auto text-center">
-
-        {/* SECTION NUMBER */}
-        <motion.span
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-sm tracking-[0.4em] uppercase text-neutral-muted"
-        >
-          02 / Authority
-        </motion.span>
+      <div className="relative z-20 max-w-5xl mx-auto text-center">
 
         {/* HEADER */}
         <motion.h3
@@ -42,22 +31,63 @@ export default function WhoWeHelp() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
           viewport={{ once: true }}
-          className="font-heading text-3xl md:text-4xl text-primary leading-tight mt-6 mb-6"
+          className="font-heading text-3xl md:text-4xl text-primary leading-tight mb-6"
         >
           Trusted by Growing Businesses
         </motion.h3>
 
+        {/* ORIGINAL SHORT DESCRIPTION */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-neutral-muted text-lg max-w-2xl mx-auto leading-relaxed mb-20"
+          className="text-neutral-muted text-lg leading-relaxed mb-14"
         >
           Supporting founders, service-based companies, and agencies
           with structured operations, marketing systems, and reliable
           virtual assistance.
         </motion.p>
+
+        {/* 🔥 NEW EXECUTIVE AUTHORITY COPY (NO CARD) */}
+        <motion.h4
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          viewport={{ once: true }}
+          className="font-heading text-xl md:text-2xl text-primary mb-6"
+        >
+          We Don’t Just Provide Virtual Assistants —{" "}
+          <span className="text-accent">
+            We Build Executive Support Partnerships
+          </span>
+        </motion.h4>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          viewport={{ once: true }}
+          className="space-y-6 text-neutral-muted text-base md:text-lg leading-relaxed"
+        >
+          <p>
+            At <span className="font-semibold text-primary">Rcreate Virtual Assistance Services</span>, 
+            we match busy founders, CEOs, coaches, and service-based businesses 
+            with highly capable Virtual Assistants who act like right-hand partners — not task workers.
+          </p>
+
+          <p>
+            Our VAs don’t just complete tasks. They think ahead, solve problems,
+            and manage daily execution across operations, admin, communications,
+            and marketing — so you can lead, not manage.
+          </p>
+
+          <p>
+            We work with businesses of all sizes around the world, helping you
+            streamline internal processes and strengthen your external presence.
+          </p>
+        </motion.div>
+
       </div>
 
       {/* Side Fade Edges */}
@@ -65,7 +95,7 @@ export default function WhoWeHelp() {
       <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-neutral-background to-transparent z-10" />
 
       {/* DESKTOP AUTO-SLIDER */}
-      <div className="hidden md:block relative">
+      <div className="hidden md:block relative mt-24">
         <motion.div
           className="flex gap-24 items-center w-max"
           animate={{ x: ["0%", "-50%"] }}
@@ -91,7 +121,7 @@ export default function WhoWeHelp() {
       </div>
 
       {/* MOBILE VERSION */}
-      <div className="md:hidden flex gap-14 overflow-x-auto px-2 pb-2 mt-6">
+      <div className="md:hidden flex gap-14 overflow-x-auto px-2 pb-2 mt-10">
         {logos.map((logo, index) => (
           <div
             key={index}

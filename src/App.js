@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import WhoWeHelp from "./components/WhoWeHelp";
@@ -8,65 +9,72 @@ import HowItWorks from "./components/HowItWorks";
 import WhyChoose from "./components/WhyChoose";
 import Benefits from "./components/Benefits";
 import WhoWeServe from "./components/WhoWeServe";
-import Team from "./components/Team";
 import Testimonials from "./components/Testimonials";
 import Blogs from "./components/Blogs";
 import Career from "./components/Career";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import SectionDivider from "./components/SectionDivider";
 
 function App() {
+  const [isCareerPage, setIsCareerPage] = useState(false);
+
   return (
     <div className="relative min-h-screen bg-neutral-background text-primary font-body overflow-x-hidden">
 
-      {/* Global Ambient Glow */}
+      {/* Ambient Glow */}
       <div className="pointer-events-none fixed top-[-300px] left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-accent/5 blur-[220px] rounded-full -z-10" />
 
-      <Navbar />
+      <Navbar
+        onCareerClick={() => {
+          setIsCareerPage(true);
+          window.scrollTo(0, 0);
+        }}
+        isCareerPage={isCareerPage}
+      />
 
       <main className="relative z-10">
 
-        {/* 01 — Hero */}
-        <Hero />
+        {!isCareerPage ? (
+          <>
+            <Hero />
+            <SectionDivider />
 
-        {/* 02 — Authority */}
-        <WhoWeHelp />
+            <WhoWeHelp />
+            <SectionDivider />
 
-        {/* 03 — Strategy Call */}
-        <BookCall />
+            <BookCall />
+            <SectionDivider />
 
-        {/* 04 — About */}
-        <About />
+            <About />
+            <SectionDivider />
 
-        {/* 05 — Services */}
-        <Services />
+            <Services />
+            <SectionDivider />
 
-        {/* 06 — Process */}
-        <HowItWorks />
+            <HowItWorks />
+            <SectionDivider />
 
-        {/* 07 — Why Choose */}
-        <WhyChoose />
+            <WhyChoose />
+            <SectionDivider />
 
-        {/* 08 — Benefits */}
-        <Benefits />
+            <Benefits />
+            <SectionDivider />
 
-        {/* 09 — Who We Serve */}
-        <WhoWeServe />
+            <WhoWeServe />
+            <SectionDivider />
 
-        {/* 10 — Team */}
-        <Team />
+            <Testimonials />
+            <SectionDivider />
 
-        {/* 11 — Testimonials */}
-        <Testimonials />
+            <Blogs />
+            <SectionDivider />
 
-        {/* 12 — Insights / Blogs */}
-        <Blogs />
-
-        {/* 13 — Careers */}
-        <Career />
-
-        {/* 14 — Contact */}
-        <Contact />
+            <Contact />
+          </>
+        ) : (
+          <Career />
+        )}
 
       </main>
 

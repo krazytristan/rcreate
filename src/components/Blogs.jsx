@@ -38,7 +38,6 @@ export default function Blogs() {
         {/* SECTION HEADER */}
         <div className="text-center mb-20">
           <span className="text-sm tracking-[0.4em] uppercase text-neutral-muted">
-            11 / Insights
           </span>
 
           <h2 className="font-heading text-4xl md:text-5xl text-primary mt-6 leading-tight">

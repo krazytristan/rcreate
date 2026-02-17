@@ -62,7 +62,6 @@ export default function Testimonials() {
         {/* LEFT COLUMN */}
         <div>
           <span className="text-sm tracking-[0.4em] uppercase text-neutral-muted">
-            10 / Testimonials
           </span>
 
           <h2 className="font-heading text-4xl md:text-6xl mt-6 text-primary leading-tight">

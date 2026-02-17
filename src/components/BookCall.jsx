@@ -90,7 +90,6 @@ export default function CTAForm() {
               <div className="px-6 py-6 border-b border-neutral-border flex justify-between items-center">
                 <div>
                   <span className="text-xs tracking-[0.35em] uppercase text-neutral-muted">
-                    03 / Strategy Call
                   </span>
                   <h2 className="font-heading text-xl md:text-2xl text-primary mt-2">
                     Book Your Free Strategy Call

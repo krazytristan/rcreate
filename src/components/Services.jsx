@@ -72,7 +72,6 @@ export default function Services() {
         {/* SECTION HEADER */}
         <div className="text-center mb-20">
           <span className="text-sm tracking-[0.4em] uppercase text-neutral-muted">
-            04 / Services
           </span>
 
           <h2 className="font-heading text-4xl md:text-6xl mt-6 text-primary">
