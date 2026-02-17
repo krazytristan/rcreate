@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+// src/components/About.jsx
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
 import bg1 from "../assets/bg1.jpg";
 import bg2 from "../assets/bg2.jpg";
@@ -25,36 +26,54 @@ const aboutCards = [
 
 export default function About() {
   const [active, setActive] = useState(0);
+  const sectionRef = useRef(null);
+
+  /* 🔥 Parallax Scroll Effect */
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const yParallax = useTransform(scrollYProgress, [0, 1], [-60, 60]);
+  const imageShift = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
   return (
     <section
+      ref={sectionRef}
       id="about"
-      className="relative py-36 px-6 bg-neutral-background overflow-hidden"
+      className="relative py-40 px-6 bg-neutral-background overflow-hidden"
     >
-      {/* 🔥 BACKGROUND IMAGE LAYER */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={aboutCards[active].bg}
-          className="absolute inset-0"
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <img
+      {/* ================= CINEMATIC BACKGROUND ================= */}
+      <div className="absolute inset-0 overflow-hidden">
+
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={aboutCards[active].bg}
             src={aboutCards[active].bg}
             alt="About Background"
-            className="w-full h-full object-cover"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+            style={{ y: imageShift }}
+            className="absolute inset-0 w-full h-[120%] object-cover"
           />
-        </motion.div>
-      </AnimatePresence>
+        </AnimatePresence>
 
-      {/* 🔥 DARK OVERLAY (Adjusted so image shows clearly) */}
-      <div className="absolute inset-0 bg-neutral-background/85 backdrop-blur-[2px]" />
+        {/* 🌫 Gradient Mask Instead of Solid Overlay */}
+        <motion.div
+          style={{ y: yParallax }}
+          className="absolute inset-0 bg-gradient-to-b
+            from-neutral-background/95
+            via-neutral-background/85
+            to-neutral-background"
+        />
 
-      {/* Accent Glow */}
-      <div className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] bg-accent/10 blur-[120px] rounded-full" />
+        {/* Accent Glow */}
+        <div className="absolute top-[-200px] left-[-200px] w-[500px] h-[500px] bg-accent/15 blur-[160px] rounded-full" />
+      </div>
 
+      {/* ================= CONTENT ================= */}
       <div className="relative z-20 max-w-7xl mx-auto grid md:grid-cols-2 gap-28 items-start">
 
         {/* LEFT SIDE */}
@@ -93,7 +112,8 @@ export default function About() {
         {/* RIGHT SIDE — TIMELINE */}
         <div className="relative">
 
-          <div className="absolute left-6 top-0 bottom-0 w-px bg-accent/30" />
+          {/* Accent Vertical Line */}
+          <div className="absolute left-6 top-0 bottom-0 w-px bg-accent/40" />
 
           <div className="space-y-20">
             {aboutCards.map((card, i) => (
@@ -107,6 +127,7 @@ export default function About() {
                 transition={{ delay: i * 0.15, duration: 0.6 }}
                 viewport={{ once: true }}
               >
+                {/* Marker */}
                 <div
                   className={`relative w-12 h-12 rounded-full flex items-center justify-center border transition-all duration-300
                   ${
@@ -118,18 +139,19 @@ export default function About() {
                   <div
                     className={`w-3 h-3 rounded-full transition-all duration-300
                       ${
-                        active === i ? "bg-white scale-110" : "bg-accent/50"
+                        active === i ? "bg-white scale-110" : "bg-accent/60"
                       }`}
                   />
                 </div>
 
+                {/* Glass Card */}
                 <motion.div
                   animate={{
                     scale: active === i ? 1.03 : 1,
-                    opacity: active === i ? 1 : 0.75,
+                    opacity: active === i ? 1 : 0.8,
                   }}
                   transition={{ duration: 0.3 }}
-                  className="flex-1 bg-white/85 backdrop-blur-xl border border-neutral-border rounded-2xl p-8 shadow-soft"
+                  className="flex-1 bg-white/80 backdrop-blur-xl border border-neutral-border rounded-2xl p-8 shadow-soft"
                 >
                   <h3 className="font-heading text-xl mb-3 text-primary">
                     {card.title}
