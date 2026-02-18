@@ -1,16 +1,90 @@
 // src/components/WhoWeHelp.jsx
 import { motion } from "framer-motion";
 
+
+import logo1 from "../assets/1.jpg";
+import logo2 from "../assets/2.jpg";
+import logo3 from "../assets/3.jpg";
+import logo4 from "../assets/4.jpg";
+import logo5 from "../assets/5.jpg";
+import logo6 from "../assets/6.jpg";
+import logo7 from "../assets/7.jpg";
+import logo8 from "../assets/8.jpg";
+import logo9 from "../assets/9.jpg";
+import logo10 from "../assets/10.jpg";
+import logo11 from "../assets/11.jpg";
+import logo12 from "../assets/12.jpg";
+import logo13 from "../assets/13.jpg";
+import logo14 from "../assets/14.jpg";
+import logo15 from "../assets/15.jpg";
+import logo16 from "../assets/16.jpg";
+import logo17 from "../assets/17.jpg";
+import logo18 from "../assets/18.jpg";
+import logo19 from "../assets/19.jpg";
+import logo20 from "../assets/20.jpg";
+import logo21 from "../assets/21.jpg";
+import logo22 from "../assets/22.jpg";
+import logo23 from "../assets/23.jpg";
+import logo24 from "../assets/24.jpg"; 
+import logo25 from "../assets/25.jpg";
+import logo26 from "../assets/26.jpg";
+import logo27 from "../assets/27.jpg"; 
+import logo28 from "../assets/28.jpg";
+import logo29 from "../assets/29.jpg";
+import logo30 from "../assets/30.jpg";
+import logo31 from "../assets/31.jpg";
+import logo32 from "../assets/32.jpg";
+import logo33 from "../assets/33.jpg";
+import logo34 from "../assets/34.jpg";
+import logo35 from "../assets/35.jpg";
+import logo36 from "../assets/36.jpg";
+import logo37 from "../assets/37.jpg";
+import logo38 from "../assets/38.jpg";
+import logo39 from "../assets/39.jpg";
+
 /* ===============================
    LOGO DATA
 ================================ */
 const logos = [
-  { name: "Client 1", src: "/logos/logo1.png" },
-  { name: "Client 2", src: "/logos/logo2.png" },
-  { name: "Client 3", src: "/logos/logo3.png" },
-  { name: "Client 4", src: "/logos/logo4.png" },
-  { name: "Client 5", src: "/logos/logo5.png" },
-  { name: "Client 6", src: "/logos/logo6.png" },
+  { name: "Client 1", src: logo1 },
+  { name: "Client 2", src: logo2 },
+  { name: "Client 3", src: logo3 },
+  { name: "Client 4", src: logo4 },
+  { name: "Client 5", src: logo5 },
+  { name: "Client 6", src: logo6 },
+  { name: "Client 7", src: logo7 },
+  { name: "Client 8", src: logo8 },
+  { name: "Client 9", src: logo9 },
+  { name: "Client 10", src: logo10 },
+  { name: "Client 11", src: logo11 },
+  { name: "Client 12", src: logo12 },
+  { name: "Client 13", src: logo13 },
+  { name: "Client 14", src: logo14 },
+  { name: "Client 15", src: logo15 },
+  { name: "Client 16", src: logo16 },
+  { name: "Client 17", src: logo17 },
+  { name: "Client 18", src: logo18 },
+  { name: "Client 19", src: logo19 },
+  { name: "Client 20", src: logo20 },
+  { name: "Client 21", src: logo21 },
+  { name: "Client 22", src: logo22 },
+  { name: "Client 23", src: logo23 },
+  { name: "Client 24", src: logo24 },
+  { name: "Client 25", src: logo25 },
+  { name: "Client 26", src: logo26 },
+  { name: "Client 27", src: logo27 },
+  { name: "Client 28", src: logo28 },
+  { name: "Client 29", src: logo29 },
+  { name: "Client 30", src: logo30 },
+  { name: "Client 31", src: logo31 },
+  { name: "Client 32", src: logo32 },
+  { name: "Client 33", src: logo33 },
+  { name: "Client 34", src: logo34 },
+  { name: "Client 35", src: logo35 },
+  { name: "Client 36", src: logo36 },
+  { name: "Client 37", src: logo37 },
+  { name: "Client 38", src: logo38 },
+  { name: "Client 39", src: logo39 },
 ];
 
 export default function WhoWeHelp() {
