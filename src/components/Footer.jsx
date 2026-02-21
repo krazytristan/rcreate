@@ -38,19 +38,38 @@ export default function Footer() {
 
             {/* Socials */}
             <div className="flex justify-center md:justify-start gap-4 pt-2">
-              {[FaLinkedinIn, FaFacebookF, FaInstagram].map((Icon, i) => (
-                <motion.a
-                  key={i}
-                  href="#"
-                  whileHover={{ scale: 1.1 }}
-                  className="w-10 h-10 rounded-full bg-white/60 backdrop-blur-xl border border-neutral-border flex items-center justify-center text-primary hover:text-accent transition"
-                >
-                  <Icon size={14} />
-                </motion.a>
-              ))}
+              <motion.a
+                href="https://www.linkedin.com/company/rcreate-virtual-assistance-services/?viewAsMember=true"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.1 }}
+                className="w-10 h-10 rounded-full bg-white/60 backdrop-blur-xl border border-neutral-border flex items-center justify-center text-primary hover:text-accent transition"
+              >
+                <FaLinkedinIn size={14} />
+              </motion.a>
+
+              <motion.a
+                href="https://www.facebook.com/rcreatevaservices"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.1 }}
+                className="w-10 h-10 rounded-full bg-white/60 backdrop-blur-xl border border-neutral-border flex items-center justify-center text-primary hover:text-accent transition"
+              >
+                <FaFacebookF size={14} />
+              </motion.a>
+
+              <motion.a
+                href="https://www.instagram.com/rcreatevaservices/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.1 }}
+                className="w-10 h-10 rounded-full bg-white/60 backdrop-blur-xl border border-neutral-border flex items-center justify-center text-primary hover:text-accent transition"
+              >
+                <FaInstagram size={14} />
+              </motion.a>
             </div>
           </div>
-
+          
           {/* QUICK LINKS */}
           <div className="space-y-6">
             <h4 className="font-heading text-primary text-lg">
