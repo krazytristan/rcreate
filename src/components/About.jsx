@@ -1,300 +1,247 @@
-// src/components/Hero.jsx
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import CountUp from "react-countup";
-
-/* ICONS */
+// src/components/About.jsx
+import { useState, useRef } from "react";
 import {
-  FaGoogle,
-  FaFacebook,
-  FaWordpress,
-  FaMicrosoft,
-  FaChartLine,
-} from "react-icons/fa";
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 
-import {
-  SiZapier,
-  SiNotion,
-  SiCanva,
-  SiClickup,
-  SiSquarespace,
-  SiMailchimp,
-  SiZoho,
-  SiTrello,
-  SiAsana,
-  SiBuffer,
-  SiHootsuite,
-  SiWix,
-} from "react-icons/si";
+import bg1 from "../assets/bg1.jpg";
+import bg2 from "../assets/bg2.jpg";
+import bg3 from "../assets/bg3.jpg";
 
-/* VIDEO */
-import bgVideo from "../assets/hero-bg.mp4";
-
-/* TOOL MAP */
-const toolIcons = {
-  HighLevel: <FaChartLine />,
-  Squarespace: <SiSquarespace />,
-  Zapier: <SiZapier />,
-  ClickUp: <SiClickup />,
-  Notion: <SiNotion />,
-  Canva: <SiCanva />,
-  Meta: <FaFacebook />,
-  Mailchimp: <SiMailchimp />,
-  "Zoho CRM": <SiZoho />,
-  Trello: <SiTrello />,
-  Asana: <SiAsana />,
-  Microsoft: <FaMicrosoft />,
-  Buffer: <SiBuffer />,
-  Hootsuite: <SiHootsuite />,
-  Google: <FaGoogle />,
-  WordPress: <FaWordpress />,
-  Wix: <SiWix />,
-};
-
-const tools = Object.keys(toolIcons);
-
-const titleWords = [
-  "Leading",
-  "Executive",
-  "Virtual",
-  "Assistant",
-  "Solutions",
+const aboutCards = [
+  {
+    title: "Right-Hand Executive Support",
+    desc: "Structured virtual assistants who operate as an extension of your leadership team — managing daily execution while you focus on growth strategy.",
+    bg: bg1,
+  },
+  {
+    title: "Done-For-You Operational Systems",
+    desc: "From client communication and admin to marketing systems and digital assets, we streamline and optimize backend processes.",
+    bg: bg2,
+  },
+  {
+    title: "Long-Term Strategic Partnership",
+    desc: "We build consistent, scalable partnerships that strengthen efficiency, brand presence, and operational stability.",
+    bg: bg3,
+  },
 ];
 
-export default function Hero() {
-  const videoRef = useRef(null);
-  const [openModal, setOpenModal] = useState(false);
+export default function About() {
+  const [active, setActive] = useState(0);
+  const [imageIndex, setImageIndex] = useState(0);
+  const sectionRef = useRef(null);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    date: "",
-    time: "",
+  /* PARALLAX */
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
   });
 
-  useEffect(() => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = true;
-    videoRef.current.play().catch(() => {});
-  }, []);
+  const yParallax = useTransform(scrollYProgress, [0, 1], [-40, 40]);
+  const imageShift = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
-  useEffect(() => {
-    document.body.style.overflow = openModal ? "hidden" : "auto";
-  }, [openModal]);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const nextImage = () => {
+    setImageIndex((prev) => (prev + 1) % aboutCards.length);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Reservation:", formData);
-    setOpenModal(false);
+  const prevImage = () => {
+    setImageIndex((prev) =>
+      prev === 0 ? aboutCards.length - 1 : prev - 1
+    );
   };
 
   return (
     <section
-      id="hero"
-      className="relative min-h-screen flex items-center bg-primary text-white overflow-hidden px-5 sm:px-6"
+      ref={sectionRef}
+      id="about"
+      className="relative py-20 md:py-32 lg:py-40 px-5 sm:px-6 bg-neutral-background overflow-hidden"
     >
-      {/* Background Video */}
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-30"
-      >
-        <source src={bgVideo} type="video/mp4" />
-      </video>
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/80 to-neutral-dark/95" />
+      {/* BACKGROUND */}
+      <div className="absolute inset-0 overflow-hidden">
 
-      {/* Glow */}
-      <div className="absolute top-[-150px] right-[-150px] w-[500px] h-[500px] bg-accent/20 blur-[140px] rounded-full" />
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={aboutCards[active].bg}
+            src={aboutCards[active].bg}
+            alt="About Background"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            style={{ y: imageShift }}
+            className="absolute inset-0 w-full h-[120%] object-cover"
+          />
+        </AnimatePresence>
 
-      {/* MAIN CONTENT */}
-      <div className="relative z-20 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center">
+        <motion.div
+          style={{ y: yParallax }}
+          className="absolute inset-0 bg-gradient-to-b
+          from-neutral-background/95
+          via-neutral-background/85
+          to-neutral-background"
+        />
 
-        {/* LEFT COLUMN */}
-        <div className="text-center lg:text-left">
+        <div className="absolute top-[-200px] left-[-200px] w-[400px] h-[400px] bg-accent/15 blur-[160px] rounded-full" />
 
-          {/* Animated Title */}
-          <h1 className="font-heading text-[32px] md:text-[42px] lg:text-[56px] leading-tight tracking-tight flex flex-wrap gap-2 justify-center lg:justify-start">
+      </div>
 
-            {titleWords.map((word, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: i * 0.12,
-                  duration: 0.6,
-                }}
-              >
-                {word}
-              </motion.span>
-            ))}
+      {/* CONTENT */}
+      <div className="relative z-20 max-w-7xl mx-auto grid md:grid-cols-2 gap-16 md:gap-24 items-start">
 
-            <motion.span
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="text-accent"
-            >
-              for Growing Businesses
-            </motion.span>
+        {/* LEFT SIDE */}
+        <div>
 
-          </h1>
-
-          {/* Paragraph */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-            className="mt-6 text-[16px] md:text-[17px] lg:text-[18px] text-white/80 max-w-xl leading-relaxed mx-auto lg:mx-0"
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+            className="font-heading text-[28px] sm:text-[32px] md:text-[42px] lg:text-[56px] mb-6 md:mb-8 text-primary leading-tight"
           >
-            <strong>Scale smarter. Operate efficiently. Lead confidently.</strong>
-            <br /><br />
-            Rcreate Virtual Assistance Services provides high-level executive,
-            operations, and marketing support for founders and service-based businesses worldwide.
+            Built to Support{" "}
+            <span className="text-accent">
+              Visionary Leaders
+            </span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] text-neutral-muted leading-relaxed max-w-xl mb-10 md:mb-12"
+          >
+            Rcreate Virtual Assistance Services delivers structured operational
+            support for founders and service-based businesses. We integrate
+            directly into your systems, strengthen workflows, and elevate
+            daily execution — so leadership remains focused on long-term growth.
           </motion.p>
 
+          {/* IMAGE SLIDER */}
+          <div className="relative w-full max-w-xl">
+
+            <div className="relative overflow-hidden rounded-2xl shadow-premium border border-neutral-border">
+
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={imageIndex}
+                  src={aboutCards[imageIndex].bg}
+                  alt="About Visual"
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -40 }}
+                  transition={{ duration: 0.5 }}
+                  className="w-full h-[220px] sm:h-[260px] md:h-[300px] object-cover"
+                />
+              </AnimatePresence>
+
+              {/* PREV */}
+              <button
+                onClick={prevImage}
+                className="absolute left-3 top-1/2 -translate-y-1/2
+                w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/70 backdrop-blur-xl
+                border border-neutral-border
+                text-primary hover:bg-accent hover:text-white transition"
+              >
+                ‹
+              </button>
+
+              {/* NEXT */}
+              <button
+                onClick={nextImage}
+                className="absolute right-3 top-1/2 -translate-y-1/2
+                w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/70 backdrop-blur-xl
+                border border-neutral-border
+                text-primary hover:bg-accent hover:text-white transition"
+              >
+                ›
+              </button>
+
+            </div>
+
+            {/* DOTS */}
+            <div className="flex justify-center gap-3 mt-5 md:mt-6">
+              {aboutCards.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setImageIndex(i)}
+                  className={`h-2 sm:h-3 rounded-full transition-all duration-300 ${
+                    i === imageIndex
+                      ? "w-6 sm:w-8 bg-accent"
+                      : "w-2 sm:w-3 bg-neutral-muted/40 hover:bg-accent/50"
+                  }`}
+                />
+              ))}
+            </div>
+
+          </div>
         </div>
 
-        {/* RIGHT COLUMN */}
-        <div className="flex flex-col items-center lg:items-start gap-8">
+        {/* RIGHT SIDE TIMELINE */}
+        <div className="relative">
 
-          {/* CTA */}
-          <motion.button
-            onClick={() => setOpenModal(true)}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-10 py-4 rounded-full bg-accent text-white font-semibold shadow-xl"
-          >
-            Book a Reservation
-          </motion.button>
+          {/* Timeline line */}
+          <div className="hidden md:block absolute left-6 top-0 bottom-0 w-px bg-accent/40" />
 
-          {/* STATS */}
-          <div className="grid grid-cols-2 gap-6">
+          <div className="space-y-8 md:space-y-16">
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-6 text-center">
-              <h3 className="text-[20px] md:text-[24px] lg:text-[28px] font-semibold text-accent">
-                <CountUp end={9} duration={2} />+
-              </h3>
-              <p className="text-xs uppercase tracking-widest text-neutral-muted mt-1">
-                Years Experience
-              </p>
-            </div>
+            {aboutCards.map((card, i) => (
+              <motion.div
+                key={i}
+                className="flex flex-col md:flex-row items-center md:items-start gap-5 md:gap-10 text-center md:text-left cursor-pointer"
+                onMouseEnter={() => setActive(i)}
+                onClick={() => setActive(i)}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.15, duration: 0.6 }}
+                viewport={{ once: true }}
+              >
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-6 text-center">
-              <h3 className="text-[20px] md:text-[24px] lg:text-[28px] font-semibold text-accent">
-                <CountUp end={300} duration={2} separator="," />+
-              </h3>
-              <p className="text-xs uppercase tracking-widest text-neutral-muted mt-1">
-                Businesses Served
-              </p>
-            </div>
+                {/* Circle indicator */}
+                <div
+                  className={`hidden md:flex relative w-12 h-12 rounded-full items-center justify-center border transition-all duration-300
+                  ${
+                    active === i
+                      ? "bg-accent border-accent shadow-premium"
+                      : "bg-white border-accent/40"
+                  }`}
+                >
+                  <div
+                    className={`w-3 h-3 rounded-full transition-all duration-300
+                    ${active === i ? "bg-white scale-110" : "bg-accent/60"}`}
+                  />
+                </div>
+
+                {/* Card */}
+                <motion.div
+                  animate={{
+                    scale: active === i ? 1.02 : 1,
+                    opacity: active === i ? 1 : 0.9,
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full bg-white/80 backdrop-blur-xl border border-neutral-border rounded-2xl p-6 md:p-8 shadow-soft"
+                >
+                  <h3 className="font-heading text-[18px] md:text-[20px] mb-3 text-primary">
+                    {card.title}
+                  </h3>
+
+                  <p className="text-neutral-muted text-[14px] sm:text-[15px] md:text-[16px] leading-relaxed">
+                    {card.desc}
+                  </p>
+                </motion.div>
+
+              </motion.div>
+            ))}
 
           </div>
 
         </div>
 
       </div>
-
-      {/* TOOL STRIP */}
-      <div className="absolute bottom-6 left-0 w-full overflow-hidden opacity-70">
-
-        <motion.div
-          className="flex gap-8 w-max"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, duration: 70, ease: "linear" }}
-        >
-          {[...tools, ...tools].map((tool, i) => (
-            <div key={i} className="flex items-center gap-3 text-sm text-white/60">
-              <span className="text-accent text-lg">
-                {toolIcons[tool]}
-              </span>
-              {tool}
-            </div>
-          ))}
-        </motion.div>
-
-      </div>
-
-      {/* BOOKING MODAL */}
-      <AnimatePresence>
-        {openModal && (
-          <>
-            <motion.div
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
-              onClick={() => setOpenModal(false)}
-            />
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, x: "-50%", y: "-50%" }}
-              animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
-              exit={{ opacity: 0 }}
-              className="fixed z-50 top-1/2 left-1/2 w-[95%] sm:w-[500px] bg-white rounded-3xl p-8"
-            >
-
-              <h2 className="text-[20px] md:text-[24px] lg:text-[28px] font-heading text-primary mb-6 text-center">
-                Book Your Appointment
-              </h2>
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Name"
-                  required
-                  onChange={handleChange}
-                  className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary"
-                />
-
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email"
-                  required
-                  onChange={handleChange}
-                  className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary"
-                />
-
-                {/* DATE FIX */}
-                <input
-                  type="date"
-                  name="date"
-                  required
-                  onChange={handleChange}
-                  className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary appearance-none"
-                />
-
-                {/* TIME FIX */}
-                <input
-                  type="time"
-                  name="time"
-                  required
-                  onChange={handleChange}
-                  className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary appearance-none"
-                />
-
-                <button
-                  type="submit"
-                  className="w-full bg-accent text-white py-3 rounded-xl font-semibold hover:scale-105 transition"
-                >
-                  Confirm Reservation
-                </button>
-
-              </form>
-
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
 
     </section>
   );

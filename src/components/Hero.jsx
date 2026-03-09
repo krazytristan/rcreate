@@ -53,7 +53,6 @@ const toolIcons = {
 
 const tools = Object.keys(toolIcons);
 
-/* TITLE WORDS */
 const titleWords = [
   "Leading",
   "Executive",
@@ -73,14 +72,12 @@ export default function Hero() {
     time: "",
   });
 
-  /* VIDEO AUTOPLAY */
   useEffect(() => {
     if (!videoRef.current) return;
     videoRef.current.muted = true;
     videoRef.current.play().catch(() => {});
   }, []);
 
-  /* SCROLL LOCK */
   useEffect(() => {
     document.body.style.overflow = openModal ? "hidden" : "auto";
   }, [openModal]);
@@ -100,7 +97,6 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex items-center bg-primary text-white overflow-hidden px-5 sm:px-6"
     >
-
       {/* Background Video */}
       <video
         ref={videoRef}
@@ -153,14 +149,6 @@ export default function Hero() {
 
           </h1>
 
-          {/* Animated underline */}
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: "140px" }}
-            transition={{ delay: 1, duration: 0.8 }}
-            className="h-[3px] bg-accent mt-4 rounded mx-auto lg:mx-0"
-          />
-
           {/* Paragraph */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -171,8 +159,7 @@ export default function Hero() {
             <strong>Scale smarter. Operate efficiently. Lead confidently.</strong>
             <br /><br />
             Rcreate Virtual Assistance Services provides high-level executive,
-            operations, and marketing support for founders, CEOs,
-            and service-based businesses worldwide.
+            operations, and marketing support for founders and service-based businesses worldwide.
             <br /><br />
             From internal systems to external visibility, we manage the execution —
             so you can focus on scaling strategically.
@@ -186,10 +173,8 @@ export default function Hero() {
           {/* CTA */}
           <motion.button
             onClick={() => setOpenModal(true)}
-            whileHover={{ scale: 1.08, y: -2 }}
+            whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 4, repeat: Infinity }}
             className="px-10 py-4 rounded-full bg-accent text-white font-semibold shadow-xl"
           >
             Book a Reservation
@@ -198,33 +183,23 @@ export default function Hero() {
           {/* STATS */}
           <div className="grid grid-cols-2 gap-6">
 
-            <motion.div
-              whileHover={{ y: -6 }}
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 6, repeat: Infinity }}
-              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-6 text-center"
-            >
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-6 text-center">
               <h3 className="text-[20px] md:text-[24px] lg:text-[28px] font-semibold text-accent">
                 <CountUp end={9} duration={2} />+
               </h3>
               <p className="text-xs uppercase tracking-widest text-neutral-muted mt-1">
                 Years Experience
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div
-              whileHover={{ y: -6 }}
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 7, repeat: Infinity }}
-              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-6 text-center"
-            >
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-6 text-center">
               <h3 className="text-[20px] md:text-[24px] lg:text-[28px] font-semibold text-accent">
                 <CountUp end={300} duration={2} separator="," />+
               </h3>
               <p className="text-xs uppercase tracking-widest text-neutral-muted mt-1">
                 Businesses Served
               </p>
-            </motion.div>
+            </div>
 
           </div>
 
@@ -280,7 +255,7 @@ export default function Hero() {
                   placeholder="Your Name"
                   required
                   onChange={handleChange}
-                  className="w-full p-4 border rounded-xl"
+                  className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary"
                 />
 
                 <input
@@ -289,23 +264,25 @@ export default function Hero() {
                   placeholder="Your Email"
                   required
                   onChange={handleChange}
-                  className="w-full p-4 border rounded-xl"
+                  className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary"
                 />
 
+                {/* DATE FIX */}
                 <input
                   type="date"
                   name="date"
                   required
                   onChange={handleChange}
-                  className="w-full p-4 border rounded-xl"
+                  className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary appearance-none"
                 />
 
+                {/* TIME FIX */}
                 <input
                   type="time"
                   name="time"
                   required
                   onChange={handleChange}
-                  className="w-full p-4 border rounded-xl"
+                  className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary appearance-none"
                 />
 
                 <button
