@@ -27,11 +27,8 @@ import {
   SiWix,
 } from "react-icons/si";
 
-/* ASSETS */
+/* VIDEO */
 import bgVideo from "../assets/hero-bg.mp4";
-import hero1 from "../assets/va1.jpg";
-import hero2 from "../assets/va2.jpg";
-import hero3 from "../assets/va3.jpg";
 
 /* TOOL MAP */
 const toolIcons = {
@@ -55,11 +52,20 @@ const toolIcons = {
 };
 
 const tools = Object.keys(toolIcons);
-const images = [hero1, hero2, hero3];
+
+/* TITLE WORDS */
+const titleWords = [
+  "Leading",
+  "Executive",
+  "Virtual",
+  "Assistant",
+  "Solutions",
+];
 
 export default function Hero() {
   const videoRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -67,12 +73,14 @@ export default function Hero() {
     time: "",
   });
 
+  /* VIDEO AUTOPLAY */
   useEffect(() => {
     if (!videoRef.current) return;
     videoRef.current.muted = true;
     videoRef.current.play().catch(() => {});
   }, []);
 
+  /* SCROLL LOCK */
   useEffect(() => {
     document.body.style.overflow = openModal ? "hidden" : "auto";
   }, [openModal]);
@@ -108,42 +116,57 @@ export default function Hero() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/80 to-neutral-dark/95" />
 
-      {/* Accent Glow */}
+      {/* Glow */}
       <div className="absolute top-[-150px] right-[-150px] w-[500px] h-[500px] bg-accent/20 blur-[140px] rounded-full" />
 
-      {/* Content */}
+      {/* MAIN CONTENT */}
       <div className="relative z-20 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center">
 
-        {/* LEFT SIDE */}
+        {/* LEFT COLUMN */}
         <div className="text-center lg:text-left">
 
-          {/* Mobile Image */}
-          <div className="lg:hidden mb-8 flex justify-center">
-            <img
-              src={hero1}
-              alt="Virtual Assistant"
-              className="w-60 rounded-3xl shadow-xl border border-white/10"
-            />
-          </div>
+          {/* Animated Title */}
+          <h1 className="font-heading text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-tight tracking-tight flex flex-wrap gap-2 justify-center lg:justify-start">
 
-          <motion.h1
+            {titleWords.map((word, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: i * 0.12,
+                  duration: 0.6,
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
+
+            <motion.span
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="text-accent"
+            >
+              for Growing Businesses
+            </motion.span>
+
+          </h1>
+
+          {/* Animated underline */}
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: "140px" }}
+            transition={{ delay: 1, duration: 0.8 }}
+            className="h-[3px] bg-accent mt-4 rounded mx-auto lg:mx-0"
+          />
+
+          {/* Description */}
+          <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9 }}
-            className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-7xl leading-tight tracking-tight"
-          >
-            Leading Executive Virtual Assistant Solutions
-            <br />
-            <span className="text-accent">
-              for Growing Businesses
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="mt-6 text-base sm:text-lg text-white/80 max-w-xl leading-relaxed mx-auto lg:mx-0"
+            transition={{ delay: 0.9, duration: 0.8 }}
+            className="mt-6 text-[11px] sm:text-sm md:text-base text-white/80 max-w-xl leading-relaxed mx-auto lg:mx-0"
           >
             <strong>Scale smarter. Operate efficiently. Lead confidently.</strong>
             <br /><br />
@@ -153,76 +176,69 @@ export default function Hero() {
             <br /><br />
             From internal systems to external visibility, we manage the execution —
             so you can focus on scaling strategically.
-            <br /><br />
-            All-in-one support. Structured systems. Long-term partnership.
           </motion.p>
 
-          {/* CTA */}
-          <div className="mt-8 flex justify-center lg:justify-start">
-            <button
-              onClick={() => setOpenModal(true)}
-              className="px-8 py-3 rounded-full bg-accent text-white font-medium shadow-lg hover:scale-105 transition duration-300"
+        </div>
+
+        {/* RIGHT COLUMN */}
+        <div className="flex flex-col items-center lg:items-start gap-8">
+
+          {/* CTA BUTTON */}
+          <motion.button
+            onClick={() => setOpenModal(true)}
+            whileHover={{ scale: 1.08, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 4, repeat: Infinity }}
+            className="px-10 py-4 rounded-full bg-accent text-white font-semibold shadow-xl"
+          >
+            Book a Reservation
+          </motion.button>
+
+          {/* STATS */}
+          <div className="grid grid-cols-2 gap-6">
+
+            <motion.div
+              whileHover={{ y: -6 }}
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 6, repeat: Infinity }}
+              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-6 text-center"
             >
-              Book a Reservation
-            </button>
-          </div>
-
-          {/* Stats */}
-          <div className="mt-12 flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
-
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-5 shadow-md">
               <h3 className="text-3xl font-semibold text-accent">
                 <CountUp end={9} duration={2} />+
               </h3>
               <p className="text-xs uppercase tracking-widest text-neutral-muted mt-1">
                 Years Experience
               </p>
-            </div>
+            </motion.div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-5 shadow-md">
+            <motion.div
+              whileHover={{ y: -6 }}
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 7, repeat: Infinity }}
+              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-6 text-center"
+            >
               <h3 className="text-3xl font-semibold text-accent">
                 <CountUp end={300} duration={2} separator="," />+
               </h3>
               <p className="text-xs uppercase tracking-widest text-neutral-muted mt-1">
                 Businesses Served
               </p>
-            </div>
+            </motion.div>
 
           </div>
-        </div>
 
-        {/* RIGHT SIDE IMAGES */}
-        <div className="relative hidden lg:flex justify-center items-center">
-          <div className="relative w-[420px] h-[420px]">
-
-            {images.map((img, i) => (
-              <motion.img
-                key={i}
-                src={img}
-                alt="Virtual Assistant"
-                className={`absolute rounded-3xl shadow-xl border border-white/10 object-cover
-                ${i === 0 ? "w-80 top-0 left-0 z-30" : ""}
-                ${i === 1 ? "w-72 top-20 right-0 z-20" : ""}
-                ${i === 2 ? "w-64 bottom-0 left-20 z-10" : ""}
-                `}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: i * 0.2 }}
-                whileHover={{ scale: 1.05 }}
-              />
-            ))}
-
-          </div>
         </div>
 
       </div>
 
       {/* TOOL STRIP */}
-      <div className="absolute bottom-4 sm:bottom-10 left-0 w-full overflow-hidden opacity-70">
+      <div className="absolute bottom-6 left-0 w-full overflow-hidden opacity-70">
+
         <motion.div
-          className="flex gap-6 sm:gap-10 w-max"
+          className="flex gap-8 w-max"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, duration: 100, ease: "linear" }}
+          transition={{ repeat: Infinity, duration: 70, ease: "linear" }}
         >
           {[...tools, ...tools].map((tool, i) => (
             <div key={i} className="flex items-center gap-3 text-sm text-white/60">
@@ -233,6 +249,7 @@ export default function Hero() {
             </div>
           ))}
         </motion.div>
+
       </div>
 
       {/* BOOKING MODAL */}
@@ -250,10 +267,10 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9, x: "-50%", y: "-50%" }}
               animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="fixed z-50 top-1/2 left-1/2 w-[95%] sm:w-[500px]
-              bg-white rounded-3xl p-8 shadow-2xl"
+              exit={{ opacity: 0 }}
+              className="fixed z-50 top-1/2 left-1/2 w-[95%] sm:w-[500px] bg-white rounded-3xl p-8"
             >
+
               <h3 className="text-2xl font-heading text-primary mb-6 text-center">
                 Book Your Appointment
               </h3>
@@ -302,6 +319,7 @@ export default function Hero() {
                 </button>
 
               </form>
+
             </motion.div>
           </>
         )}
