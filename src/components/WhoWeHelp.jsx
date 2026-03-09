@@ -1,7 +1,6 @@
 // src/components/WhoWeHelp.jsx
 import { motion } from "framer-motion";
 
-
 import logo1 from "../assets/1.jpg";
 import logo2 from "../assets/2.jpg";
 import logo3 from "../assets/3.jpg";
@@ -25,10 +24,10 @@ import logo20 from "../assets/20.jpg";
 import logo21 from "../assets/21.jpg";
 import logo22 from "../assets/22.jpg";
 import logo23 from "../assets/23.jpg";
-import logo24 from "../assets/24.jpg"; 
+import logo24 from "../assets/24.jpg";
 import logo25 from "../assets/25.jpg";
 import logo26 from "../assets/26.jpg";
-import logo27 from "../assets/27.jpg"; 
+import logo27 from "../assets/27.jpg";
 import logo28 from "../assets/28.jpg";
 import logo29 from "../assets/29.jpg";
 import logo30 from "../assets/30.jpg";
@@ -45,6 +44,7 @@ import logo39 from "../assets/39.jpg";
 /* ===============================
    LOGO DATA
 ================================ */
+
 const logos = [
   { name: "Client 1", src: logo1 },
   { name: "Client 2", src: logo2 },
@@ -94,7 +94,7 @@ export default function WhoWeHelp() {
       {/* Top Divider */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-neutral-border to-transparent" />
 
-      {/* Soft Accent Glow */}
+      {/* Accent Glow */}
       <div className="absolute top-[-140px] left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-accent/10 blur-[140px] rounded-full" />
 
       <div className="relative z-20 max-w-5xl mx-auto text-center">
@@ -110,7 +110,7 @@ export default function WhoWeHelp() {
           Trusted by Growing Businesses
         </motion.h3>
 
-        {/* ORIGINAL SHORT DESCRIPTION */}
+        {/* DESCRIPTION */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -123,7 +123,7 @@ export default function WhoWeHelp() {
           virtual assistance.
         </motion.p>
 
-        {/* 🔥 NEW EXECUTIVE AUTHORITY COPY (NO CARD) */}
+        {/* AUTHORITY COPY */}
         <motion.h4
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -145,9 +145,10 @@ export default function WhoWeHelp() {
           className="space-y-6 text-neutral-muted text-base md:text-lg leading-relaxed"
         >
           <p>
-            At <span className="font-semibold text-primary">Rcreate Virtual Assistance Services</span>, 
-            we match busy founders, CEOs, coaches, and service-based businesses 
-            with highly capable Virtual Assistants who act like right-hand partners — not task workers.
+            At <span className="font-semibold text-primary">Rcreate Virtual Assistance Services</span>,
+            we match busy founders, CEOs, coaches, and service-based businesses
+            with highly capable Virtual Assistants who act like right-hand
+            partners — not task workers.
           </p>
 
           <p>
@@ -164,14 +165,15 @@ export default function WhoWeHelp() {
 
       </div>
 
-      {/* Side Fade Edges */}
+      {/* Fade Edges */}
       <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-neutral-background to-transparent z-10" />
       <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-neutral-background to-transparent z-10" />
 
-      {/* DESKTOP AUTO-SLIDER */}
-      <div className="hidden md:block relative mt-24">
+      {/* UNIVERSAL AUTO CAROUSEL */}
+      <div className="relative mt-24 overflow-hidden">
+
         <motion.div
-          className="flex gap-24 items-center w-max"
+          className="flex gap-10 md:gap-16 lg:gap-24 items-center w-max"
           animate={{ x: ["0%", "-50%"] }}
           transition={{
             repeat: Infinity,
@@ -182,32 +184,21 @@ export default function WhoWeHelp() {
           {[...logos, ...logos].map((logo, index) => (
             <div
               key={index}
-              className="flex items-center justify-center min-w-[180px] opacity-60 hover:opacity-100 transition duration-500"
+              className="flex items-center justify-center 
+              min-w-[110px] md:min-w-[150px] lg:min-w-[180px]
+              opacity-60 hover:opacity-100 transition duration-500"
             >
               <img
                 src={logo.src}
                 alt={logo.name}
-                className="max-h-16 w-auto object-contain grayscale hover:grayscale-0 hover:scale-105 transition duration-500"
+                className="max-h-10 md:max-h-14 lg:max-h-16 
+                w-auto object-contain grayscale hover:grayscale-0 
+                hover:scale-105 transition duration-500"
               />
             </div>
           ))}
         </motion.div>
-      </div>
 
-      {/* MOBILE VERSION */}
-      <div className="md:hidden flex gap-14 overflow-x-auto px-2 pb-2 mt-10">
-        {logos.map((logo, index) => (
-          <div
-            key={index}
-            className="flex-shrink-0 min-w-[150px] flex items-center justify-center opacity-70"
-          >
-            <img
-              src={logo.src}
-              alt={logo.name}
-              className="max-h-14 w-auto object-contain grayscale"
-            />
-          </div>
-        ))}
       </div>
 
       {/* Bottom Divider */}
