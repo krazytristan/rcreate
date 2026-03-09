@@ -1,5 +1,5 @@
 // src/components/Services.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
@@ -77,13 +77,22 @@ export default function Services() {
     );
   };
 
+  /* AUTO SLIDE */
+  useEffect(() => {
+    const timer = setInterval(() => {
+      next();
+    }, 6000);
+
+    return () => clearInterval(timer);
+  }, [index]);
+
   return (
     <section
       id="services"
       className="relative py-36 px-6 overflow-hidden"
     >
 
-      {/* ================= BACKGROUND ================= */}
+      {/* BACKGROUND */}
       <div className="absolute inset-0 overflow-hidden">
 
         <AnimatePresence mode="wait">
@@ -94,78 +103,79 @@ export default function Services() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
+            transition={{ duration: 1 }}
             className="absolute inset-0 w-full h-full object-cover scale-110"
           />
         </AnimatePresence>
 
-        {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/60" />
 
-        {/* Gradient Mask (like About.jsx) */}
         <div
           className="absolute inset-0 bg-gradient-to-b
-            from-neutral-background/95
-            via-neutral-background/80
-            to-neutral-background"
+          from-neutral-background/95
+          via-neutral-background/80
+          to-neutral-background"
         />
 
-        {/* Accent Glow */}
         <div className="absolute top-[-200px] left-[-200px] w-[500px] h-[500px] bg-accent/15 blur-[160px] rounded-full" />
       </div>
 
-      {/* ================= CONTENT ================= */}
-      <div className="relative z-20 max-w-5xl mx-auto text-center mb-16 text-primary">
-        <h2 className="font-heading text-4xl md:text-6xl">
+      {/* HEADER */}
+      <div className="relative z-20 max-w-5xl mx-auto text-center mb-20 text-primary">
+
+        <h2 className="font-heading text-[32px] md:text-[42px] lg:text-[56px]">
           Our <span className="text-accent">Services</span>
         </h2>
-        <p className="text-neutral-muted mt-6 max-w-2xl mx-auto">
+
+        <p className="text-[16px] md:text-[17px] lg:text-[18px] text-neutral-muted mt-6 max-w-2xl mx-auto">
           Structured support designed to simplify operations and scale your
           business with clarity and confidence.
         </p>
+
       </div>
 
-      {/* ================= CARD SLIDER ================= */}
+      {/* CAROUSEL */}
       <div className="relative z-20 max-w-4xl mx-auto">
 
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, x: 60 }}
+            initial={{ opacity: 0, x: 80 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -40 }}
-            transition={{ duration: 0.4 }}
-            className="rounded-3xl p-10 bg-white/85 backdrop-blur-xl border border-neutral-border shadow-soft text-left"
+            exit={{ opacity: 0, x: -80 }}
+            transition={{ duration: 0.45 }}
+            className="rounded-3xl p-12 bg-white/85 backdrop-blur-xl border border-neutral-border shadow-soft text-left"
           >
-            <h3 className="font-heading text-2xl text-primary mb-6">
+
+            <h3 className="font-heading text-[20px] md:text-[24px] lg:text-[28px] text-primary mb-6">
               {services[index].title}
             </h3>
 
-            <ul className="space-y-3 text-neutral-muted text-sm md:text-base mb-6">
+            <ul className="space-y-3 text-neutral-muted text-[16px]">
               {services[index].content.map((item, i) => (
                 <li key={i}>• {item}</li>
               ))}
             </ul>
 
-            <p className="text-primary font-medium">
+            <p className="text-primary font-medium mt-6">
               {services[index].closing}
             </p>
+
           </motion.div>
         </AnimatePresence>
 
-        {/* ================= PAGINATION ================= */}
-        <div className="flex flex-col items-center mt-10 space-y-6">
+        {/* NAVIGATION */}
+        <div className="flex justify-between items-center mt-12">
 
-          <div className="text-primary font-semibold">
-            <span className="text-accent text-xl">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <span className="text-neutral-muted">
-              {" "}
-              / {String(services.length).padStart(2, "0")}
-            </span>
-          </div>
+          {/* Prev */}
+          <button
+            onClick={prev}
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-white border border-neutral-border text-primary hover:bg-accent hover:text-white transition"
+          >
+            <FaChevronLeft />
+          </button>
 
+          {/* DOTS */}
           <div className="flex gap-2">
             {services.map((_, i) => (
               <button
@@ -173,32 +183,25 @@ export default function Services() {
                 onClick={() => setIndex(i)}
                 className={`h-2 rounded-full transition-all duration-300 ${
                   index === i
-                    ? "bg-accent w-6"
-                    : "bg-neutral-border w-2"
+                    ? "bg-accent w-8"
+                    : "bg-neutral-border w-3"
                 }`}
               />
             ))}
           </div>
 
-          {/* Prev / Next */}
-          <div className="flex gap-6">
-            <button
-              onClick={prev}
-              className="px-6 py-3 rounded-full bg-white border border-neutral-border text-primary hover:bg-accent hover:text-white transition"
-            >
-              <FaChevronLeft />
-            </button>
-
-            <button
-              onClick={next}
-              className="px-6 py-3 rounded-full bg-accent text-white hover:opacity-90 transition"
-            >
-              <FaChevronRight />
-            </button>
-          </div>
+          {/* Next */}
+          <button
+            onClick={next}
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-accent text-white hover:opacity-90 transition"
+          >
+            <FaChevronRight />
+          </button>
 
         </div>
+
       </div>
+
     </section>
   );
 }

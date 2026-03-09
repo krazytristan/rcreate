@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import WhoWeHelp from "./components/WhoWeHelp";
@@ -10,6 +11,7 @@ import WhyChoose from "./components/WhyChoose";
 import Benefits from "./components/Benefits";
 import WhoWeServe from "./components/WhoWeServe";
 import Testimonials from "./components/Testimonials";
+import Team from "./components/Team";
 import Blogs from "./components/Blogs";
 import Career from "./components/Career";
 import Contact from "./components/Contact";
@@ -22,9 +24,10 @@ function App() {
   return (
     <div className="relative min-h-screen bg-neutral-background text-primary font-body overflow-x-hidden">
 
-      {/* Ambient Glow */}
+      {/* Ambient Glow Background */}
       <div className="pointer-events-none fixed top-[-300px] left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-accent/5 blur-[220px] rounded-full -z-10" />
 
+      {/* Navbar */}
       <Navbar
         onCareerClick={() => {
           setIsCareerPage(true);
@@ -64,6 +67,10 @@ function App() {
             <WhoWeServe />
             <SectionDivider />
 
+            {/* TEAM SECTION ADDED */}
+            <Team />
+            <SectionDivider />
+
             <Testimonials />
             <SectionDivider />
 
@@ -78,7 +85,9 @@ function App() {
 
       </main>
 
+      {/* Footer */}
       <Footer />
+
     </div>
   );
 }

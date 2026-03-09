@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FaBriefcase,
   FaTools,
@@ -66,6 +66,15 @@ export default function WhoWeServe() {
     );
   };
 
+  /* AUTO SLIDE */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActive((prev) => (prev + 1) % audiences.length);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section
       id="serve"
@@ -75,47 +84,77 @@ export default function WhoWeServe() {
 
       <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-28 items-center">
 
-        {/* LEFT COLUMN (UNCHANGED) */}
+        {/* LEFT COLUMN */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="font-heading text-4xl md:text-6xl mt-6 text-primary leading-tight">
+          <h2 className="font-heading text-[32px] md:text-[42px] lg:text-[56px] mt-6 text-primary leading-tight">
             Who <span className="text-accent">We Serve</span>
           </h2>
 
-          <p className="text-lg md:text-xl text-neutral-muted leading-relaxed max-w-xl mt-6 mb-12">
+          <p className="text-[16px] md:text-[17px] lg:text-[18px] text-neutral-muted leading-relaxed max-w-xl mt-6 mb-12">
             We partner with ambitious professionals and service-based businesses
             who need structure, clarity, and high-level execution support to scale
             sustainably.
           </p>
 
-          <div className="relative min-h-[260px]">
+          {/* SLIDER CARD */}
+          <div className="relative min-h-[260px] overflow-hidden">
+
             <AnimatePresence mode="wait">
+
               <motion.div
                 key={active}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.3}
+                onDragEnd={(e, info) => {
+                  if (info.offset.x < -80) nextSlide();
+                  if (info.offset.x > 80) prevSlide();
+                }}
+                initial={{ opacity: 0, y: 30, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.96 }}
                 transition={{ duration: 0.4 }}
-                className="rounded-3xl p-10 bg-white/70 backdrop-blur-xl border border-neutral-border shadow-soft whitespace-pre-line"
+                className="rounded-3xl p-10 bg-white/70 backdrop-blur-xl border border-neutral-border shadow-soft whitespace-pre-line cursor-grab"
               >
-                <h3 className="font-heading text-2xl mb-4 text-primary">
+
+                <h3 className="font-heading text-[20px] md:text-[24px] lg:text-[28px] mb-4 text-primary">
                   {audiences[active].title}
                 </h3>
 
                 <p className="text-neutral-muted leading-relaxed">
                   {audiences[active].description}
                 </p>
+
               </motion.div>
+
             </AnimatePresence>
+
           </div>
+
+          {/* MOBILE SLIDE DOTS */}
+          <div className="flex gap-2 mt-6 lg:hidden">
+            {audiences.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActive(i)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  active === i
+                    ? "w-6 bg-accent"
+                    : "w-2 bg-neutral-border"
+                }`}
+              />
+            ))}
+          </div>
+
         </motion.div>
 
-        {/* RIGHT COLUMN — UPDATED ONLY */}
-        <div className="flex flex-row items-center justify-center gap-8 flex-wrap">
+        {/* DESKTOP ICON SELECTOR */}
+        <div className="hidden lg:flex flex-row items-center justify-center gap-8 flex-wrap">
 
           <button
             onClick={prevSlide}
@@ -126,16 +165,17 @@ export default function WhoWeServe() {
 
           {audiences.map((item, i) => (
             <div key={i} className="flex flex-col items-center">
+
               <motion.button
                 onClick={() => setActive(i)}
                 whileHover={{ scale: 1.08 }}
                 transition={{ duration: 0.2 }}
                 className={`relative w-24 h-24 flex items-center justify-center rounded-full text-3xl transition-all duration-300
-                  ${
-                    active === i
-                      ? "bg-accent text-white shadow-premium"
-                      : "bg-white/60 backdrop-blur-xl text-accent border border-neutral-border"
-                  }`}
+                ${
+                  active === i
+                    ? "bg-accent text-white shadow-premium"
+                    : "bg-white/60 backdrop-blur-xl text-accent border border-neutral-border"
+                }`}
               >
                 {item.icon}
 
@@ -145,6 +185,7 @@ export default function WhoWeServe() {
                     className="absolute inset-0 rounded-full bg-accent/20 blur-xl -z-10"
                   />
                 )}
+
               </motion.button>
 
               {active === i && (
@@ -153,6 +194,7 @@ export default function WhoWeServe() {
                   className="mt-3 w-8 h-1 bg-accent rounded-full"
                 />
               )}
+
             </div>
           ))}
 
