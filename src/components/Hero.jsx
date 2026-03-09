@@ -126,7 +126,7 @@ export default function Hero() {
         <div className="text-center lg:text-left">
 
           {/* Animated Title */}
-          <h1 className="font-heading text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-tight tracking-tight flex flex-wrap gap-2 justify-center lg:justify-start">
+          <h1 className="font-heading text-[32px] md:text-[42px] lg:text-[56px] leading-tight tracking-tight flex flex-wrap gap-2 justify-center lg:justify-start">
 
             {titleWords.map((word, i) => (
               <motion.span
@@ -161,12 +161,12 @@ export default function Hero() {
             className="h-[3px] bg-accent mt-4 rounded mx-auto lg:mx-0"
           />
 
-          {/* Description */}
+          {/* Paragraph */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
-            className="mt-6 text-[11px] sm:text-sm md:text-base text-white/80 max-w-xl leading-relaxed mx-auto lg:mx-0"
+            className="mt-6 text-[16px] md:text-[17px] lg:text-[18px] text-white/80 max-w-xl leading-relaxed mx-auto lg:mx-0"
           >
             <strong>Scale smarter. Operate efficiently. Lead confidently.</strong>
             <br /><br />
@@ -183,7 +183,7 @@ export default function Hero() {
         {/* RIGHT COLUMN */}
         <div className="flex flex-col items-center lg:items-start gap-8">
 
-          {/* CTA BUTTON */}
+          {/* CTA */}
           <motion.button
             onClick={() => setOpenModal(true)}
             whileHover={{ scale: 1.08, y: -2 }}
@@ -204,7 +204,7 @@ export default function Hero() {
               transition={{ duration: 6, repeat: Infinity }}
               className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-6 text-center"
             >
-              <h3 className="text-3xl font-semibold text-accent">
+              <h3 className="text-[20px] md:text-[24px] lg:text-[28px] font-semibold text-accent">
                 <CountUp end={9} duration={2} />+
               </h3>
               <p className="text-xs uppercase tracking-widest text-neutral-muted mt-1">
@@ -218,7 +218,7 @@ export default function Hero() {
               transition={{ duration: 7, repeat: Infinity }}
               className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-6 text-center"
             >
-              <h3 className="text-3xl font-semibold text-accent">
+              <h3 className="text-[20px] md:text-[24px] lg:text-[28px] font-semibold text-accent">
                 <CountUp end={300} duration={2} separator="," />+
               </h3>
               <p className="text-xs uppercase tracking-widest text-neutral-muted mt-1">
@@ -259,9 +259,6 @@ export default function Hero() {
             <motion.div
               className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
               onClick={() => setOpenModal(false)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
             />
 
             <motion.div
@@ -271,9 +268,9 @@ export default function Hero() {
               className="fixed z-50 top-1/2 left-1/2 w-[95%] sm:w-[500px] bg-white rounded-3xl p-8"
             >
 
-              <h3 className="text-2xl font-heading text-primary mb-6 text-center">
+              <h2 className="text-[20px] md:text-[24px] lg:text-[28px] font-heading text-primary mb-6 text-center">
                 Book Your Appointment
-              </h3>
+              </h2>
 
               <form onSubmit={handleSubmit} className="space-y-4">
 
