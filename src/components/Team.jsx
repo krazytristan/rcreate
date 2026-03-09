@@ -1,4 +1,6 @@
+// src/components/Team.jsx
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 import team1 from "../assets/1.jpg";
 import team2 from "../assets/2.jpg";
@@ -37,24 +39,23 @@ const teamMembers = [
 ];
 
 export default function Team() {
+
+  const [paused, setPaused] = useState(false);
+
   return (
     <section
       id="team"
       className="relative py-40 px-6 bg-neutral-background overflow-hidden"
     >
+
       {/* Accent Glow */}
       <div className="absolute top-[-250px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-accent/10 blur-[180px] rounded-full" />
 
       <div className="relative max-w-7xl mx-auto">
 
         {/* HEADER */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto mb-20"
-        >
+        <div className="text-center max-w-3xl mx-auto mb-20">
+
           <h2 className="font-heading text-[32px] md:text-[42px] lg:text-[56px] text-primary leading-tight">
             Meet Our <span className="text-accent">Team</span>
           </h2>
@@ -63,52 +64,83 @@ export default function Team() {
             Behind every successful partnership is a team dedicated to
             organization, execution, and long-term operational support.
           </p>
-        </motion.div>
-
-        {/* TEAM GRID */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
-
-          {teamMembers.map((member, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.15, duration: 0.6 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -8 }}
-              className="rounded-3xl bg-white/70 backdrop-blur-xl border border-neutral-border shadow-soft overflow-hidden"
-            >
-
-              {/* IMAGE */}
-              <div className="relative h-64 overflow-hidden">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover hover:scale-105 transition duration-500"
-                />
-              </div>
-
-              {/* CONTENT */}
-              <div className="p-8 text-center">
-
-                <h3 className="font-heading text-xl text-primary mb-1">
-                  {member.name}
-                </h3>
-
-                <p className="text-accent text-sm font-medium mb-4">
-                  {member.role}
-                </p>
-
-                <p className="text-neutral-muted text-sm leading-relaxed">
-                  {member.description}
-                </p>
-
-              </div>
-
-            </motion.div>
-          ))}
 
         </div>
+
+        {/* Edge Fade */}
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-neutral-background to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-neutral-background to-transparent z-10" />
+
+        {/* Carousel */}
+        <div
+          className="relative overflow-hidden"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+
+          <motion.div
+            drag="x"
+            dragConstraints={{ left: -300, right: 0 }}
+            animate={paused ? { x: "0%" } : { x: ["0%", "-50%"] }}
+            transition={{
+              repeat: paused ? 0 : Infinity,
+              duration: 40,
+              ease: "linear",
+            }}
+            className="flex gap-8 md:gap-10 lg:gap-12 w-max cursor-grab active:cursor-grabbing"
+          >
+
+            {[...teamMembers, ...teamMembers].map((member, index) => (
+
+              <div
+                key={index}
+                className="min-w-[260px] md:min-w-[300px] lg:min-w-[320px]"
+              >
+
+                <motion.div
+                  whileHover={{ y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="rounded-3xl bg-white/70 backdrop-blur-xl border border-neutral-border shadow-soft overflow-hidden"
+                >
+
+                  {/* IMAGE */}
+                  <div className="relative h-64 overflow-hidden">
+
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover transition duration-500 hover:scale-105"
+                    />
+
+                  </div>
+
+                  {/* CONTENT */}
+                  <div className="p-8 text-center">
+
+                    <h3 className="font-heading text-xl text-primary mb-1">
+                      {member.name}
+                    </h3>
+
+                    <p className="text-accent text-sm font-medium mb-4">
+                      {member.role}
+                    </p>
+
+                    <p className="text-neutral-muted text-sm leading-relaxed">
+                      {member.description}
+                    </p>
+
+                  </div>
+
+                </motion.div>
+
+              </div>
+
+            ))}
+
+          </motion.div>
+
+        </div>
+
       </div>
     </section>
   );
