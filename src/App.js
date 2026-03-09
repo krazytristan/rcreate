@@ -12,6 +12,7 @@ import Benefits from "./components/Benefits";
 import WhoWeServe from "./components/WhoWeServe";
 import Testimonials from "./components/Testimonials";
 import Team from "./components/Team";
+import FrequentlyAsk from "./components/FrequentlyAsk";
 import Blogs from "./components/Blogs";
 import Career from "./components/Career";
 import Contact from "./components/Contact";
@@ -27,7 +28,7 @@ function App() {
       {/* Ambient Glow Background */}
       <div className="pointer-events-none fixed top-[-300px] left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-accent/5 blur-[220px] rounded-full -z-10" />
 
-      {/* Navbar */}
+      {/* NAVBAR */}
       <Navbar
         onCareerClick={() => {
           setIsCareerPage(true);
@@ -40,44 +41,62 @@ function App() {
 
         {!isCareerPage ? (
           <>
+
+            {/* HERO */}
             <Hero />
             <SectionDivider />
 
+            {/* WHO WE HELP */}
             <WhoWeHelp />
             <SectionDivider />
 
+            {/* BOOK CALL */}
             <BookCall />
             <SectionDivider />
 
+            {/* ABOUT */}
             <About />
             <SectionDivider />
 
+            {/* SERVICES */}
             <Services />
             <SectionDivider />
 
+            {/* HOW IT WORKS */}
             <HowItWorks />
             <SectionDivider />
 
+            {/* WHY CHOOSE */}
             <WhyChoose />
             <SectionDivider />
 
+            {/* BENEFITS */}
             <Benefits />
             <SectionDivider />
 
+            {/* WHO WE SERVE */}
             <WhoWeServe />
             <SectionDivider />
 
-            {/* TEAM SECTION ADDED */}
+            {/* TEAM */}
             <Team />
             <SectionDivider />
 
+            {/* TESTIMONIALS */}
             <Testimonials />
             <SectionDivider />
 
+            {/* FAQ */}
+            <FrequentlyAsk />
+            <SectionDivider />
+
+            {/* BLOGS */}
             <Blogs />
             <SectionDivider />
 
+            {/* CONTACT */}
             <Contact />
+
           </>
         ) : (
           <Career />
@@ -85,7 +104,7 @@ function App() {
 
       </main>
 
-      {/* Footer */}
+      {/* FOOTER */}
       <Footer />
 
     </div>
