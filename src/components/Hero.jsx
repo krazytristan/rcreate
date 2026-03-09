@@ -90,8 +90,9 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center bg-primary text-white overflow-hidden px-6"
+      className="relative min-h-screen flex items-center bg-primary text-white overflow-hidden px-5 sm:px-6"
     >
+
       {/* Background Video */}
       <video
         ref={videoRef}
@@ -111,16 +112,25 @@ export default function Hero() {
       <div className="absolute top-[-150px] right-[-150px] w-[500px] h-[500px] bg-accent/20 blur-[140px] rounded-full" />
 
       {/* Content */}
-      <div className="relative z-20 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-20 items-center">
+      <div className="relative z-20 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center">
 
         {/* LEFT SIDE */}
-        <div>
+        <div className="text-center lg:text-left">
+
+          {/* Mobile Image */}
+          <div className="lg:hidden mb-8 flex justify-center">
+            <img
+              src={hero1}
+              alt="Virtual Assistant"
+              className="w-60 rounded-3xl shadow-xl border border-white/10"
+            />
+          </div>
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9 }}
-            className="font-heading text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight"
+            className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-7xl leading-tight tracking-tight"
           >
             Leading Executive Virtual Assistant Solutions
             <br />
@@ -133,7 +143,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="mt-8 text-lg text-white/80 max-w-xl leading-relaxed"
+            className="mt-6 text-base sm:text-lg text-white/80 max-w-xl leading-relaxed mx-auto lg:mx-0"
           >
             <strong>Scale smarter. Operate efficiently. Lead confidently.</strong>
             <br /><br />
@@ -148,18 +158,19 @@ export default function Hero() {
           </motion.p>
 
           {/* CTA */}
-          <div className="mt-10 flex flex-wrap gap-6">
+          <div className="mt-8 flex justify-center lg:justify-start">
             <button
               onClick={() => setOpenModal(true)}
-              className="px-10 py-3 rounded-full bg-accent text-white font-medium shadow-premium hover:scale-105 transition duration-300"
+              className="px-8 py-3 rounded-full bg-accent text-white font-medium shadow-lg hover:scale-105 transition duration-300"
             >
               Book a Reservation
             </button>
           </div>
 
           {/* Stats */}
-          <div className="mt-16 flex gap-8">
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-6 shadow-soft">
+          <div className="mt-12 flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-5 shadow-md">
               <h3 className="text-3xl font-semibold text-accent">
                 <CountUp end={9} duration={2} />+
               </h3>
@@ -168,7 +179,7 @@ export default function Hero() {
               </p>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-6 shadow-soft">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-5 shadow-md">
               <h3 className="text-3xl font-semibold text-accent">
                 <CountUp end={300} duration={2} separator="," />+
               </h3>
@@ -176,21 +187,23 @@ export default function Hero() {
                 Businesses Served
               </p>
             </div>
+
           </div>
         </div>
 
         {/* RIGHT SIDE IMAGES */}
         <div className="relative hidden lg:flex justify-center items-center">
           <div className="relative w-[420px] h-[420px]">
+
             {images.map((img, i) => (
               <motion.img
                 key={i}
                 src={img}
                 alt="Virtual Assistant"
-                className={`absolute rounded-3xl shadow-premium border border-white/10 object-cover
-                  ${i === 0 ? "w-80 top-0 left-0 z-30" : ""}
-                  ${i === 1 ? "w-72 top-20 right-0 z-20" : ""}
-                  ${i === 2 ? "w-64 bottom-0 left-20 z-10" : ""}
+                className={`absolute rounded-3xl shadow-xl border border-white/10 object-cover
+                ${i === 0 ? "w-80 top-0 left-0 z-30" : ""}
+                ${i === 1 ? "w-72 top-20 right-0 z-20" : ""}
+                ${i === 2 ? "w-64 bottom-0 left-20 z-10" : ""}
                 `}
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -198,14 +211,16 @@ export default function Hero() {
                 whileHover={{ scale: 1.05 }}
               />
             ))}
+
           </div>
         </div>
+
       </div>
 
-      {/* TOOL STRIP RESTORED */}
-      <div className="absolute bottom-10 left-0 w-full overflow-hidden opacity-70">
+      {/* TOOL STRIP */}
+      <div className="absolute bottom-4 sm:bottom-10 left-0 w-full overflow-hidden opacity-70">
         <motion.div
-          className="flex gap-10 w-max"
+          className="flex gap-6 sm:gap-10 w-max"
           animate={{ x: ["0%", "-50%"] }}
           transition={{ repeat: Infinity, duration: 100, ease: "linear" }}
         >
@@ -237,13 +252,14 @@ export default function Hero() {
               animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
               exit={{ opacity: 0, scale: 0.9 }}
               className="fixed z-50 top-1/2 left-1/2 w-[95%] sm:w-[500px]
-                         bg-white rounded-3xl p-8 shadow-2xl"
+              bg-white rounded-3xl p-8 shadow-2xl"
             >
               <h3 className="text-2xl font-heading text-primary mb-6 text-center">
                 Book Your Appointment
               </h3>
 
               <form onSubmit={handleSubmit} className="space-y-4">
+
                 <input
                   type="text"
                   name="name"
@@ -284,11 +300,13 @@ export default function Hero() {
                 >
                   Confirm Reservation
                 </button>
+
               </form>
             </motion.div>
           </>
         )}
       </AnimatePresence>
+
     </section>
   );
 }
