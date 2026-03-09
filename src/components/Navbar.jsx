@@ -11,31 +11,54 @@ import {
   FaCommentDots,
   FaEnvelope,
   FaBriefcase,
+  FaChevronDown,
 } from "react-icons/fa";
 
 import Owner from "./Owner";
 import Career from "./Career";
 
-const links = [
-  { label: "Home", id: "hero", icon: <FaHome /> },
-  { label: "About", id: "about", icon: <FaInfoCircle /> },
-  { label: "Services", id: "services", icon: <FaCogs /> },
-  { label: "How It Works", id: "how-it-works", icon: <FaListOl /> },
-  { label: "Benefits", id: "benefits", icon: <FaHandHoldingHeart /> },
-  { label: "Audience", id: "serve", icon: <FaUsers /> },
-  { label: "Testimonials", id: "testimonials", icon: <FaCommentDots /> },
-  { label: "Contact", id: "contact", icon: <FaEnvelope /> },
+const menuGroups = [
+  {
+    label: "Main",
+    items: [
+      { label: "Home", id: "hero", icon: <FaHome /> },
+      { label: "About", id: "about", icon: <FaInfoCircle /> },
+    ],
+  },
+  {
+    label: "Services",
+    items: [
+      { label: "Services", id: "services", icon: <FaCogs /> },
+      { label: "How It Works", id: "how-it-works", icon: <FaListOl /> },
+      { label: "Benefits", id: "benefits", icon: <FaHandHoldingHeart /> },
+    ],
+  },
+  {
+    label: "Community",
+    items: [
+      { label: "Audience", id: "serve", icon: <FaUsers /> },
+      { label: "Testimonials", id: "testimonials", icon: <FaCommentDots /> },
+    ],
+  },
+  {
+    label: "Contact",
+    items: [
+      { label: "Contact", id: "contact", icon: <FaEnvelope /> },
+    ],
+  },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [dropdown, setDropdown] = useState(null);
   const [active, setActive] = useState("hero");
   const [ownerOpen, setOwnerOpen] = useState(false);
   const [careerOpen, setCareerOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [scrolled, setScrolled] = useState(false);
 
-  /* Responsive */
+  /* Responsive detection */
   useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth < 1024);
@@ -45,63 +68,80 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  /* Scroll Detection (disabled when modal open) */
+  /* Scroll progress + active section */
   useEffect(() => {
-    if (careerOpen || ownerOpen) return;
-
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 150;
-      setScrolled(window.scrollY > 40);
 
-      links.forEach(({ id }) => {
-        const section = document.getElementById(id);
-        if (section) {
-          const top = section.offsetTop;
-          const height = section.offsetHeight;
+      const scrollTop = window.scrollY;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
 
-          if (
-            scrollPosition >= top &&
-            scrollPosition < top + height
-          ) {
-            setActive(id);
+      const progress = scrollTop / docHeight;
+      setScrollProgress(progress);
+
+      setScrolled(scrollTop > 40);
+
+      const scrollPosition = scrollTop + 200;
+
+      menuGroups.forEach((group) => {
+        group.items.forEach(({ id }) => {
+          const section = document.getElementById(id);
+
+          if (section) {
+            const top = section.offsetTop;
+            const height = section.offsetHeight;
+
+            if (
+              scrollPosition >= top &&
+              scrollPosition < top + height
+            ) {
+              setActive(id);
+            }
           }
-        }
+        });
       });
     };
 
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [careerOpen, ownerOpen]);
+  }, []);
 
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
+
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
       setOpen(false);
+      setDropdown(null);
       setActive(id);
     }
   };
 
-  const openCareer = () => {
-    setOpen(false);
-    setCareerOpen(true);
-  };
-
-  const openTeam = () => {
-    setOpen(false);
-    setOwnerOpen(true);
-  };
-
   return (
     <>
+      {/* Scroll progress indicator */}
+      <motion.div
+        className="fixed top-0 left-0 h-[3px] bg-accent z-[60]"
+        style={{ width: `${scrollProgress * 100}%` }}
+      />
+
       <nav
-        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500
-        ${scrolled ? "w-[85%] md:w-[75%] py-2 shadow-xl" : "w-[95%] md:w-[90%] py-3"}
-        rounded-3xl backdrop-blur-2xl border border-neutral-border bg-white/60`}
+        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50
+        transition-all duration-500
+        ${
+          scrolled
+            ? "w-[85%] md:w-[75%] py-2 shadow-xl"
+            : "w-[95%] md:w-[90%] py-3"
+        }
+        rounded-3xl
+        backdrop-blur-2xl
+        border border-neutral-border
+        bg-white/60`}
       >
         <div className="flex justify-between items-center px-6 md:px-10 h-16">
 
-          {/* LOGO */}
+          {/* Logo */}
           <div
             onClick={() => scrollToSection("hero")}
             className="cursor-pointer group"
@@ -115,90 +155,84 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* DESKTOP NAV */}
+          {/* Desktop navigation */}
           {!isMobileView && (
-            <div className="flex items-center gap-8 relative">
+            <div className="flex items-center gap-10">
 
-              {/* SCROLL LINKS */}
-              {links.map(({ id, icon, label }) => {
-                const isActive = active === id;
-
-                return (
-                  <button
-                    key={id}
-                    onClick={() => scrollToSection(id)}
-                    className="flex flex-col items-center gap-1 relative pb-2 group"
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.08 }}
-                      className={`w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300
-                        ${
-                          isActive
-                            ? "bg-accent/20 text-accent"
-                            : "text-primary group-hover:bg-accent/10"
-                        }
-                      `}
-                    >
-                      {icon}
-                    </motion.div>
-
-                    <span
-                      className={`text-xs font-medium transition-all duration-300
-                        ${isActive ? "text-accent" : "text-primary"}
-                      `}
-                    >
-                      {label}
-                    </span>
-
-                    {isActive && (
-                      <motion.div
-                        layoutId="navIndicator"
-                        className="absolute -bottom-1 h-[2px] w-8 bg-accent rounded-full"
-                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                      />
-                    )}
-                  </button>
-                );
-              })}
-
-              {/* CAREER */}
-              <button
-                onClick={openCareer}
-                className="flex flex-col items-center gap-1 relative pb-2 group"
-              >
-                <motion.div
-                  whileHover={{ scale: 1.08 }}
-                  className="w-10 h-10 flex items-center justify-center rounded-full text-primary group-hover:bg-accent/10 transition-all duration-300"
+              {menuGroups.map((group) => (
+                <div
+                  key={group.label}
+                  className="relative"
+                  onMouseEnter={() => setDropdown(group.label)}
+                  onMouseLeave={() => setDropdown(null)}
                 >
-                  <FaBriefcase />
-                </motion.div>
 
-                <span className="text-xs font-medium text-primary">
-                  Career
-                </span>
+                  {/* Category button */}
+                  <button className="flex items-center gap-2 font-medium text-primary hover:text-accent transition">
+                    {group.label}
+                    <FaChevronDown className="text-xs" />
+                  </button>
+
+                  {/* Dropdown */}
+                  <AnimatePresence>
+                    {dropdown === group.label && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-10 left-0
+                        bg-white
+                        rounded-2xl
+                        border border-neutral-border
+                        shadow-xl
+                        p-3
+                        w-56"
+                      >
+                        {group.items.map((item) => (
+                          <button
+                            key={item.id}
+                            onClick={() => scrollToSection(item.id)}
+                            className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl transition
+                              ${
+                                active === item.id
+                                  ? "bg-accent/10 text-accent"
+                                  : "hover:bg-neutral-100"
+                              }
+                            `}
+                          >
+                            {item.icon}
+                            {item.label}
+                          </button>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+
+              {/* Career */}
+              <button
+                onClick={() => setCareerOpen(true)}
+                className="flex items-center gap-2 font-medium text-primary hover:text-accent transition"
+              >
+                <FaBriefcase />
+                Career
               </button>
 
-              {/* TEAM */}
+              {/* Team */}
               <button
-                onClick={openTeam}
-                className="flex flex-col items-center gap-1 relative pb-2 group"
+                onClick={() => setOwnerOpen(true)}
+                className="flex items-center gap-2 font-medium text-primary hover:text-accent transition"
               >
-                <motion.div
-                  whileHover={{ scale: 1.08 }}
-                  className="w-10 h-10 flex items-center justify-center rounded-full text-primary group-hover:bg-accent/10 transition-all duration-300"
-                >
-                  <FaUsers />
-                </motion.div>
-
-                <span className="text-xs font-medium text-primary">
-                  Team
-                </span>
+                <FaUsers />
+                Team
               </button>
 
             </div>
           )}
 
-          {/* MOBILE MENU BUTTON */}
+          {/* Mobile menu button */}
           {isMobileView && (
             <button
               onClick={() => setOpen(!open)}
@@ -209,45 +243,48 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* MOBILE MENU */}
+        {/* Mobile menu */}
         <AnimatePresence>
           {open && isMobileView && (
             <motion.div
-              initial={{ opacity: 0, y: -15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               className="px-6 pb-6 flex flex-col gap-3"
             >
-              {links.map(({ label, id }) => (
-                <button
-                  key={id}
-                  onClick={() => scrollToSection(id)}
-                  className="py-3 rounded-xl text-primary hover:bg-accent/10 transition"
-                >
-                  {label}
-                </button>
-              ))}
+              {menuGroups.map((group) =>
+                group.items.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className="py-3 rounded-xl text-primary hover:bg-accent/10"
+                  >
+                    {item.label}
+                  </button>
+                ))
+              )}
 
               <button
-                onClick={openCareer}
-                className="py-3 rounded-xl text-primary hover:bg-accent/10 transition"
+                onClick={() => setCareerOpen(true)}
+                className="py-3 rounded-xl text-primary hover:bg-accent/10"
               >
                 Career
               </button>
 
               <button
-                onClick={openTeam}
-                className="py-3 rounded-xl text-primary hover:bg-accent/10 transition"
+                onClick={() => setOwnerOpen(true)}
+                className="py-3 rounded-xl text-primary hover:bg-accent/10"
               >
                 Team
               </button>
+
             </motion.div>
           )}
         </AnimatePresence>
+
       </nav>
 
-      {/* MODALS */}
+      {/* Modals */}
       <Owner isOpen={ownerOpen} onClose={() => setOwnerOpen(false)} />
       <Career isOpen={careerOpen} onClose={() => setCareerOpen(false)} />
     </>
