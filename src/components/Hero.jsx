@@ -61,9 +61,17 @@ const titleWords = [
   "Solutions",
 ];
 
+const phrases = [
+  "Scale smarter.",
+  "Operate efficiently.",
+  "Lead confidently.",
+];
+
 export default function Hero() {
+
   const videoRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
+  const [phraseIndex, setPhraseIndex] = useState(0);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -72,12 +80,23 @@ export default function Hero() {
     time: "",
   });
 
+  /* VIDEO AUTOPLAY */
   useEffect(() => {
     if (!videoRef.current) return;
     videoRef.current.muted = true;
     videoRef.current.play().catch(() => {});
   }, []);
 
+  /* PHRASE LOOP */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPhraseIndex((prev) => (prev + 1) % phrases.length);
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  /* MODAL SCROLL LOCK */
   useEffect(() => {
     document.body.style.overflow = openModal ? "hidden" : "auto";
   }, [openModal]);
@@ -97,6 +116,7 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex items-center bg-primary text-white overflow-hidden px-5 sm:px-6"
     >
+
       {/* Background Video */}
       <video
         ref={videoRef}
@@ -121,8 +141,8 @@ export default function Hero() {
         {/* LEFT COLUMN */}
         <div className="text-center lg:text-left">
 
-          {/* Animated Title */}
-          <h1 className="font-heading text-[32px] md:text-[42px] lg:text-[56px] leading-tight tracking-tight flex flex-wrap gap-2 justify-center lg:justify-start">
+          {/* TITLE */}
+          <h1 className="font-heading text-[40px] md:text-[42px] lg:text-[56px] leading-tight tracking-tight flex flex-wrap gap-2 justify-center lg:justify-start">
 
             {titleWords.map((word, i) => (
               <motion.span
@@ -149,15 +169,25 @@ export default function Hero() {
 
           </h1>
 
-          {/* MOBILE MAIN MESSAGE */}
-          <motion.h3
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-            className="md:hidden mt-6 text-lg text-accent font-semibold"
-          >
-            Scale smarter. Operate efficiently. Lead confidently.
-          </motion.h3>
+          {/* MOBILE ANIMATION */}
+          <div className="md:hidden mt-6 h-8 flex justify-center lg:justify-start">
+
+            <AnimatePresence mode="wait">
+
+              <motion.span
+                key={phraseIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="text-accent font-semibold text-xl"
+              >
+                {phrases[phraseIndex]}
+              </motion.span>
+
+            </AnimatePresence>
+
+          </div>
 
           {/* DESKTOP PARAGRAPH */}
           <motion.p
@@ -237,7 +267,7 @@ export default function Hero() {
 
       </div>
 
-      {/* BOOKING MODAL (unchanged) */}
+      {/* BOOKING MODAL */}
       <AnimatePresence>
         {openModal && (
           <>
