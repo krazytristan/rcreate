@@ -40,7 +40,7 @@ export default function FrequentlyAsk() {
   return (
     <section
       id="faq"
-      className="relative py-40 px-6 bg-neutral-background overflow-hidden"
+      className="relative pt-10 py-40 px-6 bg-neutral-background overflow-hidden"
     >
 
       {/* Accent Glow */}

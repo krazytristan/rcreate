@@ -89,7 +89,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative py-36 px-6 overflow-hidden"
+      className="relative pt-12 md:pt-20 lg:pt-28 pb-20 px-6 overflow-hidden"
     >
 
       {/* BACKGROUND */}

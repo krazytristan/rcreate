@@ -52,7 +52,7 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="relative py-40 px-6 bg-neutral-background overflow-hidden"
+      className="relative pt-8 md:pt-20 lg:pt-28 pb-20 px-6 bg-neutral-background overflow-hidden"
     >
       {/* Accent Glow */}
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-accent/10 blur-[180px] rounded-full" />

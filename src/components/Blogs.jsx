@@ -28,7 +28,7 @@ export default function Blogs() {
   return (
     <section
       id="blogs"
-      className="relative py-32 px-6 bg-neutral-background overflow-hidden"
+      className="relative pt-10 md:pt-20 lg:pt-28 pb-20 px-6 bg-neutral-background overflow-hidden"
     >
       {/* Accent Glow */}
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-accent/10 blur-[160px] rounded-full" />

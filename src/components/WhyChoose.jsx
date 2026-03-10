@@ -13,7 +13,7 @@ export default function WhyChoose() {
   return (
     <section
       id="why-choose"
-      className="relative py-36 px-6 bg-neutral-background overflow-hidden"
+      className="relative pt-12 md:pt-20 lg:pt-28 pb-20 px-6 bg-neutral-background overflow-hidden"
     >
       {/* Accent Glow */}
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-accent/10 blur-[180px] rounded-full" />

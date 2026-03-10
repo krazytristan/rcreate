@@ -78,7 +78,7 @@ export default function WhoWeServe() {
   return (
     <section
       id="serve"
-      className="relative py-40 px-6 bg-neutral-background overflow-hidden"
+      className="relative pt-10 py-40 px-6 bg-neutral-background overflow-hidden"
     >
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[650px] h-[650px] bg-accent/10 blur-[180px] rounded-full" />
 
@@ -137,7 +137,7 @@ export default function WhoWeServe() {
           </div>
 
           {/* MOBILE SLIDE DOTS */}
-          <div className="flex gap-2 mt-6 lg:hidden">
+          <div className="flex justify-center items-center gap-2 mt-6 lg:hidden">
             {audiences.map((_, i) => (
               <button
                 key={i}

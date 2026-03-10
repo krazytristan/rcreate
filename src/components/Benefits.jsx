@@ -54,7 +54,7 @@ export default function Benefits() {
   return (
     <section
       id="benefits"
-      className="relative py-40 px-6 bg-neutral-background overflow-hidden"
+      className="relative pt-8 py-40 px-6 bg-neutral-background overflow-hidden"
     >
 
       {/* Accent Glow */}
@@ -153,7 +153,7 @@ export default function Benefits() {
           </div>
 
           {/* MOBILE DOTS */}
-          <div className="flex gap-2 mt-6 lg:hidden">
+          <div className="flex justify-center items-center gap-2 mt-6 lg:hidden">
             {benefits.map((_, i) => (
               <button
                 key={i}

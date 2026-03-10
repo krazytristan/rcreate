@@ -89,7 +89,7 @@ const logos = [
 
 export default function WhoWeHelp() {
   return (
-    <section className="relative py-32 px-6 bg-neutral-background overflow-hidden">
+    <section className="relative pt-10 md:pt-20 lg:pt-28 pb-20 px-6 bg-neutral-background overflow-hidden">
 
       {/* Top Divider */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-neutral-border to-transparent" />
