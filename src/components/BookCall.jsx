@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaPhoneAlt } from "react-icons/fa";
+import emailjs from "@emailjs/browser"; // Import EmailJS
 
 export default function CTAForm() {
-  const [open, setOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "" });
+  // ---------------------- STATE ----------------------
+  const [open, setOpen] = useState(false); // Modal open/close
+  const [submitted, setSubmitted] = useState(false); // Form submitted state
+  const [sending, setSending] = useState(false); // Email sending state
+  const [formData, setFormData] = useState({ name: "", email: "" }); // Form fields
 
-  /* Lock scroll when modal open */
+  // ---------------------- LOCK SCROLL ----------------------
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "auto";
   }, [open]);
 
-  /* Close on ESC */
+  // ---------------------- CLOSE ON ESC ----------------------
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") setOpen(false);
@@ -21,13 +24,40 @@ export default function CTAForm() {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
+  // ---------------------- FORM FIELD CHANGE ----------------------
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // ---------------------- FORM SUBMIT ----------------------
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
+
+    setSending(true); // Start sending
+
+    const serviceID = "service_mur95n2";
+    const templateID = "template_1q1ddr7";
+    const publicKey = "2AMx19wzcXVWTaMED";
+
+    // Add date and time to the form data
+    const now = new Date();
+    const timestamp = now.toLocaleString(); // e.g., "3/11/2026, 2:15:30 PM"
+    const emailData = { ...formData, submitted_at: timestamp };
+
+    emailjs
+      .send(serviceID, templateID, emailData, publicKey)
+      .then(
+        (response) => {
+          console.log("SUCCESS!", response.status, response.text);
+          setSubmitted(true);
+          setFormData({ name: "", email: "" }); // Reset form
+        },
+        (err) => {
+          console.error("FAILED...", err);
+          alert("Oops! Something went wrong. Please try again.");
+        }
+      )
+      .finally(() => setSending(false)); // Stop sending
   };
 
   return (
@@ -89,8 +119,7 @@ export default function CTAForm() {
               {/* HEADER */}
               <div className="px-6 py-6 border-b border-neutral-border flex justify-between items-center">
                 <div>
-                  <span className="text-xs tracking-[0.35em] uppercase text-neutral-muted">
-                  </span>
+                  <span className="text-xs tracking-[0.35em] uppercase text-neutral-muted"></span>
                   <h2 className="font-heading text-xl md:text-2xl text-primary mt-2">
                     Book Your Free Strategy Call
                   </h2>
@@ -107,7 +136,6 @@ export default function CTAForm() {
 
               {/* CONTENT */}
               <div className="p-6 md:p-8 text-center">
-
                 {!submitted ? (
                   <>
                     <p className="text-base md:text-lg mb-6 text-neutral-muted leading-relaxed">
@@ -116,10 +144,8 @@ export default function CTAForm() {
                       elevate your operations and unlock scalable growth.
                     </p>
 
-                    <form
-                      onSubmit={handleSubmit}
-                      className="flex flex-col gap-4"
-                    >
+                    {/* FORM */}
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                       <input
                         type="text"
                         name="name"
@@ -142,9 +168,10 @@ export default function CTAForm() {
 
                       <button
                         type="submit"
-                        className="mt-2 bg-accent text-white font-semibold py-3 rounded-xl shadow-premium hover:scale-105 transition duration-300"
+                        disabled={sending}
+                        className="mt-2 bg-accent text-white font-semibold py-3 rounded-xl shadow-premium hover:scale-105 transition duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                       >
-                        Continue →
+                        {sending ? "Sending..." : "Continue →"}
                       </button>
                     </form>
 
@@ -153,6 +180,7 @@ export default function CTAForm() {
                     </p>
                   </>
                 ) : (
+                  // CONFIRMATION MESSAGE
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -168,7 +196,7 @@ export default function CTAForm() {
                     </p>
 
                     <a
-                      href="[GHL Booking Link]"
+                      href="[GHL Booking Link]" // Replace with your booking link
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-block bg-accent text-white font-semibold px-6 py-3 rounded-xl shadow-premium hover:scale-105 transition"
@@ -177,7 +205,6 @@ export default function CTAForm() {
                     </a>
                   </motion.div>
                 )}
-
               </div>
 
               {/* FOOTER */}
