@@ -17,7 +17,6 @@ import Blogs from "./components/Blogs";
 import Career from "./components/Career";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import SectionDivider from "./components/SectionDivider";
 
 function App() {
   const [isCareerPage, setIsCareerPage] = useState(false);
@@ -44,55 +43,42 @@ function App() {
 
             {/* HERO */}
             <Hero />
-            <SectionDivider />
 
             {/* WHO WE HELP */}
             <WhoWeHelp />
-            <SectionDivider />
 
             {/* BOOK CALL */}
             <BookCall />
-            <SectionDivider />
 
             {/* ABOUT */}
             <About />
-            <SectionDivider />
 
             {/* SERVICES */}
             <Services />
-            <SectionDivider />
 
             {/* HOW IT WORKS */}
             <HowItWorks />
-            <SectionDivider />
 
             {/* WHY CHOOSE */}
             <WhyChoose />
-            <SectionDivider />
 
             {/* BENEFITS */}
             <Benefits />
-            <SectionDivider />
 
             {/* WHO WE SERVE */}
             <WhoWeServe />
-            <SectionDivider />
 
             {/* TEAM */}
             <Team />
-            <SectionDivider />
 
             {/* TESTIMONIALS */}
             <Testimonials />
-            <SectionDivider />
 
             {/* FAQ */}
             <FrequentlyAsk />
-            <SectionDivider />
 
             {/* BLOGS */}
             <Blogs />
-            <SectionDivider />
 
             {/* CONTACT */}
             <Contact />

@@ -149,12 +149,22 @@ export default function Hero() {
 
           </h1>
 
-          {/* Paragraph */}
+          {/* MOBILE MAIN MESSAGE */}
+          <motion.h3
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.9, duration: 0.6 }}
+            className="md:hidden mt-6 text-lg text-accent font-semibold"
+          >
+            Scale smarter. Operate efficiently. Lead confidently.
+          </motion.h3>
+
+          {/* DESKTOP PARAGRAPH */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
-            className="mt-6 text-[16px] md:text-[17px] lg:text-[18px] text-white/80 max-w-xl leading-relaxed mx-auto lg:mx-0"
+            className="hidden md:block mt-6 text-[16px] md:text-[17px] lg:text-[18px] text-white/80 max-w-xl leading-relaxed mx-auto lg:mx-0"
           >
             <strong>Scale smarter. Operate efficiently. Lead confidently.</strong>
             <br /><br />
@@ -227,7 +237,7 @@ export default function Hero() {
 
       </div>
 
-      {/* BOOKING MODAL */}
+      {/* BOOKING MODAL (unchanged) */}
       <AnimatePresence>
         {openModal && (
           <>
@@ -267,7 +277,6 @@ export default function Hero() {
                   className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary"
                 />
 
-                {/* DATE FIX */}
                 <input
                   type="date"
                   name="date"
@@ -276,7 +285,6 @@ export default function Hero() {
                   className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary appearance-none"
                 />
 
-                {/* TIME FIX */}
                 <input
                   type="time"
                   name="time"
