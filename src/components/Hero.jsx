@@ -327,7 +327,7 @@ export default function Hero() {
                   type="submit"
                   className="w-full bg-accent text-white py-3 rounded-xl font-semibold hover:scale-105 transition"
                 >
-                  Confirm Reservation
+                  Confirm Booking
                 </button>
 
               </form>
