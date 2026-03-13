@@ -30,7 +30,7 @@ function App() {
     <Router>
       <Routes>
         {/* Hidden admin/dashboard route */}
-        <Route path="/dashboard" element={<AdminLayout />} />
+        <Route path="/rcreate/dashboard" element={<AdminLayout />} />
 
         {/* Main site route */}
         <Route
