@@ -15,9 +15,6 @@ export default function ReadyToElevate() {
         transition={{ duration: 0.8 }}
         className="relative max-w-6xl mx-auto rounded-[32px] border border-neutral-border bg-white/70 backdrop-blur-xl p-10 md:p-16 shadow-soft text-center"
       >
-        <span className="text-sm tracking-[0.38em] uppercase text-neutral-muted">
-          Final Call To Action
-        </span>
 
         <h2 className="font-heading text-4xl md:text-6xl text-primary leading-tight mt-6">
           Ready to <span className="text-accent">Elevate Your Business?</span>

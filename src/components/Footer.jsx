@@ -91,29 +91,6 @@ export default function Footer() {
               </a>
             </div>
           </div>
-
-          {/* CONTACT */}
-          <div className="space-y-6">
-            <h4 className="font-heading text-primary text-lg">
-              Contact
-            </h4>
-
-            <div className="text-sm text-neutral-muted space-y-3">
-              <p>Email:</p>
-
-              <a
-                href="mailto:hello@rcreateva.com"
-                className="text-accent font-semibold hover:underline"
-              >
-                hello@rcreateva.com
-              </a>
-
-              <p className="pt-2">
-                Serving clients globally with remote support.
-              </p>
-            </div>
-          </div>
-
         </div>
 
         {/* BOTTOM BAR */}

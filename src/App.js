@@ -21,7 +21,7 @@ import Footer from "./components/Footer";
 import PartnershipPhilosophy from "./components/PartnershipPhilosophy";
 import ReadyToElevate from "./components/ReadyToElevate";
 
-import AdminLayout from "./components/admin/AdminLayout"; // full dashboard layout
+import AdminLayout from "./components/admin/AdminLayout";
 
 function App() {
   const [isCareerPage, setIsCareerPage] = useState(false);

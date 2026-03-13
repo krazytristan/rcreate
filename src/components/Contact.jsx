@@ -77,10 +77,10 @@ export default function Contact() {
 
           <div className="space-y-4 text-neutral-muted">
             <p>
-              <span className="font-semibold text-primary">Email:</span> yourcompany@email.com
+              <span className="font-semibold text-primary">Email:</span> team.rcreatevaservices@gmail.com
             </p>
             <p>
-              <span className="font-semibold text-primary">Availability:</span> Monday – Friday
+              <span className="font-semibold text-primary">Availability:</span> 24 Hours
             </p>
             <p>
               <span className="font-semibold text-primary">Response Time:</span> Within 24 hours

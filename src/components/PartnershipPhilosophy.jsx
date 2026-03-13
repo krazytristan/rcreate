@@ -22,9 +22,6 @@ export default function PartnershipPhilosophy() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <span className="text-sm tracking-[0.38em] uppercase text-neutral-muted">
-            Partnership Philosophy
-          </span>
 
           <h2 className="font-heading text-4xl md:text-6xl mt-6 text-primary leading-tight">
             Ongoing partnerships, <span className="text-accent">not just contracts</span>
