@@ -17,6 +17,8 @@ import Blogs from "./components/Blogs";
 import Career from "./components/Career";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import PartnershipPhilosophy from "./components/PartnershipPhilosophy";
+import ReadyToElevate from "./components/ReadyToElevate";
 
 function App() {
   const [isCareerPage, setIsCareerPage] = useState(false);
@@ -56,6 +58,9 @@ function App() {
             {/* SERVICES */}
             <Services />
 
+            {/* PartnershipPhilosophy */}
+            <PartnershipPhilosophy/>
+
             {/* HOW IT WORKS */}
             <HowItWorks />
 
@@ -76,6 +81,9 @@ function App() {
 
             {/* FAQ */}
             <FrequentlyAsk />
+
+            {/* Ready to Elevate*/}
+            <ReadyToElevate/>
 
             {/* BLOGS */}
             <Blogs />

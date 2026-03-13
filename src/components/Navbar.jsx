@@ -12,6 +12,8 @@ import {
   FaEnvelope,
   FaBriefcase,
   FaChevronDown,
+  FaRocket,
+  FaLightbulb,
 } from "react-icons/fa";
 
 import Owner from "./Owner";
@@ -31,6 +33,7 @@ const menuGroups = [
       { label: "Services", id: "services", icon: <FaCogs /> },
       { label: "How It Works", id: "how-it-works", icon: <FaListOl /> },
       { label: "Benefits", id: "benefits", icon: <FaHandHoldingHeart /> },
+      { label: "Philosophy", id: "partnership-philosophy", icon: <FaLightbulb /> },
     ],
   },
   {
@@ -44,6 +47,7 @@ const menuGroups = [
     label: "Contact",
     items: [
       { label: "Contact", id: "contact", icon: <FaEnvelope /> },
+      { label: "Ready to Elevate?", id: "ready-to-elevate", icon: <FaRocket /> },
     ],
   },
 ];
@@ -71,14 +75,10 @@ export default function Navbar() {
   /* Scroll progress + active section */
   useEffect(() => {
     const handleScroll = () => {
-
       const scrollTop = window.scrollY;
-      const docHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = scrollTop / docHeight;
       setScrollProgress(progress);
-
       setScrolled(scrollTop > 40);
 
       const scrollPosition = scrollTop + 200;
@@ -86,15 +86,10 @@ export default function Navbar() {
       menuGroups.forEach((group) => {
         group.items.forEach(({ id }) => {
           const section = document.getElementById(id);
-
           if (section) {
             const top = section.offsetTop;
             const height = section.offsetHeight;
-
-            if (
-              scrollPosition >= top &&
-              scrollPosition < top + height
-            ) {
+            if (scrollPosition >= top && scrollPosition < top + height) {
               setActive(id);
             }
           }
@@ -103,13 +98,11 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
-
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
       setOpen(false);
@@ -129,11 +122,7 @@ export default function Navbar() {
       <nav
         className={`fixed top-6 left-1/2 -translate-x-1/2 z-50
         transition-all duration-500
-        ${
-          scrolled
-            ? "w-[85%] md:w-[75%] py-2 shadow-xl"
-            : "w-[95%] md:w-[90%] py-3"
-        }
+        ${scrolled ? "w-[85%] md:w-[75%] py-2 shadow-xl" : "w-[95%] md:w-[90%] py-3"}
         rounded-3xl
         backdrop-blur-2xl
         border border-neutral-border
@@ -166,7 +155,6 @@ export default function Navbar() {
                   onMouseEnter={() => setDropdown(group.label)}
                   onMouseLeave={() => setDropdown(null)}
                 >
-
                   {/* Category button */}
                   <button className="flex items-center gap-2 font-medium text-primary hover:text-accent transition">
                     {group.label}
@@ -194,11 +182,7 @@ export default function Navbar() {
                             key={item.id}
                             onClick={() => scrollToSection(item.id)}
                             className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl transition
-                              ${
-                                active === item.id
-                                  ? "bg-accent/10 text-accent"
-                                  : "hover:bg-neutral-100"
-                              }
+                              ${active === item.id ? "bg-accent/10 text-accent" : "hover:bg-neutral-100"}
                             `}
                           >
                             {item.icon}
@@ -228,7 +212,6 @@ export default function Navbar() {
                 <FaUsers />
                 Team
               </button>
-
             </div>
           )}
 
@@ -243,7 +226,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile menu with dropdowns */}
         <AnimatePresence>
           {open && isMobileView && (
             <motion.div
@@ -252,41 +235,86 @@ export default function Navbar() {
               exit={{ opacity: 0 }}
               className="px-6 pb-6 flex flex-col gap-3"
             >
-              {menuGroups.map((group) =>
-                group.items.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className="py-3 rounded-xl text-primary hover:bg-accent/10"
-                  >
-                    {item.label}
-                  </button>
-                ))
-              )}
+              {menuGroups.map((group) => (
+                <MobileDropdown
+                  key={group.label}
+                  group={group}
+                  active={active}
+                  scrollToSection={scrollToSection}
+                />
+              ))}
 
+              {/* Career */}
               <button
                 onClick={() => setCareerOpen(true)}
-                className="py-3 rounded-xl text-primary hover:bg-accent/10"
+                className="py-3 rounded-xl text-primary hover:bg-accent/10 flex items-center gap-2"
               >
+                <FaBriefcase />
                 Career
               </button>
 
+              {/* Team */}
               <button
                 onClick={() => setOwnerOpen(true)}
-                className="py-3 rounded-xl text-primary hover:bg-accent/10"
+                className="py-3 rounded-xl text-primary hover:bg-accent/10 flex items-center gap-2"
               >
+                <FaUsers />
                 Team
               </button>
-
             </motion.div>
           )}
         </AnimatePresence>
-
       </nav>
 
       {/* Modals */}
       <Owner isOpen={ownerOpen} onClose={() => setOwnerOpen(false)} />
       <Career isOpen={careerOpen} onClose={() => setCareerOpen(false)} />
     </>
+  );
+}
+
+/* Mobile dropdown component */
+function MobileDropdown({ group, active, scrollToSection }) {
+  const [groupOpen, setGroupOpen] = useState(false);
+
+  return (
+    <div className="flex flex-col">
+      {/* Group header */}
+      <button
+        onClick={() => setGroupOpen(!groupOpen)}
+        className="flex justify-between items-center py-3 px-4 rounded-xl text-primary hover:bg-accent/10 font-medium"
+      >
+        {group.label}
+        <FaChevronDown
+          className={`ml-2 transition-transform ${groupOpen ? "rotate-180" : "rotate-0"}`}
+        />
+      </button>
+
+      {/* Dropdown items */}
+      <AnimatePresence>
+        {groupOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex flex-col gap-2 mt-2 pl-4"
+          >
+            {group.items.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`py-2 rounded-xl text-primary hover:bg-accent/10 flex items-center gap-2 ${
+                  active === item.id ? "bg-accent/10 text-accent" : ""
+                }`}
+              >
+                {item.icon}
+                {item.label}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
