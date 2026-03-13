@@ -129,7 +129,6 @@ export default function Navbar() {
         bg-white/60`}
       >
         <div className="flex justify-between items-center px-6 md:px-10 h-16">
-
           {/* Logo */}
           <div
             onClick={() => scrollToSection("hero")}
@@ -147,7 +146,6 @@ export default function Navbar() {
           {/* Desktop navigation */}
           {!isMobileView && (
             <div className="flex items-center gap-10">
-
               {menuGroups.map((group) => (
                 <div
                   key={group.label}
@@ -168,7 +166,7 @@ export default function Navbar() {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
                         className="absolute top-10 left-0
                         bg-white
                         rounded-2xl
@@ -177,18 +175,31 @@ export default function Navbar() {
                         p-3
                         w-56"
                       >
-                        {group.items.map((item) => (
-                          <button
-                            key={item.id}
-                            onClick={() => scrollToSection(item.id)}
-                            className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl transition
-                              ${active === item.id ? "bg-accent/10 text-accent" : "hover:bg-neutral-100"}
-                            `}
-                          >
-                            {item.icon}
-                            {item.label}
-                          </button>
-                        ))}
+                        <motion.div
+                          initial="hidden"
+                          animate="visible"
+                          exit="hidden"
+                          variants={{
+                            hidden: { opacity: 0 },
+                            visible: { opacity: 1, transition: { staggerChildren: 0.05 } },
+                          }}
+                        >
+                          {group.items.map((item) => (
+                            <motion.button
+                              key={item.id}
+                              onClick={() => scrollToSection(item.id)}
+                              variants={{
+                                hidden: { opacity: 0, y: -5 },
+                                visible: { opacity: 1, y: 0 },
+                              }}
+                              className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl transition
+                              ${active === item.id ? "bg-accent/10 text-accent" : "hover:bg-neutral-100"}`}
+                            >
+                              {item.icon}
+                              {item.label}
+                            </motion.button>
+                          ))}
+                        </motion.div>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -226,13 +237,15 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile menu with dropdowns */}
+        {/* Mobile Menu */}
         <AnimatePresence>
           {open && isMobileView && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              key="mobile-menu"
+              initial={{ opacity: 0, y: -20 }}       // start slightly above
+              animate={{ opacity: 1, y: 0 }}         // slide into place
+              exit={{ opacity: 0, y: -30 }}          // slide up while fading
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="px-6 pb-6 flex flex-col gap-3"
             >
               {menuGroups.map((group) => (
@@ -244,23 +257,27 @@ export default function Navbar() {
                 />
               ))}
 
-              {/* Career */}
-              <button
+              <motion.button
                 onClick={() => setCareerOpen(true)}
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2, delay: 0.05 }}
                 className="py-3 rounded-xl text-primary hover:bg-accent/10 flex items-center gap-2"
               >
-                <FaBriefcase />
-                Career
-              </button>
+                <FaBriefcase /> Career
+              </motion.button>
 
-              {/* Team */}
-              <button
+              <motion.button
                 onClick={() => setOwnerOpen(true)}
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2, delay: 0.1 }}
                 className="py-3 rounded-xl text-primary hover:bg-accent/10 flex items-center gap-2"
               >
-                <FaUsers />
-                Team
-              </button>
+                <FaUsers /> Team
+              </motion.button>
             </motion.div>
           )}
         </AnimatePresence>
@@ -294,23 +311,28 @@ function MobileDropdown({ group, active, scrollToSection }) {
       <AnimatePresence>
         {groupOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
+            layout
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             className="flex flex-col gap-2 mt-2 pl-4"
           >
-            {group.items.map((item) => (
-              <button
+            {group.items.map((item, index) => (
+              <motion.button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+                transition={{ delay: index * 0.05, duration: 0.25, ease: "easeOut" }}
                 className={`py-2 rounded-xl text-primary hover:bg-accent/10 flex items-center gap-2 ${
                   active === item.id ? "bg-accent/10 text-accent" : ""
                 }`}
               >
                 {item.icon}
                 {item.label}
-              </button>
+              </motion.button>
             ))}
           </motion.div>
         )}

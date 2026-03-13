@@ -1,6 +1,6 @@
 // src/components/Team.jsx
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import team1 from "../assets/1.jpg";
 import team2 from "../assets/2.jpg";
@@ -88,6 +88,15 @@ const teamMembers = [
 
 export default function Team() {
   const [paused, setPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile screen
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <section
@@ -98,10 +107,8 @@ export default function Team() {
       <div className="absolute top-[-250px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-accent/10 blur-[180px] rounded-full" />
 
       <div className="relative max-w-7xl mx-auto">
-
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-
           <h2 className="font-heading text-[32px] md:text-[42px] lg:text-[56px] text-primary leading-tight">
             Meet Our <span className="text-accent">Team</span>
           </h2>
@@ -110,48 +117,25 @@ export default function Team() {
             Behind every successful partnership is a team dedicated to
             organization, execution, and operational support.
           </p>
-
         </div>
 
         {/* Edge fade */}
-        <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-neutral-background to-transparent z-10" />
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-neutral-background to-transparent z-10" />
+        {!isMobile && (
+          <>
+            <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-neutral-background to-transparent z-10" />
+            <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-neutral-background to-transparent z-10" />
+          </>
+        )}
 
-        {/* Carousel */}
-        <div
-          className="relative overflow-hidden"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-        >
-
-          <motion.div
-            drag="x"
-            dragConstraints={{ left: -400, right: 0 }}
-            dragElastic={0.2}
-            animate={paused ? { x: 0 } : { x: ["0%", "-50%"] }}
-            transition={{
-              repeat: paused ? 0 : Infinity,
-              duration: 45,
-              ease: "linear",
-            }}
-            className="flex gap-8 md:gap-10 lg:gap-12 w-max cursor-grab active:cursor-grabbing"
-          >
-
-            {[...teamMembers, ...teamMembers].map((member, index) => (
-
-              <div
-                key={index}
-                className="min-w-[260px] sm:min-w-[280px] md:min-w-[300px] lg:min-w-[320px]"
-              >
-
-                <motion.div
-                  whileHover={{ y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="rounded-3xl bg-white/70 backdrop-blur-xl border border-neutral-border shadow-soft overflow-hidden"
-                >
-
+        {/* Carousel / Grid */}
+        {isMobile ? (
+          // Mobile: Grid with 3 columns
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {teamMembers.map((member, index) => (
+              <div key={index}>
+                <div className="rounded-3xl bg-white/70 backdrop-blur-xl border border-neutral-border shadow-soft overflow-hidden">
                   {/* Image */}
-                  <div className="relative h-64 overflow-hidden">
+                  <div className="relative h-[250px] overflow-hidden">
                     <img
                       src={member.image}
                       alt={member.name}
@@ -160,32 +144,87 @@ export default function Team() {
                   </div>
 
                   {/* Content */}
-                  <div className="p-8 text-center">
-
-                    <h3 className="font-heading text-xl text-primary mb-1">
+                  <div className="p-4 text-center">
+                    <h3 className="font-heading text-lg text-primary mb-1">
                       {member.name}
                     </h3>
-
-                    <p className="text-accent text-sm font-medium mb-4">
+                    <p className="text-accent text-sm font-medium mb-2">
                       {member.role}
                     </p>
-
                     <p className="text-neutral-muted text-sm leading-relaxed">
                       {member.description}
                     </p>
-
                   </div>
-
-                </motion.div>
-
+                </div>
               </div>
-
             ))}
+          </div>
+        ) : (
+          // Desktop: Animated horizontal carousel
+          <div
+            className="relative overflow-hidden"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
+            <motion.div
+              className="flex gap-8 md:gap-10 lg:gap-12 w-max cursor-grab active:cursor-grabbing"
+              drag="x"
+              dragConstraints={{ left: -400, right: 0 }}
+              dragElastic={0.2}
+              animate={paused ? { x: 0 } : { x: ["0%", "-50%"] }}
+              transition={{
+                repeat: paused ? 0 : Infinity,
+                duration: 45,
+                ease: "linear",
+              }}
+            >
+              {[...teamMembers, ...teamMembers].map((member, index) => (
+                <div
+                  key={index}
+                  className="min-w-[260px] sm:min-w-[280px] md:min-w-[300px] lg:min-w-[320px]"
+                >
+                  <motion.div
+                    whileHover={{ y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="rounded-3xl bg-white/70 backdrop-blur-xl border border-neutral-border shadow-soft overflow-hidden"
+                  >
+                    {/* Image */}
+                    <div className="relative h-64 overflow-hidden">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover transition duration-500 hover:scale-105"
+                      />
+                    </div>
 
-          </motion.div>
+                    {/* Content */}
+                    <div className="p-8 text-center">
+                      <h3 className="font-heading text-xl text-primary mb-1">
+                        {member.name}
+                      </h3>
+                      <p className="text-accent text-sm font-medium mb-4">
+                        {member.role}
+                      </p>
+                      <p className="text-neutral-muted text-sm leading-relaxed">
+                        {member.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        )}
 
+        {/* Hire Our Experts Button */}
+        <div className="mt-12 text-center">
+          <a
+            href="#contact"
+            className="inline-block px-8 py-4 bg-accent text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105"
+          >
+            Hire Our Experts
+          </a>
         </div>
-
       </div>
     </section>
   );

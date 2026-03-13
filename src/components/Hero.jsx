@@ -217,7 +217,7 @@ export default function Hero() {
             whileTap={{ scale: 0.95 }}
             className="px-10 py-4 rounded-full bg-accent text-white font-semibold shadow-xl"
           >
-            Book a Reservation
+            Book Your Free Consultation
           </motion.button>
 
           {/* STATS */}

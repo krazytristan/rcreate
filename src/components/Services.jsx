@@ -33,8 +33,7 @@ const services = [
       "Task tracking & accountability",
       "Team & vendor coordination",
     ],
-    closing:
-      "We transform scattered processes into streamlined systems.",
+    closing: "We transform scattered processes into streamlined systems.",
   },
   {
     title: "Marketing & Online Presence Support",
@@ -61,6 +60,10 @@ const services = [
     ],
     closing:
       "We focus on structure, clarity, and user experience — ensuring your website drives action.",
+    button: {
+      label: "Visit Website",
+      url: "https://horizon-it.vercel.app",
+    },
   },
 ];
 
@@ -72,9 +75,7 @@ export default function Services() {
   };
 
   const prev = () => {
-    setIndex((prev) =>
-      prev === 0 ? services.length - 1 : prev - 1
-    );
+    setIndex((prev) => (prev === 0 ? services.length - 1 : prev - 1));
   };
 
   /* AUTO SLIDE */
@@ -91,10 +92,8 @@ export default function Services() {
       id="services"
       className="relative pt-12 md:pt-20 lg:pt-28 pb-20 px-6 overflow-hidden"
     >
-
       {/* BACKGROUND */}
       <div className="absolute inset-0 overflow-hidden">
-
         <AnimatePresence mode="wait">
           <motion.img
             key={services[index].bg}
@@ -109,20 +108,17 @@ export default function Services() {
         </AnimatePresence>
 
         <div className="absolute inset-0 bg-black/60" />
-
         <div
           className="absolute inset-0 bg-gradient-to-b
-          from-neutral-background/95
-          via-neutral-background/80
-          to-neutral-background"
+           from-neutral-background/95
+           via-neutral-background/80
+           to-neutral-background"
         />
-
         <div className="absolute top-[-200px] left-[-200px] w-[500px] h-[500px] bg-accent/15 blur-[160px] rounded-full" />
       </div>
 
       {/* HEADER */}
       <div className="relative z-20 max-w-5xl mx-auto text-center mb-20 text-primary">
-
         <h2 className="font-heading text-[32px] md:text-[42px] lg:text-[56px]">
           Our <span className="text-accent">Services</span>
         </h2>
@@ -131,12 +127,10 @@ export default function Services() {
           Structured support designed to simplify operations and scale your
           business with clarity and confidence.
         </p>
-
       </div>
 
       {/* CAROUSEL */}
       <div className="relative z-20 max-w-4xl mx-auto">
-
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -146,7 +140,6 @@ export default function Services() {
             transition={{ duration: 0.45 }}
             className="rounded-3xl p-12 bg-white/85 backdrop-blur-xl border border-neutral-border shadow-soft text-left"
           >
-
             <h3 className="font-heading text-[20px] md:text-[24px] lg:text-[28px] text-primary mb-6">
               {services[index].title}
             </h3>
@@ -161,12 +154,22 @@ export default function Services() {
               {services[index].closing}
             </p>
 
+            {/* BUTTON FOR WEBSITE SERVICE */}
+            {services[index].button && (
+              <a
+                href={services[index].button.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-6 px-8 py-4 bg-accent text-white font-semibold rounded-full shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl"
+              >
+                {services[index].button.label}
+              </a>
+            )}
           </motion.div>
         </AnimatePresence>
 
         {/* NAVIGATION */}
         <div className="flex justify-between items-center mt-12">
-
           {/* Prev */}
           <button
             onClick={prev}
@@ -182,9 +185,7 @@ export default function Services() {
                 key={i}
                 onClick={() => setIndex(i)}
                 className={`h-2 rounded-full transition-all duration-300 ${
-                  index === i
-                    ? "bg-accent w-8"
-                    : "bg-neutral-border w-3"
+                  index === i ? "bg-accent w-8" : "bg-neutral-border w-3"
                 }`}
               />
             ))}
@@ -197,11 +198,15 @@ export default function Services() {
           >
             <FaChevronRight />
           </button>
-
         </div>
 
+        {/* SEE HOW WE CAN HELP BUTTON */}
+        <div className="mt-12 text-center">
+          <button className="px-8 py-4 bg-accent text-white font-semibold rounded-full shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl">
+            See How We Can Help
+          </button>
+        </div>
       </div>
-
     </section>
   );
 }
