@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -20,88 +21,65 @@ import Footer from "./components/Footer";
 import PartnershipPhilosophy from "./components/PartnershipPhilosophy";
 import ReadyToElevate from "./components/ReadyToElevate";
 
+import AdminLayout from "./components/admin/AdminLayout"; // full dashboard layout
+
 function App() {
   const [isCareerPage, setIsCareerPage] = useState(false);
 
   return (
-    <div className="relative min-h-screen bg-neutral-background text-primary font-body overflow-x-hidden">
+    <Router>
+      <Routes>
+        {/* Hidden admin/dashboard route */}
+        <Route path="/rcreate/dashboard" element={<AdminLayout />} />
 
-      {/* Ambient Glow Background */}
-      <div className="pointer-events-none fixed top-[-300px] left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-accent/5 blur-[220px] rounded-full -z-10" />
+        {/* Main site route */}
+        <Route
+          path="/*"
+          element={
+            <div className="relative min-h-screen bg-neutral-background text-primary font-body overflow-x-hidden">
+              {/* Ambient Glow Background */}
+              <div className="pointer-events-none fixed top-[-300px] left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-accent/5 blur-[220px] rounded-full -z-10" />
 
-      {/* NAVBAR */}
-      <Navbar
-        onCareerClick={() => {
-          setIsCareerPage(true);
-          window.scrollTo(0, 0);
-        }}
-        isCareerPage={isCareerPage}
-      />
+              {/* NAVBAR */}
+              <Navbar
+                onCareerClick={() => {
+                  setIsCareerPage(true);
+                  window.scrollTo(0, 0);
+                }}
+                isCareerPage={isCareerPage}
+              />
 
-      <main className="relative z-10">
+              <main className="relative z-10">
+                {!isCareerPage ? (
+                  <>
+                    <Hero />
+                    <WhoWeHelp />
+                    <BookCall />
+                    <About />
+                    <Services />
+                    <PartnershipPhilosophy />
+                    <HowItWorks />
+                    <WhyChoose />
+                    <Benefits />
+                    <WhoWeServe />
+                    <Team />
+                    <Testimonials />
+                    <FrequentlyAsk />
+                    <ReadyToElevate />
+                    <Blogs />
+                    <Contact />
+                  </>
+                ) : (
+                  <Career />
+                )}
+              </main>
 
-        {!isCareerPage ? (
-          <>
-
-            {/* HERO */}
-            <Hero />
-
-            {/* WHO WE HELP */}
-            <WhoWeHelp />
-
-            {/* BOOK CALL */}
-            <BookCall />
-
-            {/* ABOUT */}
-            <About />
-
-            {/* SERVICES */}
-            <Services />
-
-            {/* PartnershipPhilosophy */}
-            <PartnershipPhilosophy/>
-
-            {/* HOW IT WORKS */}
-            <HowItWorks />
-
-            {/* WHY CHOOSE */}
-            <WhyChoose />
-
-            {/* BENEFITS */}
-            <Benefits />
-
-            {/* WHO WE SERVE */}
-            <WhoWeServe />
-
-            {/* TEAM */}
-            <Team />
-
-            {/* TESTIMONIALS */}
-            <Testimonials />
-
-            {/* FAQ */}
-            <FrequentlyAsk />
-
-            {/* Ready to Elevate*/}
-            <ReadyToElevate/>
-
-            {/* BLOGS */}
-            <Blogs />
-
-            {/* CONTACT */}
-            <Contact />
-
-          </>
-        ) : (
-          <Career />
-        )}
-
-      </main>
-
-      {/* FOOTER */}
-      <Footer />
-
-    </div>
+              <Footer />
+            </div>
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 
