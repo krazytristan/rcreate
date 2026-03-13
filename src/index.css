@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================
+   GLOBAL RESETS
+========================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-neutral-background text-neutral-dark font-body antialiased;
+  
+  -ms-overflow-style: none;   /* IE and Edge */
+  scrollbar-width: none;      /* Firefox */
+}
+
+/* Hide Scrollbar (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Improve text rendering */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection styling */
+::selection {
+  @apply bg-accent text-white;
+}
+
+/* Remove tap highlight (mobile premium feel) */
+* {
+  -webkit-tap-highlight-color: transparent;
+}

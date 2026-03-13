@@ -1,0 +1,14 @@
+/* src/App.css */
+
+.App {
+  font-family: 'Inter', sans-serif;
+  background-color: #FCFAF4;
+  min-height: 100vh;
+}
+
+/* Remove CRA demo styles completely */
+.App-logo,
+.App-header,
+.App-link {
+  all: unset;
+}
