@@ -1,9 +1,9 @@
 // src/components/admin/AdminLayout.jsx
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
-import Topbar from "./Topbar"; // your original topnav with profile & notification
+import Topbar from "./Topbar";
 
-// Test page components
+// Pages
 import Dashboard from "../../pages/Dashboard";
 import Marketing from "../../pages/Marketing";
 import WebsiteProjects from "../../pages/WebsiteProjects";
@@ -47,18 +47,20 @@ export default function AdminLayout() {
 
   return (
     <div className="flex">
-      {/* Sidebar fixed */}
+      {/* Sidebar */}
       <Sidebar activePage={activePage} setActivePage={setActivePage} />
 
-      {/* Main content area */}
-      <div className="flex-1 flex flex-col ml-64">
-        {/* Original Topbar fixed at top */}
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col md:ml-64">
+        
+        {/* Topbar */}
         <Topbar />
 
-        {/* Scrollable main content */}
+        {/* Page Content */}
         <main className="flex-1 mt-16 overflow-auto p-6 bg-gray-50 min-h-screen">
           {renderPage()}
         </main>
+
       </div>
     </div>
   );
