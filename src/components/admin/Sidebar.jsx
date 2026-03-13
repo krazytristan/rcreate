@@ -56,11 +56,6 @@ export default function Sidebar({ activePage, setActivePage }) {
     }));
   };
 
-  const handleMobileClick = (label) => {
-    setActivePage(label);
-    setSidebarOpen(false); // close sidebar on mobile after click
-  };
-
   return (
     <>
       {/* Mobile Hamburger */}
@@ -100,14 +95,10 @@ export default function Sidebar({ activePage, setActivePage }) {
         {/* Menu */}
         <nav className="relative flex flex-col space-y-3 text-gray-700">
           
-          {/* Sliding Active Background – visible on all screens */}
+          {/* Sliding Active Background – desktop only */}
           <div
-            className="absolute left-0 w-full rounded-xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 transition-all duration-300 ease-in-out"
-            style={{
-              ...sliderStyle,
-              zIndex: 0,
-              borderRadius: '0.5rem',
-            }}
+            className="hidden md:block absolute left-0 w-full rounded-xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 transition-all duration-300 ease-in-out"
+            style={sliderStyle}
           />
 
           {menuItems.map(({ icon, label, subItems }, index) => {
@@ -115,14 +106,17 @@ export default function Sidebar({ activePage, setActivePage }) {
             const isDropdownOpen = openDropdowns[label];
 
             return (
-              <div key={label} className="flex flex-col relative z-10">
+              <div key={label} className="flex flex-col">
                 <button
                   ref={(el) => (itemRefs.current[index] = el)}
-                  onClick={() => subItems ? toggleDropdown(label) : handleMobileClick(label)}
+                  onClick={() => subItems ? toggleDropdown(label) : setActivePage(label)}
                   className={`
                     relative flex items-center justify-between px-3 h-12 rounded-xl
                     text-base font-medium transition-all duration-300
-                    ${isActive ? "text-white" : "hover:text-green-900"}
+                    ${isActive
+                      ? "text-white"
+                      : "hover:bg-gradient-to-r hover:from-green-200 hover:to-green-100 hover:text-green-900"
+                    }
                   `}
                 >
                   <div className="flex items-center space-x-4">
@@ -139,11 +133,11 @@ export default function Sidebar({ activePage, setActivePage }) {
 
                 {/* Dropdown Menu */}
                 {subItems && isDropdownOpen && (
-                  <div className="flex flex-col ml-12 mt-1 space-y-1 z-10">
+                  <div className="flex flex-col ml-12 mt-1 space-y-1">
                     {subItems.map((subLabel) => (
                       <button
                         key={subLabel}
-                        onClick={() => handleMobileClick(subLabel)}
+                        onClick={() => setActivePage(subLabel)}
                         className={`
                           text-gray-700 px-3 h-10 rounded-lg text-sm text-left
                           ${activePage === subLabel
