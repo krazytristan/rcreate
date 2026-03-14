@@ -126,7 +126,6 @@ export default function Sidebar({ activePage, setActivePage }) {
                     relative flex items-center justify-between px-3 h-12 rounded-xl
                     text-base font-medium transition-all duration-300
                     ${isActive ? "text-white md:text-white" : "text-gray-700"}
-                    hover:bg-gradient-to-r hover:from-green-200 hover:to-green-100 hover:text-green-900
                   `}
                 >
                   <div className="flex items-center space-x-4">
@@ -152,11 +151,9 @@ export default function Sidebar({ activePage, setActivePage }) {
                         onClick={() => handleMobileClick(subLabel)}
                         className={`
                           px-3 h-10 rounded-lg text-sm text-left transition
-                          ${
-                            activePage === subLabel
-                              ? "text-green-700 font-semibold"
-                              : "text-gray-700 hover:bg-green-100"
-                          }
+                          ${activePage === subLabel
+                            ? "text-green-700 font-semibold"
+                            : "text-gray-700"}
                         `}
                       >
                         {subLabel}
