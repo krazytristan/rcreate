@@ -11,15 +11,15 @@ const menuItems = [
   { icon: <TbBrowserShare />, label: "Website Projects" },
   { icon: <FaGlobe />, label: "HR" },
   { icon: <FaChartPie />, label: "Analytics & Reports" },
-  { 
-    icon: <FaUniversity />, 
+  {
+    icon: <FaUniversity />,
     label: "Finance",
-    subItems: ["Budgeting", "Invoices", "Reports"]
+    subItems: ["Budgeting", "Invoices", "Reports"],
   },
-  { 
-    icon: <HiOutlinePresentationChartLine />, 
+  {
+    icon: <HiOutlinePresentationChartLine />,
     label: "Operations",
-    subItems: ["Logistics", "Processes"]
+    subItems: ["Logistics", "Processes"],
   },
   { icon: <RiFileList3Line />, label: "Documents" },
   { icon: <FaRegCommentDots />, label: "Message" },
@@ -34,17 +34,17 @@ export default function Sidebar({ activePage, setActivePage }) {
 
   useEffect(() => {
     const activeIndex = menuItems.findIndex(
-      (item) => item.label === activePage || (item.subItems && item.subItems.includes(activePage))
+      (item) =>
+        item.label === activePage ||
+        (item.subItems && item.subItems.includes(activePage))
     );
 
     const el = itemRefs.current[activeIndex];
-    if (el) {
-      const thinnerHeight = el.offsetHeight - 8;
-      const offset = (el.offsetHeight - thinnerHeight) / 2;
 
+    if (el) {
       setSliderStyle({
-        top: el.offsetTop + offset,
-        height: thinnerHeight,
+        transform: `translateY(${el.offsetTop}px)`,
+        height: el.offsetHeight,
       });
     }
   }, [activePage]);
@@ -58,7 +58,7 @@ export default function Sidebar({ activePage, setActivePage }) {
 
   const handleMobileClick = (label) => {
     setActivePage(label);
-    setSidebarOpen(false); // close sidebar on mobile after click
+    setSidebarOpen(false);
   };
 
   return (
@@ -89,7 +89,7 @@ export default function Sidebar({ activePage, setActivePage }) {
         `}
       >
         {/* Logo */}
-        <div className="mb-12 flex items-center justify-start md:ml-0 px-4 md:px-0">
+        <div className="mb-12 flex items-center justify-start px-4 md:px-0">
           <img
             src={`${process.env.PUBLIC_URL}/assets/adminlogo.png`}
             alt="RCREATE Logo"
@@ -99,29 +99,34 @@ export default function Sidebar({ activePage, setActivePage }) {
 
         {/* Menu */}
         <nav className="relative flex flex-col space-y-3 text-gray-700">
-          
-          {/* Sliding Active Background – desktop only */}
+
+          {/* Sliding Active Indicator */}
           <div
-            className="hidden md:block absolute left-0 w-full rounded-xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 transition-all duration-300 ease-in-out"
+            className="hidden md:block absolute left-0 w-full rounded-xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
             style={sliderStyle}
           />
 
           {menuItems.map(({ icon, label, subItems }, index) => {
-            const isActive = label === activePage || (subItems && subItems.includes(activePage));
+            const isActive =
+              label === activePage ||
+              (subItems && subItems.includes(activePage));
+
             const isDropdownOpen = openDropdowns[label];
 
             return (
               <div key={label} className="flex flex-col">
                 <button
                   ref={(el) => (itemRefs.current[index] = el)}
-                  onClick={() => subItems ? toggleDropdown(label) : handleMobileClick(label)}
+                  onClick={() =>
+                    subItems
+                      ? toggleDropdown(label)
+                      : handleMobileClick(label)
+                  }
                   className={`
                     relative flex items-center justify-between px-3 h-12 rounded-xl
                     text-base font-medium transition-all duration-300
-                    ${isActive
-                      ? "bg-green-600 text-white md:text-white" // active background on mobile
-                      : "hover:bg-gradient-to-r hover:from-green-200 hover:to-green-100 hover:text-green-900"
-                    }
+                    ${isActive ? "text-white md:text-white" : "text-gray-700"}
+                    hover:bg-gradient-to-r hover:from-green-200 hover:to-green-100 hover:text-green-900
                   `}
                 >
                   <div className="flex items-center space-x-4">
@@ -131,12 +136,14 @@ export default function Sidebar({ activePage, setActivePage }) {
 
                   {subItems && (
                     <IoIosArrowDown
-                      className={`text-lg transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`}
+                      className={`text-lg transition-transform duration-300 ${
+                        isDropdownOpen ? "rotate-180" : ""
+                      }`}
                     />
                   )}
                 </button>
 
-                {/* Dropdown Menu */}
+                {/* Dropdown */}
                 {subItems && isDropdownOpen && (
                   <div className="flex flex-col ml-12 mt-1 space-y-1">
                     {subItems.map((subLabel) => (
@@ -144,10 +151,11 @@ export default function Sidebar({ activePage, setActivePage }) {
                         key={subLabel}
                         onClick={() => handleMobileClick(subLabel)}
                         className={`
-                          text-gray-700 px-3 h-10 rounded-lg text-sm text-left
-                          ${activePage === subLabel
-                            ? "bg-green-500 text-white"
-                            : "hover:bg-green-100 hover:text-green-900"
+                          px-3 h-10 rounded-lg text-sm text-left transition
+                          ${
+                            activePage === subLabel
+                              ? "text-green-700 font-semibold"
+                              : "text-gray-700 hover:bg-green-100"
                           }
                         `}
                       >
