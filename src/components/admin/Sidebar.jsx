@@ -47,7 +47,7 @@ export default function Sidebar({ activePage, setActivePage }) {
         height: el.offsetHeight,
       });
     }
-  }, [activePage]);
+  }, [activePage, sidebarOpen]);
 
   const toggleDropdown = (label) => {
     setOpenDropdowns((prev) => ({
@@ -99,10 +99,10 @@ export default function Sidebar({ activePage, setActivePage }) {
 
         {/* Menu */}
         <nav className="relative flex flex-col space-y-3 text-gray-700">
-
+          
           {/* Sliding Active Indicator */}
           <div
-            className="hidden md:block absolute left-0 w-full rounded-xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            className="absolute left-0 w-full h-1 md:h-full rounded-xl bg-gradient-to-r from-green-700 via-green-500 to-green-400 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
             style={sliderStyle}
           />
 
