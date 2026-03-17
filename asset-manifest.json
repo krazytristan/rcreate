@@ -1,10 +1,15 @@
 {
   "files": {
-    "main.css": "/rcreate/static/css/main.05df7fa2.css",
-    "main.js": "/rcreate/static/js/main.eb49b82a.js",
+    "main.css": "/rcreate/static/css/main.755fb41b.css",
+    "main.js": "/rcreate/static/js/main.7e9bd3a9.js",
     "static/media/hero-bg.mp4": "/rcreate/static/media/hero-bg.67da17d1a5386448f59a.mp4",
     "static/media/reg.png": "/rcreate/static/media/reg.d4c786f7960eb7fcc99b.png",
     "static/media/va2.jpg": "/rcreate/static/media/va2.ab5a04268339c0676200.jpg",
+    "static/media/VA-Co Founder.jpg": "/rcreate/static/media/VA-Co Founder.365d84c3af1d83a30f35.jpg",
+    "static/media/VA-Founder-Regine Candido.jpg": "/rcreate/static/media/VA-Founder-Regine Candido.2e420ebe86e8679445b4.jpg",
+    "static/media/VA-Erika Antoinette Paala.jpg": "/rcreate/static/media/VA-Erika Antoinette Paala.bc9c4937726e04d4deb9.jpg",
+    "static/media/VA-Gennevie Glinogo.jpg": "/rcreate/static/media/VA-Gennevie Glinogo.df845a3bc42c5b1d1ac6.jpg",
+    "static/media/VA-Bernalyn Malabanan.jpg": "/rcreate/static/media/VA-Bernalyn Malabanan.1e231d5b0aa9843eda3f.jpg",
     "static/media/va3.jpg": "/rcreate/static/media/va3.56bde2b3e5e62b39b2cd.jpg",
     "static/media/va1.jpg": "/rcreate/static/media/va1.234c83f5937490834288.jpg",
     "static/media/va4.jpg": "/rcreate/static/media/va4.d04d6a0fa8af03ec20b3.jpg",
@@ -53,11 +58,11 @@
     "static/media/back2.jpg": "/rcreate/static/media/back2.9a6d6622594a59383039.jpg",
     "static/media/back3.jpg": "/rcreate/static/media/back3.d6facf2522e66214f479.jpg",
     "index.html": "/rcreate/index.html",
-    "main.05df7fa2.css.map": "/rcreate/static/css/main.05df7fa2.css.map",
-    "main.eb49b82a.js.map": "/rcreate/static/js/main.eb49b82a.js.map"
+    "main.755fb41b.css.map": "/rcreate/static/css/main.755fb41b.css.map",
+    "main.7e9bd3a9.js.map": "/rcreate/static/js/main.7e9bd3a9.js.map"
   },
   "entrypoints": [
-    "static/css/main.05df7fa2.css",
-    "static/js/main.eb49b82a.js"
+    "static/css/main.755fb41b.css",
+    "static/js/main.7e9bd3a9.js"
   ]
 }
