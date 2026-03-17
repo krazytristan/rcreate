@@ -171,7 +171,7 @@ export default function CTAForm() {
                         disabled={sending}
                         className="mt-2 bg-accent text-white font-semibold py-3 rounded-xl shadow-premium hover:scale-105 transition duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                       >
-                        {sending ? "Sending..." : "Continue →"}
+                        {sending ? "Sending..." : "Continue"}
                       </button>
                     </form>
 

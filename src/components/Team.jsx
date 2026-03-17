@@ -2,29 +2,30 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ReactDOM from "react-dom";
 
-import team1 from "../assets/1.jpg"; // card image
-import team2 from "../assets/2.jpg"; // card image
-import team3 from "../assets/3.jpg"; // card image
+import team1 from "../assets/Internal Team.jpg";
+import team2 from "../assets/Executive Partners.jpg";
+import team3 from "../assets/Technical Dev.jpg";
 
-import team1Modal from "../assets/VA-Founder-Regine Candido.jpg"; // modal image
-import team2Modal from "../assets/VA-Co Founder.jpg"; // modal image
+import team1Modal from "../assets/VA-Founder-Regine Candido.jpg";
+import team2Modal from "../assets/VA-Co Founder.jpg";
 
 import exec1 from "../assets/VA-Erika Antoinette Paala.jpg";
 import exec2 from "../assets/VA-Bernalyn Malabanan.jpg";
 import exec3 from "../assets/VA-Gennevie Glinogo.jpg";
-import exec4 from "../assets/3.jpg";
+import exec4 from "../assets/VA - Fatima Mendoza.jpg";
 import exec5 from "../assets/2.jpg";
 import exec6 from "../assets/2.jpg";
 
-import dev1 from "../assets/3.jpg";
-import dev2 from "../assets/3.jpg";
+import dev1 from "../assets/Tristan.jpg";
+import dev2 from "../assets/Rodolfo.jpg";
 import dev3 from "../assets/3.jpg";
-import dev4 from "../assets/3.jpg";
-import dev5 from "../assets/3.jpg";
+import dev4 from "../assets/Florencio.jpg";
+import dev5 from "../assets/John Mark.jpg";
 import dev6 from "../assets/3.jpg";
-import dev7 from "../assets/3.jpg";
+import dev7 from "../assets/Bejay.jpg";
 import dev8 from "../assets/3.jpg";
-import dev9 from "../assets/3.jpg";
+import dev9 from "../assets/Marvin.jpg";
+import dev10 from "../assets/Kharlo.jpg";
 
 import TeamModal from "./TeamModal";
 
@@ -37,14 +38,14 @@ const teamCategories = [
     expandable: true,
     leaders: [
       {
-        src: team1, // fallback
+        src: team1Modal, // fallback
         modalImage: team1Modal, // modal image
         name: "Regine Candido",
         role: "Founder and Chief Executive Officer",
         bio: "Regine is the founder of the agency and the driving force behind its vision of helping businesses grow through reliable and strategic remote support.",
       },
       {
-        src: team2, // fallback
+        src: team2Modal, // fallback
         modalImage: team2Modal, // modal image
         name: "Arnaldo Arias Jr.",
         role: "Co Founder and Finance Manager",
@@ -83,6 +84,7 @@ const teamCategories = [
       { src: dev7, name: "Developer 7" },
       { src: dev8, name: "Developer 8" },
       { src: dev9, name: "Developer 9" },
+      { src: dev10, name: "Developer 10" },
     ],
   },
 ];

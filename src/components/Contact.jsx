@@ -143,7 +143,7 @@ export default function Contact() {
             disabled={loading}
             className={`w-full py-4 rounded-xl bg-accent text-white font-semibold shadow-premium hover:scale-[1.02] hover:shadow-xl transition-all duration-300 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
           >
-            {loading ? "Sending..." : "Submit Inquiry →"}
+            {loading ? "Sending..." : "Submit Inquiry"}
           </button>
         </motion.form>
       </div>
