@@ -62,9 +62,9 @@ const titleWords = [
 ];
 
 const phrases = [
-  "Scale smarter.",
-  "Operate efficiently.",
-  "Lead confidently.",
+  "Scale smarter",
+  "Operate efficiently",
+  "Lead confidently",
 ];
 
 export default function Hero() {

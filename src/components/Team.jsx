@@ -13,17 +13,17 @@ import exec1 from "../assets/VA-Erika Antoinette Paala.jpg";
 import exec2 from "../assets/VA-Bernalyn Malabanan.jpg";
 import exec3 from "../assets/VA-Gennevie Glinogo.jpg";
 import exec4 from "../assets/VA - Fatima Mendoza.jpg";
-import exec5 from "../assets/2.jpg";
-import exec6 from "../assets/2.jpg";
+import exec5 from "../assets/placeholder-f.png";
+import exec6 from "../assets/placeholder-f.png";
 
 import dev1 from "../assets/Tristan.jpg";
 import dev2 from "../assets/Rodolfo.jpg";
-import dev3 from "../assets/3.jpg";
+import dev3 from "../assets/placeholder-m.png";
 import dev4 from "../assets/Florencio.jpg";
 import dev5 from "../assets/John Mark.jpg";
-import dev6 from "../assets/3.jpg";
+import dev6 from "../assets/placeholder-m.png";
 import dev7 from "../assets/Bejay.jpg";
-import dev8 from "../assets/3.jpg";
+import dev8 from "../assets/placeholder-m.png";
 import dev9 from "../assets/Marvin.jpg";
 import dev10 from "../assets/Kharlo.jpg";
 

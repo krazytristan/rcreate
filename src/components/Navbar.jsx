@@ -122,7 +122,15 @@ export default function Navbar() {
       <nav
         className={`fixed top-6 left-1/2 -translate-x-1/2 z-50
         transition-all duration-500
-        ${scrolled ? "w-[85%] md:w-[75%] py-2 shadow-xl" : "w-[95%] md:w-[90%] py-3"}
+        ${
+          scrolled
+            ? isMobileView
+              ? "w-[90%] py-1 shadow-xl"
+              : "w-[85%] md:w-[75%] py-2 shadow-xl"
+            : isMobileView
+            ? "w-[95%] py-1"
+            : "w-[95%] md:w-[90%] py-3"
+        }
         rounded-3xl
         backdrop-blur-2xl
         border border-neutral-border
@@ -242,9 +250,9 @@ export default function Navbar() {
           {open && isMobileView && (
             <motion.div
               key="mobile-menu"
-              initial={{ opacity: 0, y: -20 }}       // start slightly above
-              animate={{ opacity: 1, y: 0 }}         // slide into place
-              exit={{ opacity: 0, y: -30 }}          // slide up while fading
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="px-6 pb-6 flex flex-col gap-3"
             >
