@@ -1,17 +1,28 @@
 {
   "files": {
-    "main.css": "/rcreate/static/css/main.755fb41b.css",
-    "main.js": "/rcreate/static/js/main.7e9bd3a9.js",
+    "main.css": "/rcreate/static/css/main.9e67b373.css",
+    "main.js": "/rcreate/static/js/main.93fe79d7.js",
     "static/media/hero-bg.mp4": "/rcreate/static/media/hero-bg.67da17d1a5386448f59a.mp4",
     "static/media/reg.png": "/rcreate/static/media/reg.d4c786f7960eb7fcc99b.png",
+    "static/media/Executive Partners.jpg": "/rcreate/static/media/Executive Partners.0cfa0cf1b3c3e559c46a.jpg",
+    "static/media/Technical Dev.jpg": "/rcreate/static/media/Technical Dev.2f331636abc267e14f3d.jpg",
     "static/media/va2.jpg": "/rcreate/static/media/va2.ab5a04268339c0676200.jpg",
     "static/media/VA-Co Founder.jpg": "/rcreate/static/media/VA-Co Founder.365d84c3af1d83a30f35.jpg",
+    "static/media/Bejay.jpg": "/rcreate/static/media/Bejay.3660e4e7ffa861b0e1a3.jpg",
+    "static/media/VA - Fatima Mendoza.jpg": "/rcreate/static/media/VA - Fatima Mendoza.18220b9da34940b15c4a.jpg",
+    "static/media/Internal Team.jpg": "/rcreate/static/media/Internal Team.d9f218cf67a013ebdf00.jpg",
     "static/media/VA-Founder-Regine Candido.jpg": "/rcreate/static/media/VA-Founder-Regine Candido.2e420ebe86e8679445b4.jpg",
+    "static/media/Kharlo.jpg": "/rcreate/static/media/Kharlo.7219d0a708deba751cf1.jpg",
     "static/media/VA-Erika Antoinette Paala.jpg": "/rcreate/static/media/VA-Erika Antoinette Paala.bc9c4937726e04d4deb9.jpg",
+    "static/media/John Mark.jpg": "/rcreate/static/media/John Mark.eb040648569b4cc4eeef.jpg",
     "static/media/VA-Gennevie Glinogo.jpg": "/rcreate/static/media/VA-Gennevie Glinogo.df845a3bc42c5b1d1ac6.jpg",
     "static/media/VA-Bernalyn Malabanan.jpg": "/rcreate/static/media/VA-Bernalyn Malabanan.1e231d5b0aa9843eda3f.jpg",
+    "static/media/Marvin.jpg": "/rcreate/static/media/Marvin.de2398a64beb6f621f7f.jpg",
+    "static/media/Rodolfo.jpg": "/rcreate/static/media/Rodolfo.07a3094a4db5ab9b0b6b.jpg",
+    "static/media/Tristan.jpg": "/rcreate/static/media/Tristan.b84fbd59282a8d334baf.jpg",
     "static/media/va3.jpg": "/rcreate/static/media/va3.56bde2b3e5e62b39b2cd.jpg",
     "static/media/va1.jpg": "/rcreate/static/media/va1.234c83f5937490834288.jpg",
+    "static/media/Florencio.jpg": "/rcreate/static/media/Florencio.125981f60d77e7e93171.jpg",
     "static/media/va4.jpg": "/rcreate/static/media/va4.d04d6a0fa8af03ec20b3.jpg",
     "static/media/17.jpg": "/rcreate/static/media/17.47f6157cd4f98f30f692.jpg",
     "static/media/27.jpg": "/rcreate/static/media/27.512c321bd590374ef019.jpg",
@@ -58,11 +69,11 @@
     "static/media/back2.jpg": "/rcreate/static/media/back2.9a6d6622594a59383039.jpg",
     "static/media/back3.jpg": "/rcreate/static/media/back3.d6facf2522e66214f479.jpg",
     "index.html": "/rcreate/index.html",
-    "main.755fb41b.css.map": "/rcreate/static/css/main.755fb41b.css.map",
-    "main.7e9bd3a9.js.map": "/rcreate/static/js/main.7e9bd3a9.js.map"
+    "main.9e67b373.css.map": "/rcreate/static/css/main.9e67b373.css.map",
+    "main.93fe79d7.js.map": "/rcreate/static/js/main.93fe79d7.js.map"
   },
   "entrypoints": [
-    "static/css/main.755fb41b.css",
-    "static/js/main.7e9bd3a9.js"
+    "static/css/main.9e67b373.css",
+    "static/js/main.93fe79d7.js"
   ]
 }
