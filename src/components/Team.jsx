@@ -1,15 +1,21 @@
-// src/components/Team.jsx
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import team1 from "../assets/1.jpg";
-import team2 from "../assets/2.jpg";
-import team3 from "../assets/3.jpg";
-import exec1 from "../assets/2.jpg";
-import exec2 from "../assets/2.jpg";
-import exec3 from "../assets/2.jpg";
-import exec4 from "../assets/2.jpg";
+import { motion } from "framer-motion";
+import ReactDOM from "react-dom";
+
+import team1 from "../assets/1.jpg"; // card image
+import team2 from "../assets/2.jpg"; // card image
+import team3 from "../assets/3.jpg"; // card image
+
+import team1Modal from "../assets/VA-Founder-Regine Candido.jpg"; // modal image
+import team2Modal from "../assets/VA-Co Founder.jpg"; // modal image
+
+import exec1 from "../assets/VA-Erika Antoinette Paala.jpg";
+import exec2 from "../assets/VA-Bernalyn Malabanan.jpg";
+import exec3 from "../assets/VA-Gennevie Glinogo.jpg";
+import exec4 from "../assets/3.jpg";
 import exec5 from "../assets/2.jpg";
 import exec6 from "../assets/2.jpg";
+
 import dev1 from "../assets/3.jpg";
 import dev2 from "../assets/3.jpg";
 import dev3 from "../assets/3.jpg";
@@ -20,17 +26,36 @@ import dev7 from "../assets/3.jpg";
 import dev8 from "../assets/3.jpg";
 import dev9 from "../assets/3.jpg";
 
+import TeamModal from "./TeamModal";
+
 const teamCategories = [
   {
     title: "Internal Team",
-    description: "Leads strategic operations, client systems, and executive-level support.",
-    image: team1,
-    note: "CEO, Executive Assistant, Operations Manager",
-    expandable: false,
+    description:
+      "Leads strategic operations, client systems, and executive-level support.",
+    image: team1, // card image
+    expandable: true,
+    leaders: [
+      {
+        src: team1, // fallback
+        modalImage: team1Modal, // modal image
+        name: "Regine Candido",
+        role: "Founder and Chief Executive Officer",
+        bio: "Regine is the founder of the agency and the driving force behind its vision of helping businesses grow through reliable and strategic remote support.",
+      },
+      {
+        src: team2, // fallback
+        modalImage: team2Modal, // modal image
+        name: "Arnaldo Arias Jr.",
+        role: "Co Founder and Finance Manager",
+        bio: "Arnaldo oversees the financial management and operational structure of the agency and ensures internal processes remain organized and sustainable.",
+      },
+    ],
   },
   {
     title: "Executive Partners",
-    description: "Focused on workflow optimization, client success, and leadership guidance.",
+    description:
+      "Focused on workflow optimization, client success, and leadership guidance.",
     image: team2,
     expandable: true,
     photos: [
@@ -44,7 +69,8 @@ const teamCategories = [
   },
   {
     title: "Technical & Web Developers",
-    description: "Builds automation workflows, manages websites, funnels, and landing pages.",
+    description:
+      "Builds automation workflows, manages websites, funnels, and landing pages.",
     image: team3,
     expandable: true,
     photos: [
@@ -85,12 +111,12 @@ export default function Team() {
         </p>
       </div>
 
-      {/* 3 Boxes */}
+      {/* Team Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {teamCategories.map((category, index) => (
           <motion.div
             key={index}
-            layoutId={!isMobile && category.expandable ? `card-${index}` : undefined}
+            layoutId={!isMobile ? `card-${index}` : undefined}
             className={`rounded-3xl bg-white/70 backdrop-blur-xl border border-neutral-border shadow-soft overflow-hidden cursor-pointer ${
               category.expandable ? "hover:shadow-lg transition" : ""
             }`}
@@ -105,17 +131,18 @@ export default function Team() {
               />
             </div>
             <div className="p-6 text-center">
-              <h3 className="font-heading text-xl text-primary mb-2">{category.title}</h3>
-              <p className="text-neutral-muted text-sm leading-relaxed mb-2">{category.description}</p>
-              {category.note && (
-                <p className="text-accent text-sm font-medium mt-4">{category.note}</p>
-              )}
+              <h3 className="font-heading text-xl text-primary mb-2">
+                {category.title}
+              </h3>
+              <p className="text-neutral-muted text-sm leading-relaxed mb-2">
+                {category.description}
+              </p>
             </div>
           </motion.div>
         ))}
       </div>
 
-      {/* Hire Our Experts Button */}
+      {/* Hire Button */}
       <div className="mt-12 text-center">
         <a
           href="#contact"
@@ -125,82 +152,15 @@ export default function Team() {
         </a>
       </div>
 
-      {/* Expandable Modal */}
-      <AnimatePresence>
-        {activeIndex !== null && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            style={{ backgroundColor: "rgba(0,0,0,0.4)" }}
-            onClick={() => setActiveIndex(null)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: 0.2 } }}
-            exit={{ opacity: 0, transition: { duration: 0.15 } }}
-          >
-            <motion.div
-              layoutId={!isMobile ? `card-${activeIndex}` : undefined}
-              className={`bg-white rounded-xl w-full ${isMobile ? "max-w-md" : "max-w-6xl"} cursor-auto relative`}
-              onClick={(e) => e.stopPropagation()}
-              initial={{ scale: isMobile ? 0.85 : 1, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1, transition: { duration: 0.25, ease: "easeOut" } }}
-              exit={{ scale: isMobile ? 0.85 : 1, opacity: 0, transition: { duration: 0.2, ease: "easeIn" } }}
-            >
-              <button
-                className="absolute top-2 right-2 text-gray-700 font-bold text-xl z-10"
-                onClick={() => setActiveIndex(null)}
-              >
-                &times;
-              </button>
-
-              {/* Scrollable content */}
-              <div
-                className="overflow-y-auto p-6"
-                style={{
-                  maxHeight: isMobile
-                    ? "calc(100vh - 64px - 72px)" // 64px top + 72px estimated bottom navbar height
-                    : "calc(100vh - 64px - 32px)", // desktop
-                }}
-              >
-                {teamCategories[activeIndex].photos ? (
-                  <div className={`grid gap-4 ${isMobile ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-3"}`}>
-                    {teamCategories[activeIndex].photos.map((photo, i) => (
-                      <div key={i} className="text-center">
-                        <img
-                          src={photo.src}
-                          alt={photo.name}
-                          className={`w-full ${isMobile ? "h-32" : "h-40"} object-cover rounded`}
-                        />
-                        <p className="text-sm font-medium mt-1">{photo.name}</p>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="relative h-64 overflow-hidden">
-                    <img
-                      src={teamCategories[activeIndex].image}
-                      alt={teamCategories[activeIndex].title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-
-                <div className="p-6 text-center">
-                  <h3 className="font-heading text-xl text-primary mb-2">
-                    {teamCategories[activeIndex].title}
-                  </h3>
-                  <p className="text-neutral-muted text-sm leading-relaxed">
-                    {teamCategories[activeIndex].description}
-                  </p>
-                  {teamCategories[activeIndex].note && (
-                    <p className="text-accent text-sm font-medium mt-4">
-                      {teamCategories[activeIndex].note}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Modal */}
+      {ReactDOM.createPortal(
+        <TeamModal
+          activeCategory={activeIndex !== null ? teamCategories[activeIndex] : null}
+          onClose={() => setActiveIndex(null)}
+          isMobile={isMobile}
+        />,
+        document.body
+      )}
     </section>
   );
 }
