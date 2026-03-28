@@ -1,5 +1,4 @@
-// src/components/Hero.jsx
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CountUp from "react-countup";
 
@@ -27,9 +26,6 @@ import {
   SiWix,
 } from "react-icons/si";
 
-/* VIDEO */
-import bgVideo from "../assets/hero-bg.mp4";
-
 /* TOOL MAP */
 const toolIcons = {
   HighLevel: <FaChartLine />,
@@ -53,6 +49,14 @@ const toolIcons = {
 
 const tools = Object.keys(toolIcons);
 
+/* CAROUSEL IMAGES */
+const images = [
+  "/images/slide1.jpg",
+  "/images/slide2.jpg",
+  "/images/slide3.jpg",
+];
+
+/* TEXT */
 const titleWords = [
   "Leading",
   "Executive",
@@ -68,10 +72,9 @@ const phrases = [
 ];
 
 export default function Hero() {
-
-  const videoRef = useRef(null);
-  const [openModal, setOpenModal] = useState(false);
+  const [current, setCurrent] = useState(0);
   const [phraseIndex, setPhraseIndex] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -80,11 +83,12 @@ export default function Hero() {
     time: "",
   });
 
-  /* VIDEO AUTOPLAY */
+  /* CAROUSEL AUTO */
   useEffect(() => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = true;
-    videoRef.current.play().catch(() => {});
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 3500);
+    return () => clearInterval(interval);
   }, []);
 
   /* PHRASE LOOP */
@@ -92,11 +96,10 @@ export default function Hero() {
     const interval = setInterval(() => {
       setPhraseIndex((prev) => (prev + 1) % phrases.length);
     }, 2500);
-
     return () => clearInterval(interval);
   }, []);
 
-  /* MODAL SCROLL LOCK */
+  /* MODAL LOCK */
   useEffect(() => {
     document.body.style.overflow = openModal ? "hidden" : "auto";
   }, [openModal]);
@@ -112,135 +115,116 @@ export default function Hero() {
   };
 
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center bg-primary text-white overflow-hidden px-5 sm:px-6"
-    >
+    <section className="relative min-h-screen flex items-center bg-primary text-white px-6 py-12 overflow-hidden">
 
-      {/* Background Video */}
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-30"
-      >
-        <source src={bgVideo} type="video/mp4" />
-      </video>
+      {/* MAIN */}
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/80 to-neutral-dark/95" />
-
-      {/* Glow */}
-      <div className="absolute top-[-150px] right-[-150px] w-[500px] h-[500px] bg-accent/20 blur-[140px] rounded-full" />
-
-      {/* MAIN CONTENT */}
-      <div className="relative z-20 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center">
-
-        {/* LEFT COLUMN */}
-        <div className="text-center lg:text-left">
+        {/* LEFT */}
+        <div className="space-y-6 text-center md:text-left">
 
           {/* TITLE */}
-          <h1 className="font-heading text-[40px] md:text-[42px] lg:text-[56px] leading-tight tracking-tight flex flex-wrap gap-2 justify-center lg:justify-start">
-
+          <h1 className="font-heading text-[32px] sm:text-[40px] md:text-[52px] leading-tight flex flex-wrap gap-2 justify-center md:justify-start">
             {titleWords.map((word, i) => (
               <motion.span
                 key={i}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: i * 0.12,
-                  duration: 0.6,
-                }}
+                transition={{ delay: i * 0.1 }}
               >
                 {word}
               </motion.span>
             ))}
 
-            <motion.span
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="text-accent"
-            >
+            <span className="text-accent">
               for Growing Businesses
-            </motion.span>
-
+            </span>
           </h1>
 
-          {/* MOBILE ANIMATION */}
-          <div className="md:hidden mt-6 h-8 flex justify-center lg:justify-start">
-
+          {/* MOBILE PHRASE */}
+          <div className="md:hidden h-8 flex justify-center">
             <AnimatePresence mode="wait">
-
               <motion.span
                 key={phraseIndex}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-                className="text-accent font-semibold text-xl"
+                exit={{ opacity: 0, y: -15 }}
+                className="text-accent font-semibold"
               >
                 {phrases[phraseIndex]}
               </motion.span>
-
             </AnimatePresence>
-
           </div>
 
-          {/* DESKTOP PARAGRAPH */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-            className="hidden md:block mt-6 text-[16px] md:text-[17px] lg:text-[18px] text-white/80 max-w-xl leading-relaxed mx-auto lg:mx-0"
-          >
-            <strong>Scale smarter. Operate efficiently. Lead confidently.</strong>
+          {/* DESCRIPTION */}
+          <p className="hidden md:block text-white/80 text-base md:text-lg leading-relaxed max-w-xl">
+            <strong className="text-accent">
+              Scale smarter. Operate efficiently. Lead confidently.
+            </strong>
             <br /><br />
             Rcreate Virtual Assistance Services provides high-level executive,
             operations, and marketing support for founders and service-based businesses worldwide.
             <br /><br />
-            From internal systems to external visibility, we manage the execution —
-            so you can focus on scaling strategically.
-          </motion.p>
+            Focus on scaling — we handle execution.
+          </p>
 
-        </div>
-
-        {/* RIGHT COLUMN */}
-        <div className="flex flex-col items-center lg:items-start gap-8">
-
-          {/* CTA */}
-          <motion.button
+          {/* BUTTON */}
+          <button
             onClick={() => setOpenModal(true)}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-10 py-4 rounded-full bg-accent text-white font-semibold shadow-xl"
+            className="px-8 py-3 rounded-full bg-accent text-white font-semibold shadow-lg hover:scale-105 transition"
           >
             Book a Reservation
-          </motion.button>
+          </button>
 
           {/* STATS */}
-          <div className="grid grid-cols-2 gap-6">
-
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-6 text-center">
-              <h3 className="text-[20px] md:text-[24px] lg:text-[28px] font-semibold text-accent">
+          <div className="grid grid-cols-2 gap-4 pt-4">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+              <h3 className="text-xl font-bold text-accent">
                 <CountUp end={9} duration={2} />+
               </h3>
-              <p className="text-xs uppercase tracking-widest text-neutral-muted mt-1">
+              <p className="text-xs text-neutral-muted uppercase">
                 Years Experience
               </p>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-6 text-center">
-              <h3 className="text-[20px] md:text-[24px] lg:text-[28px] font-semibold text-accent">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+              <h3 className="text-xl font-bold text-accent">
                 <CountUp end={300} duration={2} separator="," />+
               </h3>
-              <p className="text-xs uppercase tracking-widest text-neutral-muted mt-1">
+              <p className="text-xs text-neutral-muted uppercase">
                 Businesses Served
               </p>
             </div>
+          </div>
 
+        </div>
+
+        {/* RIGHT - CAROUSEL */}
+        <div className="relative w-full h-[260px] sm:h-[320px] md:h-[420px] overflow-hidden rounded-2xl shadow-xl">
+
+          {images.map((img, index) => (
+            <motion.img
+              key={index}
+              src={img}
+              alt="carousel"
+              className="absolute w-full h-full object-cover"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: current === index ? 1 : 0 }}
+              transition={{ duration: 0.8 }}
+            />
+          ))}
+
+          {/* DOTS */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            {images.map((_, i) => (
+              <div
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`w-3 h-3 rounded-full cursor-pointer ${
+                  current === i ? "bg-accent" : "bg-white/40"
+                }`}
+              />
+            ))}
           </div>
 
         </div>
@@ -248,15 +232,14 @@ export default function Hero() {
       </div>
 
       {/* TOOL STRIP */}
-      <div className="absolute bottom-6 left-0 w-full overflow-hidden opacity-70">
-
+      <div className="absolute bottom-6 left-0 w-full overflow-hidden opacity-60">
         <motion.div
           className="flex gap-8 w-max"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, duration: 70, ease: "linear" }}
+          transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
         >
           {[...tools, ...tools].map((tool, i) => (
-            <div key={i} className="flex items-center gap-3 text-sm text-white/60">
+            <div key={i} className="flex items-center gap-2 text-sm text-white/60">
               <span className="text-accent text-lg">
                 {toolIcons[tool]}
               </span>
@@ -264,15 +247,14 @@ export default function Hero() {
             </div>
           ))}
         </motion.div>
-
       </div>
 
-      {/* BOOKING MODAL */}
+      {/* MODAL */}
       <AnimatePresence>
         {openModal && (
           <>
             <motion.div
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+              className="fixed inset-0 bg-black/60 z-40"
               onClick={() => setOpenModal(false)}
             />
 
@@ -280,58 +262,22 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.9, x: "-50%", y: "-50%" }}
               animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
               exit={{ opacity: 0 }}
-              className="fixed z-50 top-1/2 left-1/2 w-[95%] sm:w-[500px] bg-white rounded-3xl p-8"
+              className="fixed z-50 top-1/2 left-1/2 w-[95%] sm:w-[400px] bg-white rounded-2xl p-6"
             >
-
-              <h2 className="text-[20px] md:text-[24px] lg:text-[28px] font-heading text-primary mb-6 text-center">
+              <h2 className="text-xl font-heading text-primary mb-4 text-center">
                 Book Your Appointment
               </h2>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <input type="text" name="name" placeholder="Your Name" required onChange={handleChange} className="w-full p-3 border rounded-lg" />
+                <input type="email" name="email" placeholder="Your Email" required onChange={handleChange} className="w-full p-3 border rounded-lg" />
+                <input type="date" name="date" required onChange={handleChange} className="w-full p-3 border rounded-lg" />
+                <input type="time" name="time" required onChange={handleChange} className="w-full p-3 border rounded-lg" />
 
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Name"
-                  required
-                  onChange={handleChange}
-                  className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary"
-                />
-
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email"
-                  required
-                  onChange={handleChange}
-                  className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary"
-                />
-
-                <input
-                  type="date"
-                  name="date"
-                  required
-                  onChange={handleChange}
-                  className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary appearance-none"
-                />
-
-                <input
-                  type="time"
-                  name="time"
-                  required
-                  onChange={handleChange}
-                  className="w-full p-4 rounded-xl border border-neutral-border bg-white text-primary appearance-none"
-                />
-
-                <button
-                  type="submit"
-                  className="w-full bg-accent text-white py-3 rounded-xl font-semibold hover:scale-105 transition"
-                >
-                  Confirm Reservation
+                <button className="w-full bg-accent text-white py-2 rounded-lg font-semibold">
+                  Confirm
                 </button>
-
               </form>
-
             </motion.div>
           </>
         )}
