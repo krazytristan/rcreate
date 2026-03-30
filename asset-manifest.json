@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.e4711c92.css",
-    "main.js": "/static/js/main.e2d139e1.js",
+    "main.js": "/static/js/main.615f37e7.js",
     "static/media/va-devteam.jpg": "/static/media/va-devteam.adec23373345d1003cc8.jpg",
     "static/media/va-dev.jpg": "/static/media/va-dev.df659ca734be4c700edd.jpg",
     "static/media/vateam.jpg": "/static/media/vateam.d30e0cabefe009930257.jpg",
@@ -23,7 +23,7 @@
     "static/media/Florencio.jpg": "/static/media/Florencio.125981f60d77e7e93171.jpg",
     "static/media/vision2.jpg": "/static/media/vision2.42e534816ea36e8ad76c.jpg",
     "static/media/vision.jpg": "/static/media/vision.f7358731e1f9824bd9f0.jpg",
-    "static/media/vision3.jpg": "/static/media/vision3.bda66b2c55771dd03c9e.jpg",
+    "static/media/vision5.jpg": "/static/media/vision5.a1878344a4c2ef10a6d0.jpg",
     "static/media/17.jpg": "/static/media/17.47f6157cd4f98f30f692.jpg",
     "static/media/27.jpg": "/static/media/27.512c321bd590374ef019.jpg",
     "static/media/12.jpg": "/static/media/12.2ea4e7ca2ad8579948bd.jpg",
@@ -71,10 +71,10 @@
     "static/media/back3.jpg": "/static/media/back3.d6facf2522e66214f479.jpg",
     "index.html": "/index.html",
     "main.e4711c92.css.map": "/static/css/main.e4711c92.css.map",
-    "main.e2d139e1.js.map": "/static/js/main.e2d139e1.js.map"
+    "main.615f37e7.js.map": "/static/js/main.615f37e7.js.map"
   },
   "entrypoints": [
     "static/css/main.e4711c92.css",
-    "static/js/main.e2d139e1.js"
+    "static/js/main.615f37e7.js"
   ]
 }
