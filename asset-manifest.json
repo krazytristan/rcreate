@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "./static/css/main.e4711c92.css",
-    "main.js": "./static/js/main.ce13c636.js",
+    "main.js": "./static/js/main.22d97cb0.js",
     "static/media/va-devteam.jpg": "./static/media/va-devteam.adec23373345d1003cc8.jpg",
     "static/media/va-dev.jpg": "./static/media/va-dev.df659ca734be4c700edd.jpg",
     "static/media/vateam.jpg": "./static/media/vateam.d30e0cabefe009930257.jpg",
@@ -12,6 +12,7 @@
     "static/media/VA - Fatima Mendoza.jpg": "./static/media/VA - Fatima Mendoza.18220b9da34940b15c4a.jpg",
     "static/media/Internal Team.jpg": "./static/media/Internal Team.d9f218cf67a013ebdf00.jpg",
     "static/media/VA-Founder-Regine Candido.jpg": "./static/media/VA-Founder-Regine Candido.2e420ebe86e8679445b4.jpg",
+    "static/media/VA-Abegail Manalo.jpg": "./static/media/VA-Abegail Manalo.064718ab2b1b1037abc5.jpg",
     "static/media/Kharlo.jpg": "./static/media/Kharlo.7219d0a708deba751cf1.jpg",
     "static/media/VA-Erika Antoinette Paala.jpg": "./static/media/VA-Erika Antoinette Paala.bc9c4937726e04d4deb9.jpg",
     "static/media/John Mark.jpg": "./static/media/John Mark.eb040648569b4cc4eeef.jpg",
@@ -64,17 +65,16 @@
     "static/media/2.jpg": "./static/media/2.f0d4f11bf9864014a46a.jpg",
     "static/media/33.jpg": "./static/media/33.90af7b79a14661d151c2.jpg",
     "static/media/35.jpg": "./static/media/35.0381ecd3165f59193795.jpg",
-    "static/media/placeholder-f.png": "./static/media/placeholder-f.64c02cb4a679070bf3d1.png",
     "static/media/back4.jpg": "./static/media/back4.fb36633d28ca98a294e9.jpg",
     "static/media/back1.jpg": "./static/media/back1.fbd487d083b899e0697b.jpg",
     "static/media/back2.jpg": "./static/media/back2.9a6d6622594a59383039.jpg",
     "static/media/back3.jpg": "./static/media/back3.d6facf2522e66214f479.jpg",
     "index.html": "./index.html",
     "main.e4711c92.css.map": "./static/css/main.e4711c92.css.map",
-    "main.ce13c636.js.map": "./static/js/main.ce13c636.js.map"
+    "main.22d97cb0.js.map": "./static/js/main.22d97cb0.js.map"
   },
   "entrypoints": [
     "static/css/main.e4711c92.css",
-    "static/js/main.ce13c636.js"
+    "static/js/main.22d97cb0.js"
   ]
 }
