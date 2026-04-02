@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.e4711c92.css",
-    "main.js": "./static/js/main.b60631c1.js",
+    "main.css": "./static/css/main.766ddd4d.css",
+    "main.js": "./static/js/main.1856b133.js",
     "static/media/va-devteam.jpg": "./static/media/va-devteam.adec23373345d1003cc8.jpg",
     "static/media/va-dev.jpg": "./static/media/va-dev.df659ca734be4c700edd.jpg",
     "static/media/vateam.jpg": "./static/media/vateam.d30e0cabefe009930257.jpg",
@@ -70,11 +70,11 @@
     "static/media/back2.jpg": "./static/media/back2.9a6d6622594a59383039.jpg",
     "static/media/back3.jpg": "./static/media/back3.d6facf2522e66214f479.jpg",
     "index.html": "./index.html",
-    "main.e4711c92.css.map": "./static/css/main.e4711c92.css.map",
-    "main.b60631c1.js.map": "./static/js/main.b60631c1.js.map"
+    "main.766ddd4d.css.map": "./static/css/main.766ddd4d.css.map",
+    "main.1856b133.js.map": "./static/js/main.1856b133.js.map"
   },
   "entrypoints": [
-    "static/css/main.e4711c92.css",
-    "static/js/main.b60631c1.js"
+    "static/css/main.766ddd4d.css",
+    "static/js/main.1856b133.js"
   ]
 }
